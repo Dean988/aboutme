@@ -3,16 +3,20 @@ import {
     ArrowRight,
     Bot,
     BrainCircuit,
+    Briefcase,
+    CircleDot,
     ChevronRight,
     Cpu,
     Github,
     Linkedin,
     Mail,
     MapPin,
+    Menu,
     Radar,
     ShieldCheck,
     Sparkles,
     Trophy,
+    UserRound,
 } from 'lucide-react';
 import portfolioData from './data/portfolio.json';
 
@@ -35,6 +39,13 @@ const fadeInUp = {
     viewport: { once: true, amount: 0.25 },
     transition: { duration: 0.7, ease: 'easeOut' },
 } as const;
+
+const dockItems = [
+    { label: 'Profile', href: '#top', icon: UserRound },
+    { label: 'Education', href: '#education', icon: Trophy },
+    { label: 'Journey', href: '#journey', icon: Briefcase },
+    { label: 'Contact', href: '#contact', icon: Mail },
+] as const;
 
 function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: string; copy?: string }) {
     return (
@@ -71,13 +82,14 @@ function App() {
     ];
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-surface-950 text-slate-100">
+        <div id="top" className="relative min-h-screen overflow-hidden bg-surface-950 pb-28 text-slate-100 md:pb-0">
             <div className="fixed inset-0 pointer-events-none">
                 <div className="grid-overlay absolute inset-0 opacity-[0.16]" />
                 <div className="noise-overlay absolute inset-0" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(125,211,252,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(246,196,83,0.06),transparent_32%)]" />
                 <div className="spotlight absolute left-[-18rem] top-[-12rem] h-[36rem] w-[36rem] rounded-full blur-3xl" />
                 <div className="absolute bottom-[-14rem] right-[-10rem] h-[28rem] w-[28rem] rounded-full bg-accent-blue/15 blur-3xl animate-pulse-soft" />
+                <div className="scan-beam absolute inset-x-0 top-0 h-40 opacity-40" />
             </div>
 
             <header className="sticky top-0 z-40 border-b border-white/10 bg-surface-950/75 backdrop-blur-2xl">
@@ -117,24 +129,37 @@ function App() {
                 <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
                     <motion.div {...fadeInUp} className="panel-shell relative overflow-hidden rounded-[2rem] p-6 md:p-10">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,0.14),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(79,140,255,0.14),transparent_34%)]" />
+                        <div className="circuit-orb absolute -right-10 top-10 h-28 w-28 rounded-full border border-accent-cyan/20" />
                         <div className="relative z-10">
                             <div className="flex flex-wrap items-center gap-3">
                                 <div className="section-kicker">{hero.eyebrow}</div>
-                                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] text-slate-300">
-                                    <span className="h-2 w-2 rounded-full bg-accent-cyan" />
+                                <motion.div
+                                    animate={{ opacity: [0.65, 1, 0.65] }}
+                                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] text-slate-300"
+                                >
+                                    <span className="beacon-dot h-2 w-2 rounded-full bg-accent-cyan" />
                                     Profile online
-                                </div>
+                                </motion.div>
                             </div>
 
                             <div className="mt-6 flex flex-wrap gap-3">
-                                <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-slate-300 md:text-xs md:tracking-[0.24em]">
+                                <motion.div
+                                    whileHover={{ y: -2, scale: 1.01 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-slate-300 md:text-xs md:tracking-[0.24em]"
+                                >
                                     <MapPin size={14} className="text-accent-cyan" />
                                     {profile.location}
-                                </div>
-                                <div className="inline-flex items-center gap-2 rounded-full border border-accent-gold/20 bg-accent-gold/10 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-accent-gold md:text-xs md:tracking-[0.24em]">
+                                </motion.div>
+                                <motion.div
+                                    whileHover={{ y: -2, scale: 1.01 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="inline-flex items-center gap-2 rounded-full border border-accent-gold/20 bg-accent-gold/10 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-accent-gold md:text-xs md:tracking-[0.24em]"
+                                >
                                     <Sparkles size={14} />
                                     Gaming-inspired presentation
-                                </div>
+                                </motion.div>
                             </div>
 
                             <h1 className="mt-8 max-w-4xl text-[2.9rem] font-bold leading-[0.93] text-white sm:text-6xl md:text-7xl xl:text-[5.8rem]">
@@ -158,6 +183,8 @@ function App() {
                                             key={item.value}
                                             initial={{ opacity: 0, y: 18 }}
                                             whileInView={{ opacity: 1, y: 0 }}
+                                            whileHover={{ y: -4, scale: 1.01 }}
+                                            whileTap={{ scale: 0.98 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: 0.1 * index, duration: 0.55 }}
                                             className="min-w-[15rem] rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 md:min-w-0"
@@ -214,15 +241,22 @@ function App() {
                         </div>
 
                         <div className="relative z-10 flex h-full min-h-[34rem] flex-col gap-4 md:min-h-[38rem]">
-                            <div className="flex items-start justify-between gap-4 rounded-[1.5rem] border border-white/10 bg-black/20 p-4 backdrop-blur-md">
+                            <motion.div
+                                whileHover={{ y: -3 }}
+                                className="flex items-start justify-between gap-4 rounded-[1.5rem] border border-white/10 bg-black/20 p-4 backdrop-blur-md"
+                            >
                                 <div>
                                     <div className="section-kicker">Player Profile</div>
                                     <p className="mt-2 text-sm leading-7 text-slate-300">{profile.availability}</p>
                                 </div>
                                 <ShieldCheck className="mt-1 shrink-0 text-accent-gold" />
-                            </div>
+                            </motion.div>
 
-                            <div className="panel-shell relative overflow-hidden rounded-[1.8rem] p-3">
+                            <motion.div
+                                whileHover={{ y: -4 }}
+                                transition={{ type: 'spring', stiffness: 220, damping: 20 }}
+                                className="panel-shell relative overflow-hidden rounded-[1.8rem] p-3"
+                            >
                                 <div className="absolute inset-x-3 top-3 flex items-center justify-between rounded-full border border-white/10 bg-surface-950/70 px-4 py-2 text-[10px] tracking-[0.14em] text-slate-300 md:text-[11px] md:tracking-[0.18em]">
                                     <span>Current Build</span>
                                     <span className="text-accent-cyan">AI and Sociology</span>
@@ -236,20 +270,25 @@ function App() {
                                     <div className="text-sm font-medium text-white">{profile.name}</div>
                                     <div className="mt-1 text-sm text-slate-400">{profile.headline}</div>
                                 </div>
-                            </div>
+                            </motion.div>
 
                             <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
                                 {signalCards.map((card) => {
                                     const Icon = card.icon;
                                     return (
-                                        <div key={card.title} className="panel-shell relative rounded-[1.45rem] p-4">
+                                        <motion.div
+                                            key={card.title}
+                                            whileHover={{ y: -4, scale: 1.01 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            className="panel-shell relative rounded-[1.45rem] p-4"
+                                        >
                                             <div className="flex items-center justify-between gap-3">
                                                 <div className="section-kicker">{card.title}</div>
                                                 <Icon size={18} className="text-accent-cyan" />
                                             </div>
                                             <div className="mt-3 text-lg font-medium text-white">{card.value}</div>
                                             <p className="mt-2 text-sm leading-6 text-slate-400">{card.detail}</p>
-                                        </div>
+                                        </motion.div>
                                     );
                                 })}
                             </div>
@@ -257,7 +296,7 @@ function App() {
                     </motion.aside>
                 </section>
 
-                <section>
+                <section id="education">
                     <SectionHeading
                         eyebrow="Achievements"
                         title="Education presented like milestones, with the tone kept clean."
@@ -270,6 +309,8 @@ function App() {
                                 key={item.degree}
                                 initial={{ opacity: 0, y: 24 }}
                                 whileInView={{ opacity: 1, y: 0 }}
+                                whileHover={{ y: -5, scale: 1.01 }}
+                                whileTap={{ scale: 0.985 }}
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ delay: index * 0.12, duration: 0.65 }}
                                 className="panel-shell relative overflow-hidden rounded-[2rem] p-6"
@@ -328,6 +369,8 @@ function App() {
                                             key={service.slug}
                                             initial={{ opacity: 0, y: 18 }}
                                             whileInView={{ opacity: 1, y: 0 }}
+                                            whileHover={{ y: -5, scale: 1.01 }}
+                                            whileTap={{ scale: 0.985 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: index * 0.1, duration: 0.55 }}
                                             className="group min-w-[17rem] rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 transition hover:border-accent-cyan/30 hover:bg-white/[0.06] md:min-w-0"
@@ -348,7 +391,7 @@ function App() {
                     </motion.section>
                 </section>
 
-                <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+                <section id="journey" className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
                     <motion.section {...fadeInUp} className="panel-shell relative rounded-[2rem] p-6 md:p-8">
                         <SectionHeading
                             eyebrow="Campaign Log"
@@ -359,7 +402,11 @@ function App() {
                         <div className="relative mt-8 space-y-4 pl-6">
                             <div className="timeline-line absolute bottom-0 left-0 top-0 w-px" />
                             {experience.map((item) => (
-                                <div key={item.id} className="relative rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
+                                <motion.div
+                                    key={item.id}
+                                    whileHover={{ y: -4 }}
+                                    className="relative rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5"
+                                >
                                     <div className="absolute left-[-1.9rem] top-6 h-4 w-4 rounded-full border-4 border-surface-950 bg-accent-cyan" />
                                     <div className="flex flex-wrap items-start justify-between gap-3">
                                         <div>
@@ -378,7 +425,7 @@ function App() {
                                             </div>
                                         ))}
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </motion.section>
@@ -393,6 +440,7 @@ function App() {
                                         key={skill.name}
                                         initial={{ opacity: 0, x: 24 }}
                                         whileInView={{ opacity: 1, x: 0 }}
+                                        whileHover={{ y: -3 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: index * 0.12, duration: 0.55 }}
                                         className="rounded-[1.5rem] border border-white/10 bg-surface-900/65 p-4"
@@ -417,10 +465,14 @@ function App() {
 
                             <div className="mt-6 grid gap-3">
                                 {skills.inventory.map((item) => (
-                                    <div key={item.name} className="rounded-[1.25rem] border border-white/8 bg-surface-950/60 p-4">
+                                    <motion.div
+                                        key={item.name}
+                                        whileHover={{ y: -3 }}
+                                        className="rounded-[1.25rem] border border-white/8 bg-surface-950/60 p-4"
+                                    >
                                         <div className="text-sm font-medium uppercase tracking-[0.22em] text-accent-gold">{item.name}</div>
                                         <div className="mt-2 text-sm leading-7 text-slate-400">{item.desc}</div>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
                         </motion.section>
@@ -428,6 +480,7 @@ function App() {
                 </section>
 
                 <motion.section
+                    id="contact"
                     {...fadeInUp}
                     transition={{ duration: 0.72, delay: 0.12, ease: 'easeOut' }}
                     className="panel-shell relative overflow-hidden rounded-[2.2rem] p-6 md:p-10"
@@ -486,6 +539,51 @@ function App() {
                     </div>
                 </motion.section>
             </main>
+
+            <motion.nav
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.55, ease: 'easeOut' }}
+                className="fixed bottom-4 left-1/2 z-50 w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 lg:hidden"
+            >
+                <div className="panel-shell mobile-dock relative rounded-[1.8rem] px-2 py-2">
+                    <div className="flex items-center justify-between gap-1">
+                        {dockItems.map((item) => {
+                            const Icon = item.icon;
+
+                            return (
+                                <motion.a
+                                    key={item.label}
+                                    href={item.href}
+                                    whileTap={{ scale: 0.94 }}
+                                    className="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-[1.2rem] px-2 py-2 text-center text-[11px] text-slate-300 transition hover:bg-white/8 hover:text-white"
+                                >
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06]">
+                                        <Icon size={16} />
+                                    </div>
+                                    <span className="truncate">{item.label}</span>
+                                </motion.a>
+                            );
+                        })}
+                    </div>
+                </div>
+            </motion.nav>
+
+            <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+                className="fixed bottom-28 right-4 z-40 lg:hidden"
+            >
+                <a
+                    href={`mailto:${profile.socials.email}`}
+                    className="panel-shell inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm text-accent-cyan"
+                >
+                    <Menu size={16} />
+                    Quick contact
+                    <CircleDot size={14} className="text-accent-gold" />
+                </a>
+            </motion.div>
         </div>
     );
 }
