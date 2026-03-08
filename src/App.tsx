@@ -49,7 +49,7 @@ function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: stri
     return (
         <div className="max-w-2xl">
             <div className="section-kicker">{eyebrow}</div>
-            <h2 className="pixel-heading mt-3 text-2xl leading-tight text-white md:text-4xl">{title}</h2>
+            {title ? <h2 className="pixel-heading mt-3 text-2xl leading-tight text-white md:text-4xl">{title}</h2> : null}
             {copy ? <p className="mt-4 text-sm leading-7 text-slate-400 md:text-base md:leading-8">{copy}</p> : null}
         </div>
     );
@@ -260,8 +260,7 @@ function App() {
                 <section id="education">
                     <SectionHeading
                         eyebrow="Achievements"
-                        title="Education presented like milestones, with the tone kept clean."
-                        copy=""
+                        title="Education"
                     />
 
                     <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -292,8 +291,7 @@ function App() {
                     <motion.section {...fadeInUp} transition={{ duration: 0.72, delay: 0.1, ease: 'easeOut' }} className="panel-shell relative rounded-[2rem] p-6 md:p-8">
                         <SectionHeading
                             eyebrow="Loadout"
-                            title="Skills and services shown like a retro loadout screen."
-                            copy=""
+                            title="Loadout"
                         />
 
                         <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -327,8 +325,7 @@ function App() {
                         <div className="relative z-10">
                             <SectionHeading
                                 eyebrow="Terminal Log"
-                                title="A few clean notes about how I work."
-                                copy=""
+                                title="Notes"
                             />
 
                             <div className="mt-8 grid gap-3">
@@ -354,8 +351,7 @@ function App() {
                     <motion.section {...fadeInUp} className="panel-shell relative rounded-[2rem] p-6 md:p-8">
                         <SectionHeading
                             eyebrow="Campaign Log"
-                            title="Career history shown like quests and mission logs."
-                            copy=""
+                            title="Journey"
                         />
 
                         <div className="relative mt-8 space-y-4 pl-6">
@@ -387,7 +383,7 @@ function App() {
 
                     <div className="grid gap-6">
                         <motion.section {...fadeInUp} transition={{ duration: 0.72, delay: 0.08, ease: 'easeOut' }} className="panel-shell relative rounded-[2rem] p-6 md:p-8">
-                            <SectionHeading eyebrow="Core Stats" title="Strengths displayed like a retro HUD." />
+                            <SectionHeading eyebrow="Core Stats" title="Stats" />
 
                             <div className="mt-6 space-y-4">
                                 {skills.primary.map((skill, index) => (
@@ -415,7 +411,7 @@ function App() {
                         </motion.section>
 
                         <motion.section {...fadeInUp} transition={{ duration: 0.72, delay: 0.12, ease: 'easeOut' }} className="panel-shell relative rounded-[2rem] p-6 md:p-8">
-                            <SectionHeading eyebrow="Inventory" title="Tools, platforms, and methods in the current build." />
+                            <SectionHeading eyebrow="Inventory" title="Tools" />
 
                             <div className="mt-6 grid gap-3">
                                 {skills.inventory.map((item) => (
@@ -445,8 +441,7 @@ function App() {
                         <div>
                             <SectionHeading
                                 eyebrow="Open Channel"
-                                title="Contact links ready for the next quest."
-                                copy=""
+                                title="Contact"
                             />
                         </div>
 
