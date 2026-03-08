@@ -81,7 +81,7 @@ function App() {
 
     return (
         <div id="top" className="relative min-h-screen overflow-hidden bg-surface-950 pb-24 text-slate-100 md:pb-0">
-            <div className="fixed inset-0 pointer-events-none">
+            <div className="absolute inset-0 pointer-events-none">
                 <div className="grid-overlay absolute inset-0 opacity-[0.16]" />
                 <div className="noise-overlay absolute inset-0" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(125,211,252,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(246,196,83,0.06),transparent_32%)]" />
@@ -97,7 +97,7 @@ function App() {
                         </div>
                         <div className="min-w-0">
                             <div className="truncate text-sm font-medium tracking-wide text-white">{profile.name}</div>
-                            <div className="hidden text-xs text-slate-400 sm:block">{profile.headline}</div>
+                            <div className="text-xs text-slate-400">{profile.headline}</div>
                         </div>
                     </div>
 
@@ -138,6 +138,10 @@ function App() {
                                 </div>
                             </div>
 
+                            <div className="mt-5 text-sm font-medium tracking-[0.14em] text-accent-cyan md:text-base">
+                                {profile.headline}
+                            </div>
+
                             <h1 className="mt-8 max-w-4xl text-[2.9rem] font-bold leading-[0.93] text-white sm:text-6xl md:text-7xl xl:text-[5.8rem]">
                                 {hero.titleFirst}
                                 <br />
@@ -152,8 +156,7 @@ function App() {
                                 {hero.intro}
                             </p>
 
-                            <div className="mt-8 overflow-x-auto pb-2 no-scrollbar">
-                                <div className="flex min-w-max gap-3 md:grid md:min-w-0 md:grid-cols-3">
+                            <div className="mt-8 grid gap-3 md:grid-cols-3">
                                     {hero.metrics.map((item, index) => (
                                         <motion.div
                                             key={item.value}
@@ -161,13 +164,12 @@ function App() {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: 0.1 * index, duration: 0.55 }}
-                                            className="min-w-[15rem] rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 md:min-w-0"
+                                            className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4"
                                         >
                                             <div className="text-xl font-semibold text-white">{item.value}</div>
                                             <div className="mt-2 text-sm leading-6 text-slate-400">{item.label}</div>
                                         </motion.div>
                                     ))}
-                                </div>
                             </div>
 
                             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
@@ -233,10 +235,6 @@ function App() {
                                     alt={profile.name}
                                     className="h-[16rem] w-full rounded-[1.45rem] object-cover object-top pt-10 sm:h-[20rem] lg:h-[24rem]"
                                 />
-                                <div className="absolute inset-x-4 bottom-4 rounded-[1.2rem] border border-white/10 bg-surface-950/72 p-4 backdrop-blur-xl">
-                                    <div className="text-sm font-medium text-white">{profile.name}</div>
-                                    <div className="mt-1 text-sm text-slate-400">{profile.headline}</div>
-                                </div>
                             </div>
 
                             <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
@@ -319,8 +317,7 @@ function App() {
                             copy="The goal is to feel distinctive on mobile and desktop without losing seriousness."
                         />
 
-                        <div className="mt-8 overflow-x-auto pb-2 no-scrollbar">
-                            <div className="flex min-w-max gap-4 md:grid md:min-w-0 md:grid-cols-2">
+                        <div className="mt-8 grid gap-4 md:grid-cols-2">
                                 {services.map((service, index) => {
                                     const Icon = serviceIcons[service.slug as keyof typeof serviceIcons] ?? Sparkles;
 
@@ -331,7 +328,7 @@ function App() {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: index * 0.1, duration: 0.55 }}
-                                            className="group min-w-[17rem] rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 transition hover:border-accent-cyan/30 hover:bg-white/[0.06] md:min-w-0"
+                                            className="group rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 transition hover:border-accent-cyan/30 hover:bg-white/[0.06]"
                                         >
                                             <div className="flex items-center justify-between gap-4">
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-surface-900/80 text-accent-cyan">
@@ -344,7 +341,6 @@ function App() {
                                         </motion.div>
                                     );
                                 })}
-                            </div>
                         </div>
                     </motion.section>
                 </section>
