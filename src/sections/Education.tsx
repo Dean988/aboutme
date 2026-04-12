@@ -6,162 +6,87 @@ gsap.registerPlugin(ScrollTrigger);
 
 const educationData = [
   {
-    degree: 'Master Degree',
+    degree: 'Master Degree in Artificial Intelligence',
     institution: 'Politecnico di Torino',
-    image: '/ai_anim.gif', // Using requested GIF
-    focus: 'AI Architecture, Machine Learning & AI Ethics and Management',
-    score: '110/110 Cum Laude'
+    image: '/ai_core.png',
+    focus: 'AI architecture, machine learning, ethics, and management.',
+    score: '110/110 cum laude',
+    topics: ['AI architecture', 'Machine learning', 'Ethics', 'Management'],
   },
   {
-    degree: 'Master\'s Degree in Social Data Science',
-    institution: 'Università degli Studi d\'Annunzio',
-    image: '/social_anim_new.gif', // Using requested GIF
-    focus: 'Digital Sociology & Predictive Modeling',
-    score: '110/110 Cum Laude'
-  }
+    degree: "Master's Degree in Social Data Science",
+    institution: "Universita degli Studi d'Annunzio",
+    image: '/social_data.png',
+    focus: 'Digital sociology, predictive modeling, and human-centered analysis.',
+    score: '110/110 cum laude',
+    topics: ['Digital sociology', 'Predictive modeling', 'Social research', 'Analytics'],
+  },
 ];
 
 export default function Education() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!sectionRef.current) {
+      return;
+    }
 
-    // A subtle floating effect instead of extreme parallax since they are gifs
-    const images = containerRef.current.querySelectorAll('.edu-image');
-    images.forEach(img => {
-      gsap.to(img, {
-        y: -15,
-        duration: 2,
-        yoyo: true,
-        repeat: -1,
-        ease: 'sine.inOut'
-      });
-    });
-
-    const blocks = containerRef.current.querySelectorAll('.edu-block');
-    blocks.forEach(block => {
-      gsap.fromTo(block,
-        { opacity: 0, scale: 0.95 },
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        '.education-card',
+        { y: 34, opacity: 0 },
         {
-          opacity: 1, 
-          scale: 1,
-          duration: 1,
+          y: 0,
+          opacity: 1,
+          duration: 0.82,
+          stagger: 0.14,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: block,
-            start: 'top 80%',
-          }
-        }
+            trigger: sectionRef.current,
+            start: 'top 70%',
+          },
+        },
       );
-    });
+    }, sectionRef.current);
 
+    return () => context.revert();
   }, []);
 
   return (
-    <section 
-      ref={containerRef}
-      style={{
-        width: '100vw',
-        padding: '15vh 10vw',
-        position: 'relative',
-        zIndex: 10,
-        backgroundColor: 'rgba(0,0,0,0.5)'
-      }}
-    >
-      <div style={{ textAlign: 'center', marginBottom: '15vh' }}>
-        <div style={{ fontFamily: 'var(--font-retro)', color: 'var(--color-tertiary)', fontSize: '0.8rem', marginBottom: '1rem' }}>
-          &gt; KNOWLEDGE_BASE_UNLOCKED
+    <section id="education" ref={sectionRef} className="section">
+      <div className="section-shell">
+        <div className="section-heading">
+          <span className="eyebrow">Education</span>
+          <h2>Academic depth supporting practical AI delivery.</h2>
+          <p>
+            My educational path combines technical AI training with social data
+            science, which is why I naturally approach products through both systems
+            thinking and user context.
+          </p>
         </div>
-        <h2 style={{ 
-          fontSize: 'clamp(3rem, 6vw, 5rem)', 
-          letterSpacing: '-0.02em', 
-          color: '#fff',
-          textTransform: 'uppercase',
-          fontFamily: 'var(--font-display)'
-        }}>
-          Academic
-          <br/>
-          <span style={{ color: 'transparent', WebkitTextStroke: '1px var(--color-tertiary)' }}>Foundation</span>
-        </h2>
-      </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '15vh' }}>
-        {educationData.map((item, index) => (
-          <div key={index} className={`edu-block mobile-col${index % 2 === 0 ? '' : '-reverse'}`} style={{
-            display: 'flex',
-            flexDirection: index % 2 === 0 ? 'row' : 'row-reverse',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '5vw'
-          }}>
-            
-            <div className="mobile-full-width" style={{ flex: 1 }}>
-              <div className="mobile-bottom-margin" style={{ 
-                display: 'inline-block',
-                padding: '0.5rem 1rem',
-                border: '1px solid var(--color-tertiary)',
-                backgroundColor: 'rgba(255, 51, 0, 0.1)',
-                color: 'var(--color-tertiary)',
-                fontFamily: 'var(--font-retro)',
-                fontSize: '0.6rem',
-                marginBottom: '2rem',
-              }}>
-                LOCATION: {item.institution.toUpperCase()}
+        <div className="education-grid">
+          {educationData.map((item) => (
+            <article key={item.degree} className="surface-card education-card">
+              <div className="education-card__media">
+                <img src={item.image} alt={item.degree} />
               </div>
-              
-              <h3 className="mobile-font-huge mobile-bottom-margin" style={{ 
-                fontSize: 'clamp(2rem, 3.5vw, 3.5rem)', 
-                lineHeight: 1.2, 
-                marginBottom: '1rem',
-                fontFamily: 'var(--font-display)'
-              }}>
-                {item.degree}
-              </h3>
-              
-              <p className="mobile-bottom-margin" style={{ 
-                fontSize: '1.2rem', 
-                color: 'var(--color-accent)',
-                marginBottom: '1rem'
-              }}>
-                {item.focus}
-              </p>
 
-              <div className="mobile-bottom-margin" style={{
-                fontFamily: 'var(--font-retro)',
-                fontSize: '0.7rem',
-                color: '#0f0',
-              }}>
-                &gt; SCORE: {item.score}
-              </div>
-            </div>
+              <div className="education-card__body">
+                <span className="education-badge">{item.score}</span>
+                <p className="education-meta">{item.institution}</p>
+                <h3>{item.degree}</h3>
+                <p>{item.focus}</p>
 
-            <div className="mobile-full-width" style={{ flex: 1, position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              {item.image && (
-                <div style={{ 
-                  borderRadius: '12px',
-                  boxShadow: '0 0 30px rgba(0, 240, 255, 0.2)',
-                  width: '100%',
-                  maxWidth: '500px',
-                  overflow: 'hidden'
-                }}>
-                  <img 
-                    className="edu-image"
-                    src={item.image} 
-                    alt={item.degree} 
-                    style={{
-                      width: '100%',
-                      height: 'auto', 
-                      display: 'block',
-                      mixBlendMode: 'screen',
-                    }}
-                  />
+                <div className="education-topics">
+                  {item.topics.map((topic) => (
+                    <span key={topic}>{topic}</span>
+                  ))}
                 </div>
-              )}
-            </div>
-            
-          </div>
-        ))}
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

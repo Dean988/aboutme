@@ -4,144 +4,141 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const principles = [
+  {
+    title: 'Context before complexity',
+    description:
+      'I like systems that solve the real problem first: user context, business flow, and team constraints come before technical spectacle.',
+  },
+  {
+    title: 'Delivery with structure',
+    description:
+      'From prototypes to production-minded solutions, I work toward interfaces and workflows that remain understandable after the demo.',
+  },
+  {
+    title: 'Research translated into action',
+    description:
+      'My background in sociology helps me connect data patterns with human behavior, decision making, and product adoption.',
+  },
+];
+
+const capabilities = [
+  { label: 'AI engineering and orchestration', level: 96 },
+  { label: 'Analytics and data systems', level: 91 },
+  { label: 'Research-driven product thinking', level: 89 },
+];
+
 export default function About() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!sectionRef.current) {
+      return;
+    }
 
-    const cards = containerRef.current.querySelectorAll('.stat-card');
-    
-    gsap.fromTo(cards,
-      { y: 100, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 70%',
-        }
-      }
-    );
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        '.reveal-card',
+        { y: 32, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.14,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 72%',
+          },
+        },
+      );
+
+      gsap.fromTo(
+        '.capability-bar__fill',
+        { scaleX: 0, transformOrigin: 'left center' },
+        {
+          scaleX: 1,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 68%',
+          },
+        },
+      );
+    }, sectionRef.current);
+
+    return () => context.revert();
   }, []);
 
   return (
-    <section 
-      ref={containerRef}
-      className="mobile-padding"
-      style={{
-        minHeight: '100vh',
-        width: '100vw',
-        padding: '10vh 10vw',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '3rem', borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '1rem' }}>
-        <h2 style={{ fontSize: '3rem', flex: 1 }}>PLAYER PROFILE</h2>
-        <div style={{ fontFamily: 'var(--font-retro)', fontSize: '0.7rem', color: '#0f0', border: '1px solid #0f0', padding: '5px 10px' }}>STATUS: AVAILABLE OK</div>
-      </div>
-
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '2rem'
-      }}>
-        
-        {/* Card 1 */}
-        <div className="stat-card" style={{
-          backgroundColor: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderTop: '4px solid var(--color-tertiary)',
-          padding: '2rem',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '4px'
-        }}>
-          <h3 style={{ fontFamily: 'var(--font-retro)', fontSize: '1rem', color: 'var(--color-tertiary)', marginBottom: '1.5rem', letterSpacing: '0.1em' }}>LV. DATA + AI</h3>
-          <ul style={{ lineHeight: 1.8, fontSize: '1.1rem' }}>
-            <li style={{ marginBottom: '1rem' }}><strong style={{color: 'var(--color-accent)'}}>Current Build:</strong> AI systems with human context. A profile that mixes sociology, product thinking, and technical delivery.</li>
-            <li style={{ marginBottom: '1rem' }}><strong style={{color: 'var(--color-accent)'}}>Playstyle:</strong> Professional, curious, practical. I like interfaces and systems that feel thoughtful rather than loud.</li>
-            <li><strong style={{color: 'var(--color-accent)'}}>Career Arc:</strong> Research -&gt; delivery -&gt; impact. From academic depth to solutions that work in real environments.</li>
-          </ul>
+    <section id="about" ref={sectionRef} className="section">
+      <div className="section-shell">
+        <div className="section-heading">
+          <span className="eyebrow">About</span>
+          <h2>A professional profile shaped by both data and people.</h2>
+          <p>
+            My work combines technical implementation, research sensitivity, and a
+            preference for products that feel reliable, legible, and useful from the
+            first interaction onward.
+          </p>
         </div>
 
-        {/* Card 2 */}
-        <div className="stat-card" style={{
-          backgroundColor: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderTop: '4px solid var(--color-accent)',
-          padding: '2rem',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '4px'
-        }}>
-          <h3 style={{ fontFamily: 'var(--font-retro)', fontSize: '1rem', color: 'var(--color-accent)', marginBottom: '1.5rem', letterSpacing: '0.1em' }}>CORE STATS</h3>
-          <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <li>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontFamily: 'var(--font-retro)', fontSize: '0.7rem' }}>
-                <span>PYTHON & AI ENG</span>
-                <span style={{ color: 'var(--color-accent)' }}>98%</span>
-              </div>
-              <div style={{ width: '100%', height: '10px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
-                <div style={{ width: '98%', height: '100%', background: 'linear-gradient(90deg, var(--color-tertiary), var(--color-accent))' }} />
-              </div>
-            </li>
-            <li>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontFamily: 'var(--font-retro)', fontSize: '0.7rem' }}>
-                <span>SQL & DATA SYS</span>
-                <span style={{ color: 'var(--color-accent)' }}>93%</span>
-              </div>
-              <div style={{ width: '100%', height: '10px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
-                <div style={{ width: '93%', height: '100%', background: 'linear-gradient(90deg, var(--color-tertiary), var(--color-accent))' }} />
-              </div>
-            </li>
-            <li>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontFamily: 'var(--font-retro)', fontSize: '0.7rem' }}>
-                <span>RESEARCH & ANALYTICS</span>
-                <span style={{ color: 'var(--color-accent)' }}>91%</span>
-              </div>
-              <div style={{ width: '100%', height: '10px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
-                <div style={{ width: '91%', height: '100%', background: 'linear-gradient(90deg, var(--color-tertiary), var(--color-accent))' }} />
-              </div>
-            </li>
-          </ul>
-        </div>
+        <div className="about-layout">
+          <article className="surface-card about-story reveal-card">
+            <p>
+              I moved from sociology into advanced AI and data work because I am most
+              interested in systems that connect analysis with real human behavior.
+              That perspective helps me build solutions that are not only accurate,
+              but also understandable and operationally relevant.
+            </p>
+            <p>
+              Whether the project is an assistant, an analytics workflow, or a
+              decision-support system, I focus on clarity, maintainability, and the
+              quality of the user experience around the model.
+            </p>
 
-        {/* Card 3 */}
-        <div className="stat-card" style={{
-          backgroundColor: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderTop: '4px solid var(--color-secondary)',
-          padding: '2rem',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '4px'
-        }}>
-          <h3 style={{ fontFamily: 'var(--font-retro)', fontSize: '1rem', color: 'var(--color-secondary)', marginBottom: '1.5rem', letterSpacing: '0.1em' }}>INVENTORY</h3>
-          
-          <div style={{ marginBottom: '1rem' }}>
-            <span style={{ fontFamily: 'var(--font-retro)', fontSize: '0.6rem', color: '#fff', opacity: 0.5, display: 'block', marginBottom: '0.5rem' }}>GEN AI STACK</span>
-            <p>LLMs, prompting, evaluation, orchestration.</p>
-          </div>
-          
-          <div style={{ marginBottom: '1rem' }}>
-            <span style={{ fontFamily: 'var(--font-retro)', fontSize: '0.6rem', color: '#fff', opacity: 0.5, display: 'block', marginBottom: '0.5rem' }}>ML & DATA</span>
-            <p>Pandas, NumPy, predictive modeling, experimentation.</p>
-          </div>
-          
-          <div style={{ marginBottom: '1rem' }}>
-            <span style={{ fontFamily: 'var(--font-retro)', fontSize: '0.6rem', color: '#fff', opacity: 0.5, display: 'block', marginBottom: '0.5rem' }}>CLOUD & DELIVERY</span>
-            <p>Azure, AWS, production thinking, scalability.</p>
-          </div>
-          
-          <div>
-            <span style={{ fontFamily: 'var(--font-retro)', fontSize: '0.6rem', color: '#fff', opacity: 0.5, display: 'block', marginBottom: '0.5rem' }}>VISUALIZATION</span>
-            <p>Power BI, dashboards, insight storytelling.</p>
-          </div>
-        </div>
+            <div className="about-principles">
+              {principles.map((item) => (
+                <div key={item.title} className="principle-card">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </article>
 
+          <aside className="surface-card capabilities-card reveal-card">
+            <span className="eyebrow">Core strengths</span>
+
+            <div className="capabilities-list">
+              {capabilities.map((item) => (
+                <div key={item.label} className="capability-row">
+                  <header>
+                    <span>{item.label}</span>
+                    <strong>{item.level}%</strong>
+                  </header>
+                  <div className="capability-bar">
+                    <div
+                      className="capability-bar__fill"
+                      style={{ width: `${item.level}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="capability-tags" aria-label="Capabilities">
+              <span>LLM orchestration</span>
+              <span>RAG and retrieval design</span>
+              <span>Behavioral analytics</span>
+              <span>Azure and AWS delivery</span>
+              <span>Power BI and storytelling</span>
+              <span>Experimentation and evaluation</span>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
   );
