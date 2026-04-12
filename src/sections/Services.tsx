@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Bot, Database, LineChart, Users } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Bot, Database, LineChart, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -9,39 +9,45 @@ const servicesData = [
   {
     title: 'RAG and knowledge assistants',
     description:
-      'Designing retrieval-driven systems that surface the right information with context, traceability, and practical usefulness for teams.',
+      'Retrieval-first systems that can navigate internal knowledge, preserve context, and return outputs that are actually usable in production workflows.',
     image: '/rag_knowledge.png',
+    motion: '/background.gif',
     tag: 'Knowledge systems',
     icon: Database,
   },
   {
     title: 'Predictive modeling and analytics',
     description:
-      'Turning data into decision support through behavioral analytics, forecasting, experimentation, and dashboards that stay readable.',
+      'Behavioral analysis, forecasting, experimentation, and dashboards designed to reveal signal without flattening the human side of the data.',
     image: '/social_data.png',
+    motion: '/social_anim_new.gif',
     tag: 'Analytics',
     icon: LineChart,
   },
   {
     title: 'AI automation and agent workflows',
     description:
-      'Structuring AI-assisted processes that can support research, internal operations, and multi-step execution without losing control.',
+      'Agentic layers and orchestrated systems for multi-step internal processes, research support, and execution chains that need control as much as intelligence.',
     image: '/ai_services.png',
+    motion: '/autonomous_agents.gif',
     tag: 'Automation',
     icon: Bot,
   },
   {
-    title: 'Human-centered AI strategy',
+    title: 'Immersive AI direction',
     description:
-      'Bringing a social-science lens to architecture and evaluation so systems are not only advanced, but also aligned with real users.',
+      'A more cinematic layer for AI products and portfolios: motion, media, and interaction design that make technical work feel immediate and memorable.',
     image: '/socio_ai_fusion.png',
-    tag: 'Strategy',
-    icon: Users,
+    motion: '/ai_anim.gif',
+    tag: 'Experience layer',
+    icon: Sparkles,
   },
 ];
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeService = servicesData[activeIndex];
 
   useEffect(() => {
     if (!sectionRef.current) {
@@ -50,17 +56,17 @@ export default function Services() {
 
     const context = gsap.context(() => {
       gsap.fromTo(
-        '.service-card',
+        '.services-reveal',
         { y: 36, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          stagger: 0.14,
+          duration: 0.84,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 72%',
           },
         },
       );
@@ -72,40 +78,64 @@ export default function Services() {
   return (
     <section id="services" ref={sectionRef} className="section">
       <div className="section-shell">
-        <div className="section-heading">
+        <div className="section-heading services-reveal">
           <span className="eyebrow">Services</span>
-          <h2>AI capabilities designed to look polished and work in reality.</h2>
+          <h2>Media-rich interactions around serious AI work.</h2>
           <p>
-            The strongest systems are the ones that feel intentional at every level:
-            architecture, content quality, business fit, and the experience around the
-            model itself.
+            This is the balance I aim for: strong technical systems, but presented with
+            enough visual intelligence and motion to feel contemporary, tactile, and
+            immersive rather than flat.
           </p>
         </div>
 
-        <div className="services-grid">
-          {servicesData.map((item) => {
-            const Icon = item.icon;
+        <div className="services-explorer">
+          <div className="services-list services-reveal">
+            {servicesData.map((item, index) => {
+              const Icon = item.icon;
+              const isActive = activeIndex === index;
 
-            return (
-              <article key={item.title} className="surface-card service-card">
-                <div className="service-card__media">
-                  <img src={item.image} alt={item.title} />
-                </div>
-
-                <div className="service-card__body">
-                  <div className="service-card__header">
-                    <span className="service-icon">
-                      <Icon size={18} />
-                    </span>
+              return (
+                <button
+                  key={item.title}
+                  type="button"
+                  className={`service-list-item${isActive ? ' is-active' : ''}`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onFocus={() => setActiveIndex(index)}
+                  data-cursor="media"
+                >
+                  <span className="service-icon">
+                    <Icon size={18} />
+                  </span>
+                  <div className="service-list-item__copy">
                     <span className="service-tag">{item.tag}</span>
+                    <strong>{item.title}</strong>
+                    <p>{item.description}</p>
                   </div>
+                </button>
+              );
+            })}
+          </div>
 
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            );
-          })}
+          <div className="surface-card services-preview services-reveal" data-cursor="media">
+            <div className="services-preview__visual">
+              <img className="services-preview__motion" src={activeService.motion} alt="" />
+              <img className="services-preview__image" src={activeService.image} alt={activeService.title} />
+              <div className="services-preview__wash" />
+              <div className="services-preview__label">
+                <span>{activeService.tag}</span>
+                <strong>{activeService.title}</strong>
+              </div>
+            </div>
+
+            <div className="services-preview__body">
+              <p>{activeService.description}</p>
+              <div className="services-preview__pills">
+                <span>Interactive layer</span>
+                <span>Immersive media</span>
+                <span>Production mindset</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

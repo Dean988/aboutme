@@ -8,7 +8,7 @@ const educationData = [
   {
     degree: 'Master Degree in Artificial Intelligence',
     institution: 'Politecnico di Torino',
-    image: '/ai_core.png',
+    image: '/ai_anim.gif',
     focus: 'AI architecture, machine learning, ethics, and management.',
     score: '110/110 cum laude',
     topics: ['AI architecture', 'Machine learning', 'Ethics', 'Management'],
@@ -16,7 +16,7 @@ const educationData = [
   {
     degree: "Master's Degree in Social Data Science",
     institution: "Universita degli Studi d'Annunzio",
-    image: '/social_data.png',
+    image: '/social_anim_new.gif',
     focus: 'Digital sociology, predictive modeling, and human-centered analysis.',
     score: '110/110 cum laude',
     topics: ['Digital sociology', 'Predictive modeling', 'Social research', 'Analytics'],
@@ -47,6 +47,15 @@ export default function Education() {
           },
         },
       );
+
+      gsap.to('.education-card__media img', {
+        scale: 1.05,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        stagger: 0.15,
+      });
     }, sectionRef.current);
 
     return () => context.revert();
@@ -57,17 +66,17 @@ export default function Education() {
       <div className="section-shell">
         <div className="section-heading">
           <span className="eyebrow">Education</span>
-          <h2>Academic depth supporting practical AI delivery.</h2>
+          <h2>Academic depth with richer visual storytelling.</h2>
           <p>
-            My educational path combines technical AI training with social data
-            science, which is why I naturally approach products through both systems
-            thinking and user context.
+            I wanted this section to feel alive as well: two educational tracks, both
+            represented with moving media to reflect the technical and social layers of
+            my work.
           </p>
         </div>
 
         <div className="education-grid">
           {educationData.map((item) => (
-            <article key={item.degree} className="surface-card education-card">
+            <article key={item.degree} className="surface-card education-card" data-cursor="media">
               <div className="education-card__media">
                 <img src={item.image} alt={item.degree} />
               </div>
