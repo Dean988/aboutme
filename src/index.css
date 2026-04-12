@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Press+Start+2P&family=Syncopate:wght@400;700&display=swap');
+
+:root {
+  --color-bg: #030303;
+  --color-text: #E5E5E5;
+  --color-accent: #00F0FF; /* Neon Cyan */
+  --color-secondary: #FF003C; /* Neon Pink/Red */
+  --color-tertiary: #FF3300; /* Neon Red/Fiery Orange */
+  --font-primary: 'Inter', sans-serif;
+  --font-display: 'Syncopate', sans-serif; 
+  --font-retro: 'Press Start 2P', cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  /* The animated GIF overlay */
+  background-image: linear-gradient(rgba(3,3,3,0.8), rgba(3,3,3,0.9)), url('/background.gif');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Lenis recommended styles */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Selection */
+::selection {
+  background: var(--color-accent);
+  color: #000;
+}
+
+/* Mobile Responsiveness Utility Classes */
+@media (max-width: 768px) {
+  .mobile-col {
+    flex-direction: column !important;
+  }
+  .mobile-col-reverse {
+    flex-direction: column-reverse !important;
+  }
+  .mobile-padding {
+    padding: 10vh 5vw !important;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+  .mobile-text-center {
+    text-align: center !important;
+  }
+  .mobile-align-center {
+    align-items: center !important;
+  }
+  .mobile-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .mobile-font-huge {
+    font-size: 2.5rem !important;
+  }
+  .mobile-font-large {
+    font-size: 1.8rem !important;
+  }
+  .mobile-gap-small {
+    gap: 1.5rem !important;
+  }
+  .mobile-bottom-margin {
+    margin-bottom: 2rem !important;
+  }
+  .mobile-experience-card {
+    min-width: 300px !important;
+    padding: 1.5rem !important;
+  }
+}
