@@ -8,30 +8,30 @@ const servicesData = [
   {
     title: 'RAG and knowledge assistants',
     description:
-      'Retrieval-driven systems that make internal knowledge easier to access, navigate, and trust.',
+      'Retrieval-driven systems that make internal knowledge easier to navigate, query, and trust.',
     image: '/rag_knowledge.png',
-    details: ['Context-aware retrieval', 'Knowledge design', 'Assistant UX'],
-  },
-  {
-    title: 'Predictive modeling and analytics',
-    description:
-      'Analytics workflows that turn datasets into operational insight, experimentation, and decision support.',
-    image: '/social_data.png',
-    details: ['Behavioral analytics', 'Forecasting', 'Insight delivery'],
+    details: ['Knowledge retrieval', 'Context logic', 'Assistant UX'],
   },
   {
     title: 'AI engineering and orchestration',
     description:
       'Structured systems for assistants, workflows, and model-based tools that need more than a prototype.',
     image: '/ai_services.png',
-    details: ['LLM systems', 'Workflow design', 'Production thinking'],
+    details: ['Workflow orchestration', 'LLM systems', 'Production logic'],
   },
   {
-    title: 'Research-informed AI strategy',
+    title: 'Research-informed strategy',
     description:
-      'A perspective that connects technical architecture with human context, adoption, and product clarity.',
+      'A way of framing AI that connects architecture with human context, adoption, and product clarity.',
     image: '/socio_ai_fusion.png',
     details: ['Human-centered framing', 'Evaluation thinking', 'Product fit'],
+  },
+  {
+    title: 'System architecture and AI layers',
+    description:
+      'Infrastructure thinking for products that need durable foundations, not just surface-level polish.',
+    image: '/ai_core.png',
+    details: ['System layers', 'Architecture choices', 'Scalable direction'],
   },
 ];
 
@@ -68,11 +68,11 @@ export default function Services() {
     <section id="services" ref={sectionRef} className="section">
       <div className="section-shell">
         <div className="section-heading services-reveal">
-          <span className="eyebrow">Services</span>
-          <h2>What I build.</h2>
+          <span className="eyebrow">Loadout</span>
+          <h2>Primary abilities currently equipped.</h2>
           <p>
-            The goal is always the same: make the technical layer stronger while making
-            the final product clearer, more useful, and easier for people to work with.
+            Each card represents a capability I can bring into a project, from
+            retrieval systems and orchestration to strategy and system architecture.
           </p>
         </div>
 

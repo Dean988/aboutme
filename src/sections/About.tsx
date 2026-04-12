@@ -4,31 +4,31 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const principles = [
+const profileTraits = [
   {
-    title: 'Clear thinking',
+    title: 'System thinking',
     description:
-      'I prefer systems that are understandable from the inside out, not just visually impressive from a distance.',
+      'I like AI products that feel architected, not improvised. The strongest work is usually the clearest work.',
   },
   {
-    title: 'Human context',
+    title: 'Human logic',
     description:
-      'My background in sociology helps me connect models, user behavior, and product decisions in a more grounded way.',
+      'A social data science background helps me read not only the model, but also the user behavior around it.',
   },
   {
-    title: 'Professional delivery',
+    title: 'Execution mode',
     description:
-      'I care about how AI work is shipped, explained, maintained, and used by real teams in real environments.',
+      'From concept to delivery, I focus on usable outputs, maintainability, and decisions that survive beyond the demo.',
   },
 ];
 
 const strengths = [
   'AI engineering and orchestration',
-  'Analytics and data systems',
-  'Research-driven product thinking',
-  'RAG and retrieval design',
-  'Power BI and data storytelling',
-  'Azure and AWS delivery',
+  'RAG system design',
+  'Behavioral analytics',
+  'Research-driven product framing',
+  'Dashboards and decision support',
+  'Cloud-aware delivery',
 ];
 
 export default function About() {
@@ -64,35 +64,41 @@ export default function About() {
     <section id="about" ref={sectionRef} className="section">
       <div className="section-shell">
         <div className="section-heading about-reveal">
-          <span className="eyebrow">About</span>
-          <h2>A profile shaped by both technical systems and social understanding.</h2>
+          <span className="eyebrow">Player Profile</span>
+          <h2>A technical profile with a social-science layer underneath.</h2>
           <p>
-            I moved from sociology into advanced AI and data work because I am most
-            interested in how complex systems meet real human behavior. That perspective
-            is what makes my work feel both analytical and practical.
+            I moved from sociology into advanced AI and data work because I was always
+            more interested in how systems behave in the real world than in how they
+            look in isolation.
           </p>
         </div>
 
         <div className="about-layout">
           <article className="panel about-story about-reveal">
-            <p>
-              Whether the project is an assistant, an analytics workflow, or a
-              decision-support system, I focus on clarity, maintainability, and a user
-              experience that makes the intelligence feel usable rather than abstract.
-            </p>
+            <div className="about-story__media">
+              <img src="/social_anim.gif" alt="Animated network visualization." />
+            </div>
 
-            <div className="about-pillars">
-              {principles.map((item) => (
-                <div key={item.title} className="about-pillar">
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </div>
-              ))}
+            <div className="about-story__content">
+              <p>
+                That perspective is what shapes my work today: I build solutions that
+                aim to be technically strong, but also usable, readable, and relevant to
+                the people working around them.
+              </p>
+
+              <div className="about-pillars">
+                {profileTraits.map((item) => (
+                  <div key={item.title} className="about-pillar">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </article>
 
           <aside className="panel about-profile about-reveal">
-            <span className="about-profile__label">Core strengths</span>
+            <span className="about-profile__label">Equipped skills</span>
             <ul className="about-strengths">
               {strengths.map((item) => (
                 <li key={item}>{item}</li>

@@ -4,15 +4,15 @@ import gsap from 'gsap';
 import heroGraphic from '../assets/hero.png';
 
 const metrics = [
-  { value: '2', label: "Master's degrees" },
-  { value: 'AI', label: 'Engineering and delivery' },
-  { value: 'Data', label: 'Research-driven mindset' },
+  { value: 'LV. 02', label: "Master's degrees unlocked" },
+  { value: 'AI + DATA', label: 'Primary class specialization' },
+  { value: 'RAG / AGENTS', label: 'Current active build' },
 ];
 
-const highlights = [
-  'RAG systems and assistants',
-  'Analytics and decision support',
-  'Research, product thinking, and execution',
+const loadoutItems = [
+  'Decision-support systems',
+  'Knowledge assistants',
+  'Analytics and experimentation',
 ];
 
 export default function Hero() {
@@ -46,17 +46,18 @@ export default function Hero() {
     <section id="home" ref={sectionRef} className="section hero">
       <div className="section-shell hero-layout">
         <div className="hero-copy">
-          <span className="eyebrow hero-reveal">Portfolio</span>
+          <span className="eyebrow hero-reveal">Player One // Portfolio</span>
 
           <h1 className="hero-display hero-reveal">
-            Building AI products that feel clear, credible, and ready for real use.
+            DATA SCIENTIST
+            <span>&amp; AI ENGINEER</span>
           </h1>
 
           <p className="hero-lead hero-reveal">
-            I work across data science, AI engineering, and product thinking, with a
-            profile shaped by both technical depth and social data science. My focus is
-            on solutions that are strong in substance and clear in the way they are
-            presented.
+            I design AI systems with a gaming-inspired interface language: structured,
+            sharp, and immersive. Under the visual layer, the focus stays serious:
+            analytics, knowledge systems, orchestration, and products that work in
+            real contexts.
           </p>
 
           <div className="hero-actions hero-reveal">
@@ -64,8 +65,8 @@ export default function Hero() {
               <Mail size={18} />
               Contact me
             </a>
-            <a className="button button-secondary" href="#experience">
-              View experience
+            <a className="button button-secondary" href="#services">
+              Open loadout
               <ArrowRight size={18} />
             </a>
           </div>
@@ -80,26 +81,28 @@ export default function Hero() {
           </div>
         </div>
 
-        <aside className="hero-visual hero-reveal" aria-label="Profile overview">
+        <aside className="hero-visual hero-reveal" aria-label="Gaming HUD summary">
           <div className="panel hero-visual__frame">
             <div className="hero-visual__art">
-              <div className="hero-note">Available for AI, analytics, and product-focused work</div>
-              <img src={heroGraphic} alt="Abstract layered graphic representing AI systems." />
+              <img className="hero-visual__bg" src="/background.gif" alt="" />
+              <div className="hero-visual__grid" />
+              <div className="hero-note">SYSTEM ONLINE // AVAILABLE FOR NEW QUESTS</div>
+              <img className="hero-visual__graphic" src={heroGraphic} alt="Abstract gaming-style AI systems graphic." />
             </div>
 
             <div className="hero-visual__stack">
               <div className="hero-stack-card">
-                <span>Current focus</span>
-                <strong>AI systems, analytics workflows, and knowledge tools</strong>
-              </div>
-
-              <div className="hero-stack-card">
-                <span>Approach</span>
+                <span>Active loadout</span>
                 <ul>
-                  {highlights.map((item) => (
+                  {loadoutItems.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
+              </div>
+
+              <div className="hero-stack-card">
+                <span>Status</span>
+                <strong>From research logic to production-minded AI delivery.</strong>
               </div>
             </div>
           </div>

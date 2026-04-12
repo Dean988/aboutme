@@ -84,55 +84,63 @@ export default function Contact() {
     <section id="contact" ref={sectionRef} className="section section-soft">
       <div className="section-shell">
         <div className="contact-shell panel">
-          <span className="eyebrow contact-reveal">Contact</span>
+          <div className="contact-shell__grid">
+            <div className="contact-shell__copy">
+              <span className="eyebrow contact-reveal">Final Screen</span>
 
-          <h2 className="contact-reveal">
-            Open to thoughtful AI, analytics, and product-focused collaborations.
-          </h2>
+              <h2 className="contact-reveal">Ready for the next mission.</h2>
 
-          <p className="contact-reveal">
-            If you are building something ambitious but want it to feel clear, useful,
-            and professionally executed, I would be happy to hear more.
-          </p>
+              <p className="contact-reveal">
+                If you are building an AI or data product and want the result to feel
+                sharper, clearer, and more memorable, I would be happy to hear about it.
+              </p>
 
-          <div className="contact-actions contact-reveal">
-            <a className="button button-primary" href="mailto:diemidiodino@gmail.com">
-              <Mail size={18} />
-              diemidiodino@gmail.com
-            </a>
-            <a
-              className="button button-secondary"
-              href="https://github.com/Dean988/aboutme"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View repository
-              <ArrowUpRight size={18} />
-            </a>
-          </div>
-
-          <div className="contact-links contact-reveal">
-            {socialLinks.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <a
-                  key={item.label}
-                  className="contact-link"
-                  href={item.href}
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
-                >
-                  <Icon size={18} />
-                  {item.label}
+              <div className="contact-actions contact-reveal">
+                <a className="button button-primary" href="mailto:diemidiodino@gmail.com">
+                  <Mail size={18} />
+                  diemidiodino@gmail.com
                 </a>
-              );
-            })}
+                <a
+                  className="button button-secondary"
+                  href="https://github.com/Dean988/aboutme"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View repository
+                  <ArrowUpRight size={18} />
+                </a>
+              </div>
+            </div>
+
+            <div className="contact-shell__panel contact-reveal">
+              <div className="contact-shell__media">
+                <img src="/social_data.png" alt="Data visualization graphic." />
+              </div>
+
+              <div className="contact-links">
+                {socialLinks.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <a
+                      key={item.label}
+                      className="contact-link"
+                      href={item.href}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                    >
+                      <Icon size={18} />
+                      {item.label}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <footer className="contact-meta contact-reveal">
             <span>© {new Date().getFullYear()} Dino Di Emidio</span>
-            <span>Based in Italy</span>
+            <span>System status: online</span>
           </footer>
         </div>
       </div>

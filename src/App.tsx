@@ -8,10 +8,10 @@ import Hero from './sections/Hero';
 import Services from './sections/Services';
 
 const navigationItems = [
-  { label: 'Education', href: '#education' },
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Services', href: '#services' },
+  { label: 'Skill Tree', href: '#education' },
+  { label: 'Profile', href: '#about' },
+  { label: 'Campaign', href: '#experience' },
+  { label: 'Loadout', href: '#services' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -48,7 +48,7 @@ function App() {
         <div className="section-shell site-header__inner">
           <a className="brand" href="#home">
             Dino Di Emidio
-            <span>Data Scientist and AI Engineer</span>
+            <span>Data Scientist // AI Engineer</span>
           </a>
 
           <nav className="site-nav" aria-label="Primary">
@@ -60,7 +60,7 @@ function App() {
           </nav>
 
           <a className="header-cta" href="#contact">
-            Get in touch
+            Start mission
           </a>
         </div>
       </header>

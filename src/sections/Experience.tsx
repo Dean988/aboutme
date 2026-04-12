@@ -76,22 +76,33 @@ export default function Experience() {
     <section id="experience" ref={sectionRef} className="section section-contrast">
       <div className="section-shell">
         <div className="section-heading experience-reveal">
-          <span className="eyebrow">Experience</span>
-          <h2>Professional work across AI, analytics, and applied research.</h2>
+          <span className="eyebrow">Campaign Log</span>
+          <h2>Professional missions completed across AI, analytics, and research.</h2>
           <p>
-            Across these roles, the common thread has been translating advanced
-            technical work into systems that support clearer decisions, better
-            operations, and stronger delivery.
+            Each role added a different layer to the build: enterprise systems,
+            industrial AI, model alignment, and behavioral analytics applied to real
+            datasets and operations.
           </p>
         </div>
 
+        <div className="experience-spotlight panel experience-reveal">
+          <div className="experience-spotlight__media">
+            <img src="/autonomous_agents.gif" alt="Autonomous agents animation." />
+          </div>
+          <div className="experience-spotlight__copy">
+            <span>Mission theme</span>
+            <strong>From experimentation to production-oriented AI systems.</strong>
+          </div>
+        </div>
+
         <div className="experience-list">
-          {experienceData.map((item) => (
+          {experienceData.map((item, index) => (
             <article key={`${item.company}-${item.duration}`} className="panel experience-card experience-reveal">
               <div className="experience-card__meta">
-                <span>{item.duration}</span>
+                <span>{`Stage ${String(index + 1).padStart(2, '0')}`}</span>
                 <h3>{item.company}</h3>
                 <p>{item.role}</p>
+                <small>{item.duration}</small>
               </div>
 
               <ul className="experience-card__points">

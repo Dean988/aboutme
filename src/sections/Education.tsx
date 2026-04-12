@@ -8,7 +8,7 @@ const educationData = [
   {
     degree: 'Master Degree in Artificial Intelligence',
     institution: 'Politecnico di Torino',
-    image: '/ai_core.png',
+    image: '/ai_anim.gif',
     focus: 'AI architecture, machine learning, ethics, and management.',
     score: '110/110 cum laude',
     topics: ['AI architecture', 'Machine learning', 'AI ethics', 'Management'],
@@ -16,7 +16,7 @@ const educationData = [
   {
     degree: "Master's Degree in Social Data Science",
     institution: "Universita degli Studi d'Annunzio",
-    image: '/social_data.png',
+    image: '/social_anim_new.gif',
     focus: 'Digital sociology, predictive modeling, and human-centered analysis.',
     score: '110/110 cum laude',
     topics: ['Digital sociology', 'Predictive modeling', 'Social research', 'Analytics'],
@@ -56,20 +56,23 @@ export default function Education() {
     <section id="education" ref={sectionRef} className="section section-soft">
       <div className="section-shell">
         <div className="section-heading education-reveal">
-          <span className="eyebrow">Education</span>
-          <h2>Academic foundation presented right at the beginning.</h2>
+          <span className="eyebrow">Skill Tree</span>
+          <h2>Academic unlocks available right after the intro screen.</h2>
           <p>
-            My path combines technical AI training with social data science, which is a
-            big part of how I approach product decisions, user context, and real-world
-            implementation.
+            These two tracks define the build: one deeply technical, one deeply human.
+            Together they shape how I approach AI systems, product logic, and
+            decision-making.
           </p>
         </div>
 
         <div className="education-grid">
-          {educationData.map((item) => (
+          {educationData.map((item, index) => (
             <article key={item.degree} className="panel education-card education-reveal">
               <div className="education-card__media">
                 <img src={item.image} alt={item.degree} />
+                <div className="education-card__overlay">
+                  <span>{`Unlock ${index + 1}`}</span>
+                </div>
               </div>
 
               <div className="education-card__content">
