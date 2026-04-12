@@ -12,7 +12,7 @@ const experienceData = [
     points: [
       'Designing generative and predictive AI architectures for next-generation automotive workflows.',
       'Building explainable systems that connect experimentation, business intelligence, and decision support.',
-      'Turning advanced AI concepts into operational frameworks for real industrial use.',
+      'Turning advanced AI concepts into operational frameworks for industrial use.',
     ],
   },
   {
@@ -53,17 +53,17 @@ export default function Experience() {
 
     const context = gsap.context(() => {
       gsap.fromTo(
-        '.timeline-item',
-        { y: 36, opacity: 0 },
+        '.experience-reveal',
+        { y: 28, opacity: 0 },
         {
           y: 0,
           opacity: 1,
           duration: 0.8,
-          stagger: 0.14,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 78%',
           },
         },
       );
@@ -73,28 +73,28 @@ export default function Experience() {
   }, []);
 
   return (
-    <section id="experience" ref={sectionRef} className="section">
+    <section id="experience" ref={sectionRef} className="section section-contrast">
       <div className="section-shell">
-        <div className="section-heading">
+        <div className="section-heading experience-reveal">
           <span className="eyebrow">Experience</span>
-          <h2>Professional work across industry, research, and applied AI.</h2>
+          <h2>Professional work across AI, analytics, and applied research.</h2>
           <p>
-            The common thread across these roles is turning advanced technical work
-            into systems that can support better decisions, better operations, and
-            better user outcomes.
+            Across these roles, the common thread has been translating advanced
+            technical work into systems that support clearer decisions, better
+            operations, and stronger delivery.
           </p>
         </div>
 
-        <div className="experience-layout">
+        <div className="experience-list">
           {experienceData.map((item) => (
-            <article key={`${item.company}-${item.duration}`} className="surface-card timeline-item">
-              <div className="timeline-meta">
-                <span className="timeline-period">{item.duration}</span>
+            <article key={`${item.company}-${item.duration}`} className="panel experience-card experience-reveal">
+              <div className="experience-card__meta">
+                <span>{item.duration}</span>
                 <h3>{item.company}</h3>
-                <p className="timeline-role">{item.role}</p>
+                <p>{item.role}</p>
               </div>
 
-              <ul className="timeline-points">
+              <ul className="experience-card__points">
                 {item.points.map((point) => (
                   <li key={point}>{point}</li>
                 ))}

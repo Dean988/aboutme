@@ -62,16 +62,16 @@ export default function Contact() {
     const context = gsap.context(() => {
       gsap.fromTo(
         '.contact-reveal',
-        { y: 32, opacity: 0 },
+        { y: 28, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.82,
+          duration: 0.8,
           stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 72%',
+            start: 'top 78%',
           },
         },
       );
@@ -81,19 +81,18 @@ export default function Contact() {
   }, []);
 
   return (
-    <section id="contact" ref={sectionRef} className="section">
+    <section id="contact" ref={sectionRef} className="section section-soft">
       <div className="section-shell">
-        <div className="surface-card contact-card">
+        <div className="contact-shell panel">
           <span className="eyebrow contact-reveal">Contact</span>
 
           <h2 className="contact-reveal">
-            Let&apos;s build something sharp, useful, and well considered.
+            Open to thoughtful AI, analytics, and product-focused collaborations.
           </h2>
 
           <p className="contact-reveal">
-            If you are working on AI products, internal assistants, data workflows, or
-            research-informed digital experiences, I would be happy to hear more about
-            the challenge.
+            If you are building something ambitious but want it to feel clear, useful,
+            and professionally executed, I would be happy to hear more.
           </p>
 
           <div className="contact-actions contact-reveal">
@@ -112,14 +111,14 @@ export default function Contact() {
             </a>
           </div>
 
-          <div className="social-links contact-reveal">
+          <div className="contact-links contact-reveal">
             {socialLinks.map((item) => {
               const Icon = item.icon;
 
               return (
                 <a
                   key={item.label}
-                  className="social-link"
+                  className="contact-link"
                   href={item.href}
                   target={item.href.startsWith('http') ? '_blank' : undefined}
                   rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
@@ -131,9 +130,9 @@ export default function Contact() {
             })}
           </div>
 
-          <footer className="contact-footer contact-reveal">
+          <footer className="contact-meta contact-reveal">
             <span>© {new Date().getFullYear()} Dino Di Emidio</span>
-            <span>Data scientist and AI engineer based in Italy</span>
+            <span>Based in Italy</span>
           </footer>
         </div>
       </div>

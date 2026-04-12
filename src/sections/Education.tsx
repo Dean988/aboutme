@@ -8,15 +8,15 @@ const educationData = [
   {
     degree: 'Master Degree in Artificial Intelligence',
     institution: 'Politecnico di Torino',
-    image: '/ai_anim.gif',
+    image: '/ai_core.png',
     focus: 'AI architecture, machine learning, ethics, and management.',
     score: '110/110 cum laude',
-    topics: ['AI architecture', 'Machine learning', 'Ethics', 'Management'],
+    topics: ['AI architecture', 'Machine learning', 'AI ethics', 'Management'],
   },
   {
     degree: "Master's Degree in Social Data Science",
     institution: "Universita degli Studi d'Annunzio",
-    image: '/social_anim_new.gif',
+    image: '/social_data.png',
     focus: 'Digital sociology, predictive modeling, and human-centered analysis.',
     score: '110/110 cum laude',
     topics: ['Digital sociology', 'Predictive modeling', 'Social research', 'Analytics'],
@@ -33,61 +33,52 @@ export default function Education() {
 
     const context = gsap.context(() => {
       gsap.fromTo(
-        '.education-card',
-        { y: 34, opacity: 0 },
+        '.education-reveal',
+        { y: 28, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.82,
-          stagger: 0.14,
+          duration: 0.8,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 78%',
           },
         },
       );
-
-      gsap.to('.education-card__media img', {
-        scale: 1.05,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        stagger: 0.15,
-      });
     }, sectionRef.current);
 
     return () => context.revert();
   }, []);
 
   return (
-    <section id="education" ref={sectionRef} className="section">
+    <section id="education" ref={sectionRef} className="section section-soft">
       <div className="section-shell">
-        <div className="section-heading">
+        <div className="section-heading education-reveal">
           <span className="eyebrow">Education</span>
-          <h2>Academic depth with richer visual storytelling.</h2>
+          <h2>Academic foundation presented right at the beginning.</h2>
           <p>
-            I wanted this section to feel alive as well: two educational tracks, both
-            represented with moving media to reflect the technical and social layers of
-            my work.
+            My path combines technical AI training with social data science, which is a
+            big part of how I approach product decisions, user context, and real-world
+            implementation.
           </p>
         </div>
 
         <div className="education-grid">
           {educationData.map((item) => (
-            <article key={item.degree} className="surface-card education-card" data-cursor="media">
+            <article key={item.degree} className="panel education-card education-reveal">
               <div className="education-card__media">
                 <img src={item.image} alt={item.degree} />
               </div>
 
-              <div className="education-card__body">
+              <div className="education-card__content">
                 <span className="education-badge">{item.score}</span>
-                <p className="education-meta">{item.institution}</p>
+                <p className="education-card__institution">{item.institution}</p>
                 <h3>{item.degree}</h3>
                 <p>{item.focus}</p>
 
-                <div className="education-topics">
+                <div className="education-card__topics">
                   {item.topics.map((topic) => (
                     <span key={topic}>{topic}</span>
                   ))}
