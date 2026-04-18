@@ -9,11 +9,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
   :root{
-    --bg: #0b0b0b;
-    --fg: #f4f4f4;
-    --mid: #808080;
-    --dim: #3a3a3a;
-    --line: #1a1a1a;
+    --bg: #0d1424;      /* midnight navy */
+    --bg-2: #121b30;    /* elevated panels */
+    --fg: #ece5d1;      /* warm cream */
+    --mid: #7a88a6;     /* slate */
+    --dim: #263252;     /* muted line */
+    --line: #1a2339;
+    --accent: #ffd84a;  /* warm gold — matches the cat */
+    --accent-2: #5ec8c8;/* muted teal */
+    --accent-dim: #b89a33;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
   html, body{
@@ -26,18 +30,18 @@
   }
   body{
     cursor: none;
-    background-image: linear-gradient(rgba(244,244,244,0.028) 50%, transparent 50%);
+    background-image: linear-gradient(rgba(236,229,209,0.025) 50%, transparent 50%);
     background-size: 100% 4px;
   }
   body::before{
     content: ''; position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(255,255,255,0.015) 2px 3px);
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(236,229,209,0.014) 2px 3px);
     pointer-events: none; z-index: 9995;
     animation: flicker 3s infinite steps(1);
   }
   body::after{
     content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,4,14,0.55) 100%);
     pointer-events: none; z-index: 9994;
   }
   @keyframes flicker{ 0%,97%,100%{opacity:1} 98%{opacity:.85} 99%{opacity:1.1} }
@@ -66,7 +70,7 @@
     padding: 12px 20px;
     display: flex; justify-content: space-between; align-items: center;
     z-index: 100;
-    background: rgba(11,11,11,0.85);
+    background: rgba(13,20,36,0.88);
     border-bottom: 2px solid var(--fg);
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
@@ -92,7 +96,7 @@
   }
   .hud .progress-fill{
     height: 100%;
-    background-image: linear-gradient(90deg, var(--fg) 50%, transparent 50%);
+    background-image: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
     background-size: 6px 100%;
     width: 0%;
     transition: width .15s linear;
@@ -136,13 +140,13 @@
   #pathOverlay svg{ width: 100%; display: block; overflow: visible; }
   .path-bg{
     fill: none;
-    stroke: rgba(244,244,244,0.22);
+    stroke: rgba(236,229,209,0.22);
     stroke-width: 3;
     stroke-dasharray: 8 8;
   }
   .path-fg{
     fill: none;
-    stroke: var(--fg);
+    stroke: var(--accent);
     stroke-width: 4;
     stroke-linecap: butt;
   }
@@ -181,7 +185,7 @@
   .node-marker .flag{
     width: 14px; height: 20px;
     margin: 0 auto 4px;
-    background: var(--fg);
+    background: var(--accent);
     clip-path: polygon(0 0, 100% 15%, 0 35%, 0 100%, 30% 100%, 30% 0);
     animation: flagWave .9s ease-in-out infinite;
   }
@@ -218,11 +222,12 @@
     font-size: 10px;
     letter-spacing: .18em;
     padding: 8px 12px;
-    border: 2px solid var(--fg);
+    border: 2px solid var(--accent);
+    color: var(--accent);
     margin-bottom: 22px;
   }
   .zone-tag .dot{
-    width: 8px; height: 8px; background: var(--fg);
+    width: 8px; height: 8px; background: var(--accent);
     animation: blink .8s steps(2) infinite;
   }
   @media (max-width: 680px){ .zone-tag{ font-size: 8px; padding: 6px 9px; } }
@@ -238,8 +243,8 @@
   .zone-title .block{
     display: inline-block;
     padding: 2px 10px;
-    background: var(--fg);
-    color: var(--bg);
+    background: var(--accent);
+    color: #1a1203;
   }
   .zone-title .glitch{ position: relative; display: inline-block; }
   .zone-title .glitch::after{
@@ -276,11 +281,12 @@
     font-size: 10px;
     letter-spacing: .2em;
     padding: 8px 14px;
-    border: 2px solid var(--fg);
+    border: 2px solid var(--accent);
+    color: var(--accent);
     margin-bottom: 28px;
   }
   .start-tag .dot{
-    width: 8px; height: 8px; background: var(--fg);
+    width: 8px; height: 8px; background: var(--accent);
     animation: blink .8s steps(2) infinite;
   }
   .hero-title{
@@ -294,8 +300,8 @@
   .hero-title .block{
     display: inline-block;
     padding: 0 10px;
-    background: var(--fg);
-    color: var(--bg);
+    background: var(--accent);
+    color: #1a1203;
   }
   .hero-sub{
     font-size: clamp(16px, 2vw, 22px);
@@ -303,7 +309,7 @@
     max-width: 56ch;
     margin: 0 auto 28px;
   }
-  .hero-sub .hl{ background: var(--fg); color: var(--bg); padding: 0 4px; }
+  .hero-sub .hl{ background: var(--accent); color: #1a1203; padding: 0 4px; }
   .press-start{
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(10px, 1.5vw, 14px);
@@ -372,7 +378,7 @@
   }
   .level-card{
     border: 3px solid var(--fg);
-    background: #000;
+    background: var(--bg-2);
     padding: 22px 20px 22px;
     margin-bottom: 22px;
     position: relative;
@@ -459,12 +465,13 @@
     place-items: center;
     text-align: center;
     padding: 12px 14px;
-    border: 3px solid var(--fg);
-    background: var(--fg);
-    color: var(--bg);
+    border: 3px solid var(--accent);
+    background: var(--accent);
+    color: #1a1203;
     font-family: 'Press Start 2P', monospace;
     position: relative;
     min-width: 120px;
+    box-shadow: 0 0 0 1px rgba(255,216,74,0.25), 0 0 24px rgba(255,216,74,0.18);
   }
   .grade-badge .score{
     font-size: clamp(18px, 2.5vw, 24px);
@@ -475,8 +482,8 @@
   .grade-badge .lode{
     font-size: 8px;
     letter-spacing: .15em;
-    background: var(--bg);
-    color: var(--fg);
+    background: #1a1203;
+    color: var(--accent);
     padding: 3px 6px;
     display: inline-block;
   }
@@ -486,7 +493,7 @@
     pointer-events: none;
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    color: var(--fg);
+    color: var(--accent);
   }
   .grade-badge .sparks span{
     position: absolute;
@@ -515,7 +522,7 @@
   @media (max-width: 900px){ .role-wrap{ grid-template-columns: 1fr; } }
   .class-card{
     border: 3px solid var(--fg);
-    background: #000;
+    background: var(--bg-2);
     padding: 26px 24px;
     position: relative;
   }
@@ -587,7 +594,7 @@
   .inv-slot{
     border: 2px solid var(--fg);
     padding: 24px 22px;
-    background: #000;
+    background: var(--bg-2);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -634,7 +641,7 @@
   @media (max-width: 900px){ .services-grid{ grid-template-columns: 1fr; } }
   .svc-card{
     border: 3px solid var(--fg);
-    background: #000;
+    background: var(--bg-2);
     padding: 26px 22px 22px;
     position: relative;
     overflow: hidden;
@@ -646,7 +653,7 @@
     position: absolute;
     top: 0; left: -100%;
     width: 100%; height: 4px;
-    background: var(--fg);
+    background: var(--accent);
     transition: left .5s cubic-bezier(.2,.8,.2,1);
   }
   .svc-card:hover::before{ left: 0; }
@@ -660,8 +667,8 @@
   }
   .svc-card .svc-head .tier{
     padding: 3px 7px;
-    background: var(--fg);
-    color: var(--bg);
+    background: var(--accent);
+    color: #1a1203;
     font-size: 8px;
   }
   .svc-card .svc-icon{
@@ -707,7 +714,7 @@
     display: flex; justify-content: space-between;
     color: var(--mid);
   }
-  .svc-card .svc-foot .cost{ color: var(--fg); }
+  .svc-card .svc-foot .cost{ color: var(--accent); }
 
   /* marquee */
   .marquee{
@@ -715,7 +722,7 @@
     border-bottom: 2px solid var(--fg);
     overflow: hidden; white-space: nowrap;
     padding: 12px 0;
-    background: #000;
+    background: var(--bg-2);
     position: relative; z-index: 3;
   }
   .marquee .track{
@@ -735,7 +742,7 @@
   footer{
     border-top: 2px solid var(--fg);
     padding: 36px 24px 28px;
-    background: #000;
+    background: var(--bg-2);
     position: relative;
     z-index: 3;
   }
@@ -783,8 +790,8 @@
     aspect-ratio: 1;
     border: 3px solid var(--fg);
     position: relative;
-    background: #000;
-    box-shadow: 0 0 0 6px #0b0b0b, 0 0 0 8px var(--fg);
+    background: var(--bg-2);
+    box-shadow: 0 0 0 6px var(--bg), 0 0 0 8px var(--fg);
   }
   .game-screen canvas{ width: 100%; height: 100%; display: block; }
   .game-overlay{
@@ -821,7 +828,7 @@
     color: var(--fg);
     border: 2px solid var(--fg);
     padding: 14px;
-    background: #000;
+    background: var(--bg-2);
     overflow-x: auto;
     max-width: 560px;
     margin: 0 auto;
@@ -1135,7 +1142,7 @@
     <div class="svc-card reveal">
       <div class="svc-head"><span>SVC 01</span><span class="tier">CORE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
           <rect x="2" y="2" width="3" height="3"/>
           <rect x="11" y="2" width="3" height="3"/>
           <rect x="2" y="11" width="3" height="3"/>
@@ -1159,7 +1166,7 @@
     <div class="svc-card reveal d1">
       <div class="svc-head"><span>SVC 02</span><span class="tier">RARE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
           <rect x="1" y="3" width="14" height="2"/>
           <rect x="1" y="7" width="14" height="2"/>
           <rect x="1" y="11" width="14" height="2"/>
@@ -1181,7 +1188,7 @@
     <div class="svc-card reveal d2">
       <div class="svc-head"><span>SVC 03</span><span class="tier">EPIC</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
           <rect x="2" y="2" width="12" height="1"/>
           <rect x="2" y="2" width="1" height="12"/>
           <rect x="13" y="2" width="1" height="12"/>
@@ -1204,7 +1211,7 @@
     <div class="svc-card reveal">
       <div class="svc-head"><span>SVC 04</span><span class="tier">RARE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
           <rect x="2" y="4" width="4" height="2"/>
           <rect x="7" y="4" width="3" height="2"/>
           <rect x="11" y="4" width="3" height="2"/>
@@ -1230,7 +1237,7 @@
     <div class="svc-card reveal d1">
       <div class="svc-head"><span>SVC 05</span><span class="tier">LEGENDARY</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
           <rect x="5" y="2" width="6" height="1"/>
           <rect x="4" y="3" width="8" height="1"/>
           <rect x="3" y="4" width="10" height="6"/>
@@ -1254,7 +1261,7 @@
     <div class="svc-card reveal d2">
       <div class="svc-head"><span>SVC 06</span><span class="tier">CORE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
           <rect x="2" y="3" width="12" height="2"/>
           <rect x="2" y="3" width="2" height="10"/>
           <rect x="12" y="3" width="2" height="10"/>
