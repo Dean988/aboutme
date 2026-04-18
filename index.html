@@ -37,7 +37,7 @@
     content: ''; position: fixed; inset: 0;
     background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(236,229,209,0.014) 2px 3px);
     pointer-events: none; z-index: 9995;
-    will-change: auto;
+    animation: flicker 6s infinite steps(1);
   }
   body::after{
     content: ''; position: fixed; inset: 0;
@@ -45,14 +45,6 @@
     pointer-events: none; z-index: 9994;
   }
   @keyframes flicker{ 0%,97%,100%{opacity:1} 98%{opacity:.85} 99%{opacity:1.1} }
-  @media (prefers-reduced-motion: reduce){
-    *, *::before, *::after{
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
   a{ color: inherit; text-decoration: none; }
   img, svg{ image-rendering: pixelated; }
 
@@ -371,14 +363,8 @@
   @media (max-width: 680px){ .biome-tag{ display: none; } }
 
   /* make sections transparent so world map shows through */
-  section{
-    background: transparent;
-    position: relative;
-    z-index: 2;
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 900px;
-  }
-  .hero{ background: transparent; content-visibility: visible; }
+  section{ background: transparent; position: relative; z-index: 2; }
+  .hero{ background: transparent; }
 
   /* ============ ACADEMIC LEVELS ============ */
   .levels-wrap{ max-width: 1100px; margin: 30px auto 0; }
@@ -1551,8 +1537,6 @@
   }
   window.addEventListener('resize', aResize);
   aResize();
-  // Respect user's reduced-motion preference — skip the expensive canvas loop.
-  const REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // biome scroll progress — 0..1 globally, plus per-zone weights
   let frame = 0;
@@ -1949,15 +1933,7 @@
   });
 
   function drawArena(ts){
-    if (pageHidden) return;
-    if (REDUCED_MOTION){
-      // Draw a single static frame, then stop the loop entirely.
-      ax.fillStyle = '#0d1424';
-      ax.fillRect(0,0,AW,AH);
-      drawGrid();
-      drawNeural(1);
-      return;
-    }
+    if (pageHidden){ requestAnimationFrame(drawArena); return; }
     if (!ts) ts = performance.now();
     const elapsed = ts - lastDraw;
     if (elapsed < FRAME_MS){ requestAnimationFrame(drawArena); return; }
