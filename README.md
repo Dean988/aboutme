@@ -4,6 +4,8 @@ A retro-gaming personal portfolio built as a single, self-contained HTML file. B
 
 Live file: [`portfolio.html`](./portfolio.html)
 
+> Designed and built with **[Claude Design](https://claude.ai/design)** — the HTML/CSS/JS prototype was produced in an iterative design session with Anthropic's Claude, then handed off and committed as-is.
+
 ## Concept
 
 The portfolio is framed as a game adventure. As you scroll, a fixed full-viewport world-map canvas morphs through five biomes, a pixel cat sprite walks along a winding SVG path, and each section is a "World" or "Level".

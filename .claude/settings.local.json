@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Read(//c/tmp/**)",
+      "Bash(cp \"C:/Users/diemi/.claude/projects/c--Users-diemi-newportfolio/fc43c901-b181-4fb1-b44e-8ed501fd1a80/tool-results/webfetch-1776545750670-j1zncr.bin\" design.gz)",
+      "Bash(mkdir -p /tmp/design)",
+      "Read(//tmp/**)",
+      "Bash(gunzip -c /tmp/design.gz)",
+      "Bash(tar -tf design.tar)",
+      "Bash(tar -xf design.tar)",
+      "Bash(gh repo *)",
+      "Bash(gh --version)",
+      "Bash(git ls-remote *)",
+      "Bash(mkdir -p /tmp/aboutme/.claude)",
+      "Bash(cp c:/Users/diemi/newportfolio/.claude/settings.local.json /tmp/aboutme/.claude/settings.local.json)"
+    ]
+  }
+}
