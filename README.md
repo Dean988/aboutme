@@ -1,45 +1,61 @@
-# 🖥️ DeanPortfolio | Data Scientist & AI Engineer
+# PLAYER_01 — AI Engineer & Data Scientist
 
-Welcome to the source code of my high-end, highly interactive personal portfolio. This project is a hybrid showcase blending the precision of data science and artificial intelligence with an aggressive, cutting-edge "Active Theory" cyberpunk / Retro-HUD design system.
+A retro-gaming personal portfolio built as a single, self-contained HTML file. Black & white CRT aesthetic, scroll-driven world map, pixel-art animations. English copy.
 
-## ✨ Features
-- **WebGL Fluid Background**: Custom Three.js fragment shader generating organic, mouse-reactive fluid dynamics combining Cyan, Magenta, and Neon Red.
-- **Ultra-Smooth UX**: Hardware-accelerated smooth scrolling provided by `Lenis`.
-- **GSAP Animations**: Heavy use of GreenSock for parallax image tracking, sequential staggered text reveals, and hyper-interactive panels.
-- **Dynamic Services Panel**: A constrained holographic image viewer that swaps bespoke media dynamically based on hover intent.
-- **Responsive Architecture**: Fully mobile-optimized with CSS layout shifts and clamped typography.
+Live file: [`portfolio.html`](./portfolio.html)
 
-## 🛠️ Tech Stack
-- **Framework**: React + TypeScript (Vite)
-- **3D & Rendering**: `three`, `@react-three/fiber`, `@react-three/drei`
-- **Animation**: `gsap`, `lenis`
-- **Styling**: Vanilla CSS with custom utility classes & CSS variables
-- **Icons**: Custom raw SVG vectors (Zero-dependency footprint)
+## Concept
 
-## 🚀 Getting Started
+The portfolio is framed as a game adventure. As you scroll, a fixed full-viewport world-map canvas morphs through five biomes, a pixel cat sprite walks along a winding SVG path, and each section is a "World" or "Level".
 
-1. **Clone the repository**
-   \`\`\`bash
-   git clone https://github.com/Dean988/newportfolio.git
-   \`\`\`
+## Sections
 
-2. **Install dependencies**
-   \`\`\`bash
-   npm install
-   \`\`\`
+- **START** — hero with press-start screen, glitch title, typewriter boot terminal, and a live neural-network background
+- **WORLD 1 — ACADEMIC PATH** — three level cards, all 110/110 CUM LAUDE
+  - LVL 01 · Humanities Bachelor's
+  - LVL 02 · Master's in Social Data Science
+  - LVL 03 · Master's in Artificial Intelligence
+- **WORLD 2 — CLASS** — AI Engineer / Data Scientist card + pip-level skill tree
+- **WORLD 3 — SERVICES** — six tiered service cards (CORE / RARE / EPIC / LEGENDARY): ML Model Development, LLM & NLP Solutions, Data Analysis & Insights, Data Pipelines & MLOps, AI Ethics & Audits, Consulting & Strategy
+- **WORLD 4 — INVENTORY** — contact slots for LinkedIn / GitHub / Email
 
-3. **Run the development server**
-   \`\`\`bash
-   npm run dev
-   \`\`\`
+## Visual system
 
-4. **Build for production**
-   \`\`\`bash
-   npm run build
-   \`\`\`
+- Palette: pure black & white with grayscale mids
+- CRT overlay: scanlines, flicker, vignette
+- Fonts: **Press Start 2P** (display), **VT323** (body), **JetBrains Mono** (labels)
+- Custom crosshair cursor with `mix-blend-mode: difference`
 
-## 🧠 About Me
-I specialize in bridging the gap between cutting-edge AI Architectures and Social Logic. My focus spans from Retrieval-Augmented Generation (RAG) and Predictive Modeling to Autonomous Agents and Societal AI Alignment (RLHF).
+## Animations
+
+- Fixed full-page world-map canvas that morphs biome-by-biome with scroll (neural net → academic library → dungeon → shop → final zone)
+- Scroll-driven SVG path with a pixel cat sprite following waypoints
+- HUD progress bar, blinking REC, pulsing hearts, auto-incrementing score
+- Glitch pulses on zone titles
+- Spark bursts around 110L grade badges
+- Stat bars and stepped reveal animations on scroll
+- Marquee tickers (alternating direction, inverted colors)
+- Hover states: invert, sparkles, pulse borders, border-sweep on service cards
+
+## Running it
+
+No build step, no dependencies — it's a single HTML file.
+
+```bash
+# open directly in a browser
+open portfolio.html
+
+# or serve locally
+python -m http.server 8000
+# then visit http://localhost:8000/portfolio.html
+```
+
+Google Fonts are loaded from the CDN at runtime.
+
+## Responsive
+
+Fully responsive on mobile and desktop: HUD simplifies on small screens, grids collapse to single columns, the sprite and canvas scale.
 
 ---
-*Status: LEVEL 27 - SYSTEM.ONLINE*
+
+*Status: SYSTEM.ONLINE*
