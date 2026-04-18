@@ -37,7 +37,7 @@
     content: ''; position: fixed; inset: 0;
     background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(236,229,209,0.014) 2px 3px);
     pointer-events: none; z-index: 9995;
-    animation: flicker 3s infinite steps(1);
+    will-change: auto;
   }
   body::after{
     content: ''; position: fixed; inset: 0;
@@ -45,6 +45,14 @@
     pointer-events: none; z-index: 9994;
   }
   @keyframes flicker{ 0%,97%,100%{opacity:1} 98%{opacity:.85} 99%{opacity:1.1} }
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
   a{ color: inherit; text-decoration: none; }
   img, svg{ image-rendering: pixelated; }
 
@@ -70,12 +78,11 @@
     padding: 12px 20px;
     display: flex; justify-content: space-between; align-items: center;
     z-index: 100;
-    background: rgba(13,20,36,0.88);
+    background: rgba(13,20,36,0.96);
     border-bottom: 2px solid var(--fg);
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
     letter-spacing: 0.08em;
-    backdrop-filter: blur(4px);
   }
   .hud-left, .hud-right{ display: flex; gap: 16px; align-items: center; }
   .hud .blink{ animation: blink 1s steps(2) infinite; }
@@ -160,6 +167,7 @@
     pointer-events: none;
     transform: translate(-50%, -50%);
     transition: transform .12s linear;
+    will-change: transform, left, top;
   }
   #heroSprite svg{ width: 100%; height: 100%; display: block; }
   #heroSprite .bob{
@@ -358,14 +366,19 @@
     pointer-events: none;
     white-space: nowrap;
     transition: color .4s;
-    mix-blend-mode: difference;
   }
   .biome-tag .bar{ display: inline-block; width: 18px; height: 2px; background: currentColor; vertical-align: middle; margin-right: 10px; }
   @media (max-width: 680px){ .biome-tag{ display: none; } }
 
   /* make sections transparent so world map shows through */
-  section{ background: transparent; position: relative; z-index: 2; }
-  .hero{ background: transparent; }
+  section{
+    background: transparent;
+    position: relative;
+    z-index: 2;
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 900px;
+  }
+  .hero{ background: transparent; content-visibility: visible; }
 
   /* ============ ACADEMIC LEVELS ============ */
   .levels-wrap{ max-width: 1100px; margin: 30px auto 0; }
@@ -1484,30 +1497,39 @@
   let pathInfo = buildPath();
   window.addEventListener('resize', () => { pathInfo = buildPath(); updatePath(); });
 
+  const progFillEl = document.getElementById('progFill');
+  const progLblEl = document.getElementById('progLbl');
+  let lastPct = -1;
+
   function updatePath(){
     if (!pathInfo) return;
     const maxScroll = document.body.scrollHeight - window.innerHeight;
-    const progress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
-    // draw path up to progress
+    const progress = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
     pathInfo.fg.style.strokeDashoffset = pathInfo.length * (1 - progress);
-    // position hero sprite at point at length
     const pt = pathInfo.fg.getPointAtLength(pathInfo.length * progress);
-    // The path uses viewBox 100 wide -> convert x (0..100) to vw
     const spriteX = (pt.x / 100) * window.innerWidth;
     const spriteY = pt.y;
-    heroSprite.style.left = spriteX + 'px';
-    heroSprite.style.top = spriteY + 'px';
-    // flip sprite depending on direction
     const pt2 = pathInfo.fg.getPointAtLength(Math.min(pathInfo.length, pathInfo.length * progress + 10));
     const dir = pt2.x >= pt.x ? 1 : -1;
-    heroSprite.style.transform = `translate(-50%, -50%) scaleX(${dir})`;
+    heroSprite.style.transform = `translate(-50%, -50%) translate3d(${spriteX}px, ${spriteY}px, 0) scaleX(${dir})`;
+    heroSprite.style.left = '0px';
+    heroSprite.style.top = '0px';
 
-    // HUD progress
     const pct = Math.round(progress * 100);
-    document.getElementById('progFill').style.width = pct + '%';
-    document.getElementById('progLbl').textContent = pct + '%';
+    if (pct !== lastPct){
+      progFillEl.style.width = pct + '%';
+      progLblEl.textContent = pct + '%';
+      lastPct = pct;
+    }
   }
-  window.addEventListener('scroll', updatePath, { passive: true });
+  // rAF-throttled scroll → update at most once per frame
+  let pathTicking = false;
+  function scheduleUpdatePath(){
+    if (pathTicking) return;
+    pathTicking = true;
+    requestAnimationFrame(() => { pathTicking = false; updatePath(); });
+  }
+  window.addEventListener('scroll', scheduleUpdatePath, { passive: true });
   updatePath();
 
   // rebuild path after images/fonts settle + once on load
@@ -1516,17 +1538,21 @@
 
   /* ========== DYNAMIC WORLD-MAP CANVAS (morphs by scroll) ========== */
   const canvas = document.getElementById('neuralCanvas');
-  const ax = canvas.getContext('2d');
-  let AW, AH, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const ax = canvas.getContext('2d', { alpha: false, desynchronized: true });
+  // Pixel art doesn't benefit from DPR scaling; keep it at 1 for performance.
+  const DPR = 1;
+  let AW, AH;
   function aResize(){
     const rect = canvas.getBoundingClientRect();
-    AW = rect.width; AH = rect.height;
+    AW = Math.floor(rect.width); AH = Math.floor(rect.height);
     canvas.width = AW * DPR; canvas.height = AH * DPR;
     ax.setTransform(DPR,0,0,DPR,0,0);
     ax.imageSmoothingEnabled = false;
   }
   window.addEventListener('resize', aResize);
   aResize();
+  // Respect user's reduced-motion preference — skip the expensive canvas loop.
+  const REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // biome scroll progress — 0..1 globally, plus per-zone weights
   let frame = 0;
@@ -1534,26 +1560,42 @@
   let parallax = 0; // camera pan for biomes
   const BIOMES = ['NEURAL GRID','ACADEMIC SKY','CODE DUNGEON','CRYSTAL SHOP','FINAL ZONE'];
 
-  function getBiomeWeights(){
-    // 5 zones: hero / academic / class / services / inventory
-    const zones = document.querySelectorAll('[data-zone]');
+  // Cache zone positions — bounding rects trigger layout on every call,
+  // so we compute offsets once and only refresh them on scroll/resize.
+  const zoneEls = Array.from(document.querySelectorAll('[data-zone]'));
+  let zoneRects = [];
+  function refreshZoneRects(){
+    zoneRects = zoneEls.map(z => {
+      const r = z.getBoundingClientRect();
+      return { top: r.top + window.scrollY, height: r.height };
+    });
+  }
+  refreshZoneRects();
+  window.addEventListener('resize', refreshZoneRects);
+  // Refresh on load (images/fonts shifting layout) and once after settle.
+  window.addEventListener('load', refreshZoneRects);
+  setTimeout(refreshZoneRects, 900);
+
+  let cachedWeights = [1,0,0,0,0];
+  function computeBiomeWeights(){
     const weights = [0,0,0,0,0];
     const H = window.innerHeight;
     const centerY = scrollY + H/2;
-    zones.forEach((z, i) => {
-      const r = z.getBoundingClientRect();
-      const top = scrollY + r.top;
-      const bot = top + r.height;
-      // distance of zone center to viewport center, normalized
-      const zCenter = (top + bot)/2;
+    for (let i = 0; i < zoneRects.length; i++){
+      const zr = zoneRects[i];
+      const zCenter = zr.top + zr.height/2;
       const d = Math.abs(zCenter - centerY);
-      const span = Math.max(r.height, H) * 0.85;
+      const span = Math.max(zr.height, H) * 0.85;
       weights[i] = Math.max(0, 1 - d/span);
-    });
-    // normalize
-    let sum = weights.reduce((a,b)=>a+b, 0) || 1;
-    return weights.map(w => w/sum);
+    }
+    let sum = 0;
+    for (let i = 0; i < weights.length; i++) sum += weights[i];
+    if (sum === 0) sum = 1;
+    for (let i = 0; i < weights.length; i++) weights[i] /= sum;
+    cachedWeights = weights;
   }
+  computeBiomeWeights();
+  // Recompute only when scroll changes enough (handled inside drawArena tick).
 
   /* ---------- BIOME 0: NEURAL GRID ---------- */
   let columns = [];
@@ -1895,18 +1937,48 @@
     if (biomeLabel.textContent !== BIOMES[maxI]) biomeLabel.textContent = BIOMES[maxI];
   }
 
-  function drawArena(){
-    frame++;
-    scrollY = window.scrollY;
-    // smooth parallax pan
-    parallax += (scrollY - parallax) * 0.06;
+  // Throttle to ~30fps. The canvas is decorative background; 60fps is
+  // wasteful and Firefox especially benefits from halving the work.
+  const FRAME_MS = 33;
+  let lastDraw = 0;
+  let lastScrollSample = -1;
+  let pageHidden = false;
+  document.addEventListener('visibilitychange', () => {
+    pageHidden = document.hidden;
+    if (!pageHidden){ lastDraw = 0; requestAnimationFrame(drawArena); }
+  });
 
-    ax.fillStyle = '#000';
+  function drawArena(ts){
+    if (pageHidden) return;
+    if (REDUCED_MOTION){
+      // Draw a single static frame, then stop the loop entirely.
+      ax.fillStyle = '#0d1424';
+      ax.fillRect(0,0,AW,AH);
+      drawGrid();
+      drawNeural(1);
+      return;
+    }
+    if (!ts) ts = performance.now();
+    const elapsed = ts - lastDraw;
+    if (elapsed < FRAME_MS){ requestAnimationFrame(drawArena); return; }
+    lastDraw = ts - (elapsed % FRAME_MS);
+
+    frame++;
+    const sy = window.scrollY;
+    scrollY = sy;
+    // Only recompute biome weights when scroll has moved enough.
+    if (Math.abs(sy - lastScrollSample) > 8){
+      computeBiomeWeights();
+      lastScrollSample = sy;
+    }
+    parallax += (sy - parallax) * 0.06;
+
+    ax.fillStyle = '#0d1424';
     ax.fillRect(0,0,AW,AH);
 
     drawGrid();
 
-    const w = getBiomeWeights();
+    const w = cachedWeights;
     updateBiomeLabel(w);
     drawNeural(w[0]);
     drawAcademic(w[1]);
@@ -1916,13 +1988,12 @@
 
     drawDitherSweep();
 
-    // global scanline sweep
-    ax.fillStyle = 'rgba(244,244,244,0.05)';
+    ax.fillStyle = 'rgba(236,229,209,0.05)';
     ax.fillRect(0, (frame*3) % AH, AW, 2);
 
     requestAnimationFrame(drawArena);
   }
-  drawArena();
+  requestAnimationFrame(drawArena);
 
 </script>
 
