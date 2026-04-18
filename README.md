@@ -2,7 +2,7 @@
 
 A retro-gaming personal portfolio built as a single, self-contained HTML file. Black & white CRT aesthetic, scroll-driven world map, pixel-art animations. English copy.
 
-Live file: [`portfolio.html`](./portfolio.html)
+Live file: [`index.html`](./index.html)
 
 > Designed and built with **[Claude Design](https://claude.ai/design)** — the HTML/CSS/JS prototype was produced in an iterative design session with Anthropic's Claude, then handed off and committed as-is.
 
@@ -45,11 +45,11 @@ No build step, no dependencies — it's a single HTML file.
 
 ```bash
 # open directly in a browser
-open portfolio.html
+open index.html
 
 # or serve locally
 python -m http.server 8000
-# then visit http://localhost:8000/portfolio.html
+# then visit http://localhost:8000/index.html
 ```
 
 Google Fonts are loaded from the CDN at runtime.
