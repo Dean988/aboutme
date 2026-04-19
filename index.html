@@ -9,15 +9,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
   :root{
-    --bg: #0d1424;      /* midnight navy */
-    --bg-2: #121b30;    /* elevated panels */
-    --fg: #ece5d1;      /* warm cream */
-    --mid: #7a88a6;     /* slate */
-    --dim: #263252;     /* muted line */
-    --line: #1a2339;
-    --accent: #ffd84a;  /* warm gold — matches the cat */
-    --accent-2: #5ec8c8;/* muted teal */
-    --accent-dim: #b89a33;
+    --bg: #0b0b0b;
+    --fg: #f4f4f4;
+    --mid: #808080;
+    --dim: #3a3a3a;
+    --line: #1a1a1a;
   }
   *{ box-sizing: border-box; margin:0; padding:0; }
   html, body{
@@ -30,18 +26,18 @@
   }
   body{
     cursor: none;
-    background-image: linear-gradient(rgba(236,229,209,0.025) 50%, transparent 50%);
+    background-image: linear-gradient(rgba(244,244,244,0.028) 50%, transparent 50%);
     background-size: 100% 4px;
   }
   body::before{
     content: ''; position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(236,229,209,0.014) 2px 3px);
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(255,255,255,0.015) 2px 3px);
     pointer-events: none; z-index: 9995;
-    animation: flicker 6s infinite steps(1);
+    animation: flicker 3s infinite steps(1);
   }
   body::after{
     content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,4,14,0.55) 100%);
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
     pointer-events: none; z-index: 9994;
   }
   @keyframes flicker{ 0%,97%,100%{opacity:1} 98%{opacity:.85} 99%{opacity:1.1} }
@@ -70,11 +66,12 @@
     padding: 12px 20px;
     display: flex; justify-content: space-between; align-items: center;
     z-index: 100;
-    background: rgba(13,20,36,0.96);
+    background: rgba(11,11,11,0.85);
     border-bottom: 2px solid var(--fg);
     font-family: 'Press Start 2P', monospace;
     font-size: 9px;
     letter-spacing: 0.08em;
+    backdrop-filter: blur(4px);
   }
   .hud-left, .hud-right{ display: flex; gap: 16px; align-items: center; }
   .hud .blink{ animation: blink 1s steps(2) infinite; }
@@ -95,7 +92,7 @@
   }
   .hud .progress-fill{
     height: 100%;
-    background-image: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
+    background-image: linear-gradient(90deg, var(--fg) 50%, transparent 50%);
     background-size: 6px 100%;
     width: 0%;
     transition: width .15s linear;
@@ -139,13 +136,13 @@
   #pathOverlay svg{ width: 100%; display: block; overflow: visible; }
   .path-bg{
     fill: none;
-    stroke: rgba(236,229,209,0.22);
+    stroke: rgba(244,244,244,0.22);
     stroke-width: 3;
     stroke-dasharray: 8 8;
   }
   .path-fg{
     fill: none;
-    stroke: var(--accent);
+    stroke: var(--fg);
     stroke-width: 4;
     stroke-linecap: butt;
   }
@@ -159,7 +156,7 @@
     pointer-events: none;
     transform: translate(-50%, -50%);
     transition: transform .12s linear;
-    will-change: transform, left, top;
+    will-change: left, top, transform;
   }
   #heroSprite svg{ width: 100%; height: 100%; display: block; }
   #heroSprite .bob{
@@ -185,7 +182,7 @@
   .node-marker .flag{
     width: 14px; height: 20px;
     margin: 0 auto 4px;
-    background: var(--accent);
+    background: var(--fg);
     clip-path: polygon(0 0, 100% 15%, 0 35%, 0 100%, 30% 100%, 30% 0);
     animation: flagWave .9s ease-in-out infinite;
   }
@@ -222,12 +219,11 @@
     font-size: 10px;
     letter-spacing: .18em;
     padding: 8px 12px;
-    border: 2px solid var(--accent);
-    color: var(--accent);
+    border: 2px solid var(--fg);
     margin-bottom: 22px;
   }
   .zone-tag .dot{
-    width: 8px; height: 8px; background: var(--accent);
+    width: 8px; height: 8px; background: var(--fg);
     animation: blink .8s steps(2) infinite;
   }
   @media (max-width: 680px){ .zone-tag{ font-size: 8px; padding: 6px 9px; } }
@@ -243,8 +239,8 @@
   .zone-title .block{
     display: inline-block;
     padding: 2px 10px;
-    background: var(--accent);
-    color: #1a1203;
+    background: var(--fg);
+    color: var(--bg);
   }
   .zone-title .glitch{ position: relative; display: inline-block; }
   .zone-title .glitch::after{
@@ -281,12 +277,11 @@
     font-size: 10px;
     letter-spacing: .2em;
     padding: 8px 14px;
-    border: 2px solid var(--accent);
-    color: var(--accent);
+    border: 2px solid var(--fg);
     margin-bottom: 28px;
   }
   .start-tag .dot{
-    width: 8px; height: 8px; background: var(--accent);
+    width: 8px; height: 8px; background: var(--fg);
     animation: blink .8s steps(2) infinite;
   }
   .hero-title{
@@ -300,8 +295,8 @@
   .hero-title .block{
     display: inline-block;
     padding: 0 10px;
-    background: var(--accent);
-    color: #1a1203;
+    background: var(--fg);
+    color: var(--bg);
   }
   .hero-sub{
     font-size: clamp(16px, 2vw, 22px);
@@ -309,7 +304,7 @@
     max-width: 56ch;
     margin: 0 auto 28px;
   }
-  .hero-sub .hl{ background: var(--accent); color: #1a1203; padding: 0 4px; }
+  .hero-sub .hl{ background: var(--fg); color: var(--bg); padding: 0 4px; }
   .press-start{
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(10px, 1.5vw, 14px);
@@ -358,6 +353,7 @@
     pointer-events: none;
     white-space: nowrap;
     transition: color .4s;
+    mix-blend-mode: difference;
   }
   .biome-tag .bar{ display: inline-block; width: 18px; height: 2px; background: currentColor; vertical-align: middle; margin-right: 10px; }
   @media (max-width: 680px){ .biome-tag{ display: none; } }
@@ -377,7 +373,7 @@
   }
   .level-card{
     border: 3px solid var(--fg);
-    background: var(--bg-2);
+    background: #000;
     padding: 22px 20px 22px;
     margin-bottom: 22px;
     position: relative;
@@ -464,13 +460,12 @@
     place-items: center;
     text-align: center;
     padding: 12px 14px;
-    border: 3px solid var(--accent);
-    background: var(--accent);
-    color: #1a1203;
+    border: 3px solid var(--fg);
+    background: var(--fg);
+    color: var(--bg);
     font-family: 'Press Start 2P', monospace;
     position: relative;
     min-width: 120px;
-    box-shadow: 0 0 0 1px rgba(255,216,74,0.25), 0 0 24px rgba(255,216,74,0.18);
   }
   .grade-badge .score{
     font-size: clamp(18px, 2.5vw, 24px);
@@ -481,8 +476,8 @@
   .grade-badge .lode{
     font-size: 8px;
     letter-spacing: .15em;
-    background: #1a1203;
-    color: var(--accent);
+    background: var(--bg);
+    color: var(--fg);
     padding: 3px 6px;
     display: inline-block;
   }
@@ -492,7 +487,7 @@
     pointer-events: none;
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
-    color: var(--accent);
+    color: var(--fg);
   }
   .grade-badge .sparks span{
     position: absolute;
@@ -521,7 +516,7 @@
   @media (max-width: 900px){ .role-wrap{ grid-template-columns: 1fr; } }
   .class-card{
     border: 3px solid var(--fg);
-    background: var(--bg-2);
+    background: #000;
     padding: 26px 24px;
     position: relative;
   }
@@ -593,7 +588,7 @@
   .inv-slot{
     border: 2px solid var(--fg);
     padding: 24px 22px;
-    background: var(--bg-2);
+    background: #000;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -608,14 +603,15 @@
     font-size: 9px; letter-spacing: .15em;
   }
   .inv-slot .icon{
-    width: 64px; height: 64px;
-    margin: 6px 0;
-    border: 2px solid currentColor;
+    width: 40px; height: 40px;
+    margin: 4px 0;
+    border: 1px solid currentColor;
     display: grid; place-items: center;
-    background: repeating-linear-gradient(45deg, transparent 0 6px, rgba(255,255,255,0.05) 6px 7px);
+    background: transparent;
+    opacity: .85;
   }
-  .inv-slot:hover .icon{ background: repeating-linear-gradient(45deg, transparent 0 6px, rgba(0,0,0,0.08) 6px 7px); }
-  .inv-slot .icon svg{ width: 36px; height: 36px; }
+  .inv-slot:hover .icon{ opacity: 1; }
+  .inv-slot .icon svg{ width: 20px; height: 20px; }
   .inv-slot .name{ font-family: 'Press Start 2P', monospace; font-size: 14px; letter-spacing: 0.04em; }
   .inv-slot .desc{ font-size: 18px; line-height: 1.3; }
   .inv-slot .cta{
@@ -640,7 +636,7 @@
   @media (max-width: 900px){ .services-grid{ grid-template-columns: 1fr; } }
   .svc-card{
     border: 3px solid var(--fg);
-    background: var(--bg-2);
+    background: #000;
     padding: 26px 22px 22px;
     position: relative;
     overflow: hidden;
@@ -652,7 +648,7 @@
     position: absolute;
     top: 0; left: -100%;
     width: 100%; height: 4px;
-    background: var(--accent);
+    background: var(--fg);
     transition: left .5s cubic-bezier(.2,.8,.2,1);
   }
   .svc-card:hover::before{ left: 0; }
@@ -666,8 +662,8 @@
   }
   .svc-card .svc-head .tier{
     padding: 3px 7px;
-    background: var(--accent);
-    color: #1a1203;
+    background: var(--fg);
+    color: var(--bg);
     font-size: 8px;
   }
   .svc-card .svc-icon{
@@ -713,7 +709,7 @@
     display: flex; justify-content: space-between;
     color: var(--mid);
   }
-  .svc-card .svc-foot .cost{ color: var(--accent); }
+  .svc-card .svc-foot .cost{ color: var(--fg); }
 
   /* marquee */
   .marquee{
@@ -721,7 +717,7 @@
     border-bottom: 2px solid var(--fg);
     overflow: hidden; white-space: nowrap;
     padding: 12px 0;
-    background: var(--bg-2);
+    background: #000;
     position: relative; z-index: 3;
   }
   .marquee .track{
@@ -741,7 +737,7 @@
   footer{
     border-top: 2px solid var(--fg);
     padding: 36px 24px 28px;
-    background: var(--bg-2);
+    background: #000;
     position: relative;
     z-index: 3;
   }
@@ -758,8 +754,12 @@
   footer .copy .blink-c{ color: var(--fg); animation: blink 1.2s steps(2) infinite; }
 
   /* reveal */
-  .reveal{ opacity: 0; transform: translateY(28px); transition: opacity .6s steps(6), transform .6s steps(6); }
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity .55s cubic-bezier(.2,.8,.2,1), transform .55s cubic-bezier(.2,.8,.2,1); will-change: opacity, transform; }
   .reveal.in{ opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ transition: none; transform: none; opacity: 1; }
+    .coin, .cursor, .flicker, #heroSprite{ animation: none !important; }
+  }
   .reveal.d1{ transition-delay: .08s; }
   .reveal.d2{ transition-delay: .16s; }
   .reveal.d3{ transition-delay: .24s; }
@@ -789,8 +789,8 @@
     aspect-ratio: 1;
     border: 3px solid var(--fg);
     position: relative;
-    background: var(--bg-2);
-    box-shadow: 0 0 0 6px var(--bg), 0 0 0 8px var(--fg);
+    background: #000;
+    box-shadow: 0 0 0 6px #0b0b0b, 0 0 0 8px var(--fg);
   }
   .game-screen canvas{ width: 100%; height: 100%; display: block; }
   .game-overlay{
@@ -818,21 +818,6 @@
     opacity: .4;
   }
 
-  /* Mini stat panel on academic intro */
-  .ascii-panel{
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(9px, 1.1vw, 11px);
-    line-height: 1.2;
-    white-space: pre;
-    color: var(--fg);
-    border: 2px solid var(--fg);
-    padding: 14px;
-    background: var(--bg-2);
-    overflow-x: auto;
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
 </style>
 </head>
 <body>
@@ -857,19 +842,19 @@
   <svg id="pathSvg" preserveAspectRatio="none" viewBox="0 0 100 1000"></svg>
 </div>
 
-<!-- moving hero sprite: PIXEL CAT (yellow) -->
+<!-- moving hero sprite: PIXEL CAT -->
 <div id="heroSprite">
   <div class="bob">
     <svg viewBox="0 0 16 16" shape-rendering="crispEdges">
       <!-- ears -->
-      <g fill="#ffd84a">
+      <g fill="#f4f4f4">
         <rect x="2" y="3" width="2" height="2"/>
         <rect x="3" y="2" width="1" height="1"/>
         <rect x="10" y="3" width="2" height="2"/>
         <rect x="10" y="2" width="1" height="1"/>
       </g>
       <!-- head -->
-      <g fill="#ffd84a">
+      <g fill="#f4f4f4">
         <rect x="2" y="5" width="10" height="4"/>
       </g>
       <!-- eyes -->
@@ -882,17 +867,17 @@
         <rect x="6" y="7" width="2" height="1"/>
       </g>
       <!-- body -->
-      <g fill="#ffd84a">
+      <g fill="#f4f4f4">
         <rect x="3" y="9" width="9" height="4"/>
       </g>
       <!-- legs -->
-      <g fill="#ffd84a">
+      <g fill="#f4f4f4">
         <rect x="3" y="13" width="2" height="2"/>
         <rect x="6" y="13" width="2" height="2"/>
         <rect x="10" y="13" width="2" height="2"/>
       </g>
       <!-- tail -->
-      <g fill="#ffd84a">
+      <g fill="#f4f4f4">
         <rect x="12" y="8" width="1" height="1"/>
         <rect x="13" y="7" width="1" height="1"/>
         <rect x="14" y="6" width="1" height="2"/>
@@ -953,19 +938,6 @@
   <p class="reveal d1" style="max-width: 60ch; margin-bottom: 28px; font-size: clamp(17px, 2vw, 21px); line-height: 1.4;">
     Three levels cleared. Each one with <span style="background:var(--fg); color:var(--bg); padding:0 4px;">110L — cum laude</span>. A humanities origin story that grew into statistics, social data, and eventually artificial intelligence.
   </p>
-
-  <pre class="ascii-panel reveal d2">
- ┌───────────────────────────────────┐
- │  SAVE FILE · ACADEMIC.DAT         │
- │───────────────────────────────────│
- │  LVL 01   HUMANITIES       110L ★ │
- │  LVL 02   SOCIAL DATA SCI  110L ★ │
- │  LVL 03   MASTER AI        110L ★ │
- │───────────────────────────────────│
- │  STATUS   ALL CLEARED     3/3 ★   │
- │  BONUS    +CUM LAUDE × 3          │
- └───────────────────────────────────┘
-  </pre>
 
   <div class="levels-wrap">
 
@@ -1141,7 +1113,7 @@
     <div class="svc-card reveal">
       <div class="svc-head"><span>SVC 01</span><span class="tier">CORE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
           <rect x="2" y="2" width="3" height="3"/>
           <rect x="11" y="2" width="3" height="3"/>
           <rect x="2" y="11" width="3" height="3"/>
@@ -1165,7 +1137,7 @@
     <div class="svc-card reveal d1">
       <div class="svc-head"><span>SVC 02</span><span class="tier">RARE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
           <rect x="1" y="3" width="14" height="2"/>
           <rect x="1" y="7" width="14" height="2"/>
           <rect x="1" y="11" width="14" height="2"/>
@@ -1187,7 +1159,7 @@
     <div class="svc-card reveal d2">
       <div class="svc-head"><span>SVC 03</span><span class="tier">EPIC</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
           <rect x="2" y="2" width="12" height="1"/>
           <rect x="2" y="2" width="1" height="12"/>
           <rect x="13" y="2" width="1" height="12"/>
@@ -1210,7 +1182,7 @@
     <div class="svc-card reveal">
       <div class="svc-head"><span>SVC 04</span><span class="tier">RARE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
           <rect x="2" y="4" width="4" height="2"/>
           <rect x="7" y="4" width="3" height="2"/>
           <rect x="11" y="4" width="3" height="2"/>
@@ -1236,7 +1208,7 @@
     <div class="svc-card reveal d1">
       <div class="svc-head"><span>SVC 05</span><span class="tier">LEGENDARY</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
           <rect x="5" y="2" width="6" height="1"/>
           <rect x="4" y="3" width="8" height="1"/>
           <rect x="3" y="4" width="10" height="6"/>
@@ -1260,7 +1232,7 @@
     <div class="svc-card reveal d2">
       <div class="svc-head"><span>SVC 06</span><span class="tier">CORE</span></div>
       <div class="svc-icon">
-        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="#f4f4f4">
           <rect x="2" y="3" width="12" height="2"/>
           <rect x="2" y="3" width="2" height="10"/>
           <rect x="12" y="3" width="2" height="10"/>
@@ -1302,7 +1274,7 @@
   </p>
 
   <div class="inventory">
-    <a class="inv-slot reveal" href="https://www.linkedin.com/in/dinode/" target="_blank" rel="noopener">
+    <a class="inv-slot reveal" href="#" target="_blank" rel="noopener">
       <div class="slot-head"><span>SLOT 01</span><span>★★★★★</span></div>
       <div class="icon">
         <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
@@ -1318,7 +1290,7 @@
       <div class="cta"><span>CONNECT</span><span class="arrow">▶</span></div>
     </a>
 
-    <a class="inv-slot reveal d1" href="https://github.com/Dean988" target="_blank" rel="noopener">
+    <a class="inv-slot reveal d1" href="#" target="_blank" rel="noopener">
       <div class="slot-head"><span>SLOT 02</span><span>★★★★★</span></div>
       <div class="icon">
         <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
@@ -1335,7 +1307,7 @@
       <div class="cta"><span>REPOSITORY</span><span class="arrow">▶</span></div>
     </a>
 
-    <a class="inv-slot reveal d2" href="mailto:diemidiodino@gmail.com">
+    <a class="inv-slot reveal d2" href="#">
       <div class="slot-head"><span>SLOT 03</span><span>★★★★★</span></div>
       <div class="icon">
         <svg viewBox="0 0 16 16" shape-rendering="crispEdges" fill="currentColor">
@@ -1378,10 +1350,14 @@
 <script>
   /* ========== cursor ========== */
   const cursor = document.getElementById('cursor');
+  let cursorX = 0, cursorY = 0, cursorRaf = 0;
   window.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
+    cursorX = e.clientX; cursorY = e.clientY;
+    if (!cursorRaf) cursorRaf = requestAnimationFrame(() => {
+      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+      cursorRaf = 0;
+    });
+  }, { passive: true });
   document.querySelectorAll('a, .level-card, .inv-slot, .focus-row').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
@@ -1483,39 +1459,33 @@
   let pathInfo = buildPath();
   window.addEventListener('resize', () => { pathInfo = buildPath(); updatePath(); });
 
-  const progFillEl = document.getElementById('progFill');
-  const progLblEl = document.getElementById('progLbl');
-  let lastPct = -1;
-
   function updatePath(){
     if (!pathInfo) return;
     const maxScroll = document.body.scrollHeight - window.innerHeight;
-    const progress = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
+    const progress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+    // draw path up to progress
     pathInfo.fg.style.strokeDashoffset = pathInfo.length * (1 - progress);
+    // position hero sprite at point at length
     const pt = pathInfo.fg.getPointAtLength(pathInfo.length * progress);
+    // The path uses viewBox 100 wide -> convert x (0..100) to vw
     const spriteX = (pt.x / 100) * window.innerWidth;
     const spriteY = pt.y;
+    heroSprite.style.left = spriteX + 'px';
+    heroSprite.style.top = spriteY + 'px';
+    // flip sprite depending on direction
     const pt2 = pathInfo.fg.getPointAtLength(Math.min(pathInfo.length, pathInfo.length * progress + 10));
     const dir = pt2.x >= pt.x ? 1 : -1;
-    heroSprite.style.transform = `translate(-50%, -50%) translate3d(${spriteX}px, ${spriteY}px, 0) scaleX(${dir})`;
-    heroSprite.style.left = '0px';
-    heroSprite.style.top = '0px';
+    heroSprite.style.transform = `translate(-50%, -50%) scaleX(${dir})`;
 
+    // HUD progress
     const pct = Math.round(progress * 100);
-    if (pct !== lastPct){
-      progFillEl.style.width = pct + '%';
-      progLblEl.textContent = pct + '%';
-      lastPct = pct;
-    }
+    document.getElementById('progFill').style.width = pct + '%';
+    document.getElementById('progLbl').textContent = pct + '%';
   }
-  // rAF-throttled scroll → update at most once per frame
-  let pathTicking = false;
-  function scheduleUpdatePath(){
-    if (pathTicking) return;
-    pathTicking = true;
-    requestAnimationFrame(() => { pathTicking = false; updatePath(); });
-  }
-  window.addEventListener('scroll', scheduleUpdatePath, { passive: true });
+  let scrollRaf = 0;
+  window.addEventListener('scroll', () => {
+    if (!scrollRaf) scrollRaf = requestAnimationFrame(() => { updatePath(); scrollRaf = 0; });
+  }, { passive: true });
   updatePath();
 
   // rebuild path after images/fonts settle + once on load
@@ -1524,13 +1494,11 @@
 
   /* ========== DYNAMIC WORLD-MAP CANVAS (morphs by scroll) ========== */
   const canvas = document.getElementById('neuralCanvas');
-  const ax = canvas.getContext('2d', { alpha: false, desynchronized: true });
-  // Pixel art doesn't benefit from DPR scaling; keep it at 1 for performance.
-  const DPR = 1;
-  let AW, AH;
+  const ax = canvas.getContext('2d');
+  let AW, AH, DPR = Math.min(window.devicePixelRatio || 1, 1.5);
   function aResize(){
     const rect = canvas.getBoundingClientRect();
-    AW = Math.floor(rect.width); AH = Math.floor(rect.height);
+    AW = rect.width; AH = rect.height;
     canvas.width = AW * DPR; canvas.height = AH * DPR;
     ax.setTransform(DPR,0,0,DPR,0,0);
     ax.imageSmoothingEnabled = false;
@@ -1544,42 +1512,26 @@
   let parallax = 0; // camera pan for biomes
   const BIOMES = ['NEURAL GRID','ACADEMIC SKY','CODE DUNGEON','CRYSTAL SHOP','FINAL ZONE'];
 
-  // Cache zone positions — bounding rects trigger layout on every call,
-  // so we compute offsets once and only refresh them on scroll/resize.
-  const zoneEls = Array.from(document.querySelectorAll('[data-zone]'));
-  let zoneRects = [];
-  function refreshZoneRects(){
-    zoneRects = zoneEls.map(z => {
-      const r = z.getBoundingClientRect();
-      return { top: r.top + window.scrollY, height: r.height };
-    });
-  }
-  refreshZoneRects();
-  window.addEventListener('resize', refreshZoneRects);
-  // Refresh on load (images/fonts shifting layout) and once after settle.
-  window.addEventListener('load', refreshZoneRects);
-  setTimeout(refreshZoneRects, 900);
-
-  let cachedWeights = [1,0,0,0,0];
-  function computeBiomeWeights(){
+  function getBiomeWeights(){
+    // 5 zones: hero / academic / class / services / inventory
+    const zones = document.querySelectorAll('[data-zone]');
     const weights = [0,0,0,0,0];
     const H = window.innerHeight;
     const centerY = scrollY + H/2;
-    for (let i = 0; i < zoneRects.length; i++){
-      const zr = zoneRects[i];
-      const zCenter = zr.top + zr.height/2;
+    zones.forEach((z, i) => {
+      const r = z.getBoundingClientRect();
+      const top = scrollY + r.top;
+      const bot = top + r.height;
+      // distance of zone center to viewport center, normalized
+      const zCenter = (top + bot)/2;
       const d = Math.abs(zCenter - centerY);
-      const span = Math.max(zr.height, H) * 0.85;
+      const span = Math.max(r.height, H) * 0.85;
       weights[i] = Math.max(0, 1 - d/span);
-    }
-    let sum = 0;
-    for (let i = 0; i < weights.length; i++) sum += weights[i];
-    if (sum === 0) sum = 1;
-    for (let i = 0; i < weights.length; i++) weights[i] /= sum;
-    cachedWeights = weights;
+    });
+    // normalize
+    let sum = weights.reduce((a,b)=>a+b, 0) || 1;
+    return weights.map(w => w/sum);
   }
-  computeBiomeWeights();
-  // Recompute only when scroll changes enough (handled inside drawArena tick).
 
   /* ---------- BIOME 0: NEURAL GRID ---------- */
   let columns = [];
@@ -1921,40 +1873,19 @@
     if (biomeLabel.textContent !== BIOMES[maxI]) biomeLabel.textContent = BIOMES[maxI];
   }
 
-  // Throttle to ~30fps. The canvas is decorative background; 60fps is
-  // wasteful and Firefox especially benefits from halving the work.
-  const FRAME_MS = 33;
-  let lastDraw = 0;
-  let lastScrollSample = -1;
-  let pageHidden = false;
-  document.addEventListener('visibilitychange', () => {
-    pageHidden = document.hidden;
-    if (!pageHidden){ lastDraw = 0; requestAnimationFrame(drawArena); }
-  });
-
-  function drawArena(ts){
-    if (pageHidden){ requestAnimationFrame(drawArena); return; }
-    if (!ts) ts = performance.now();
-    const elapsed = ts - lastDraw;
-    if (elapsed < FRAME_MS){ requestAnimationFrame(drawArena); return; }
-    lastDraw = ts - (elapsed % FRAME_MS);
-
+  function drawArena(){
+    if (document.hidden){ requestAnimationFrame(drawArena); return; }
     frame++;
-    const sy = window.scrollY;
-    scrollY = sy;
-    // Only recompute biome weights when scroll has moved enough.
-    if (Math.abs(sy - lastScrollSample) > 8){
-      computeBiomeWeights();
-      lastScrollSample = sy;
-    }
-    parallax += (sy - parallax) * 0.06;
+    scrollY = window.scrollY;
+    // smooth parallax pan
+    parallax += (scrollY - parallax) * 0.06;
 
-    ax.fillStyle = '#0d1424';
+    ax.fillStyle = '#000';
     ax.fillRect(0,0,AW,AH);
 
     drawGrid();
 
-    const w = cachedWeights;
+    const w = getBiomeWeights();
     updateBiomeLabel(w);
     drawNeural(w[0]);
     drawAcademic(w[1]);
@@ -1964,12 +1895,13 @@
 
     drawDitherSweep();
 
-    ax.fillStyle = 'rgba(236,229,209,0.05)';
+    // global scanline sweep
+    ax.fillStyle = 'rgba(244,244,244,0.05)';
     ax.fillRect(0, (frame*3) % AH, AW, 2);
 
     requestAnimationFrame(drawArena);
   }
-  requestAnimationFrame(drawArena);
+  drawArena();
 
 </script>
 
