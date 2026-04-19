@@ -156,7 +156,7 @@
   /* HERO sprite that walks along the path */
   #heroSprite{
     position: absolute;
-    width: 64px; height: 64px;
+    width: 80px; height: 80px;
     top: 0; left: 0;
     z-index: 5;
     pointer-events: none;
@@ -165,49 +165,105 @@
     will-change: left, top, transform;
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
   }
+  @media (max-width: 600px){ #heroSprite{ width: 60px; height: 60px; } }
   #heroSprite svg{ width: 100%; height: 100%; display: block; overflow: visible; }
   #heroSprite .bob{
     width: 100%; height: 100%;
     animation: bob 0.4s steps(2) infinite;
     transform-origin: 50% 75%;
   }
+  #heroSprite.trot .bob{ animation: trot 0.3s ease-in-out infinite; }
   #heroSprite.running .bob{ animation: bobFast 0.18s steps(2) infinite; }
   #heroSprite.idle .bob{ animation: idleSit 2.4s ease-in-out infinite; }
-  #heroSprite.jump .bob{ animation: jump 0.5s cubic-bezier(.3,.8,.3,1) 1; }
+  #heroSprite.jump .bob{ animation: jump 0.55s cubic-bezier(.3,.8,.3,1) 1; }
+  #heroSprite.flip .bob{ animation: backflip 0.7s cubic-bezier(.4,.1,.3,1.2) 1; }
+  #heroSprite.dash .bob{ animation: dash 0.28s linear infinite; }
+  #heroSprite.zoomies .bob{ animation: zoomies 0.5s linear infinite; }
+  #heroSprite.stretch .bob{ animation: stretch 1.6s ease-in-out infinite; }
   @keyframes bob{
     0%, 100%{ transform: translateY(0); }
     50%{ transform: translateY(-3px); }
   }
+  @keyframes trot{
+    0%, 100%{ transform: translateY(0) rotate(-2deg); }
+    25%{ transform: translateY(-2px) rotate(1deg); }
+    50%{ transform: translateY(-4px) rotate(-1deg); }
+    75%{ transform: translateY(-2px) rotate(2deg); }
+  }
   @keyframes bobFast{
-    0%, 100%{ transform: translateY(0) scaleY(1); }
-    50%{ transform: translateY(-5px) scaleY(0.95); }
+    0%, 100%{ transform: translateY(0) scaleY(1) scaleX(1.02); }
+    50%{ transform: translateY(-6px) scaleY(0.93) scaleX(1.08); }
+  }
+  @keyframes dash{
+    0%, 100%{ transform: translateY(0) scaleX(1.12) scaleY(0.9); }
+    50%{ transform: translateY(-2px) scaleX(1.18) scaleY(0.85); }
   }
   @keyframes idleSit{
     0%, 100%{ transform: translateY(0) scaleY(1); }
-    50%{ transform: translateY(1px) scaleY(0.98); }
+    50%{ transform: translateY(1px) scaleY(0.97); }
+  }
+  @keyframes stretch{
+    0%, 100%{ transform: translateY(0) scaleX(1) scaleY(1); }
+    40%{ transform: translateY(-1px) scaleX(1.18) scaleY(0.92); }
+    70%{ transform: translateY(0) scaleX(0.96) scaleY(1.04); }
   }
   @keyframes jump{
-    0%{ transform: translateY(0) scaleY(1); }
-    30%{ transform: translateY(-14px) scaleY(1.05); }
-    60%{ transform: translateY(-10px) scaleY(1); }
+    0%{ transform: translateY(0) scaleY(0.9); }
+    20%{ transform: translateY(-18px) scaleY(1.08); }
+    55%{ transform: translateY(-12px) scaleY(1); }
     100%{ transform: translateY(0) scaleY(1); }
+  }
+  @keyframes backflip{
+    0%{ transform: translateY(0) rotate(0deg); }
+    40%{ transform: translateY(-22px) rotate(-200deg); }
+    70%{ transform: translateY(-14px) rotate(-320deg); }
+    100%{ transform: translateY(0) rotate(-360deg); }
+  }
+  @keyframes zoomies{
+    0%{ transform: translateY(0) rotate(0deg) scaleX(1); }
+    25%{ transform: translateY(-3px) rotate(-6deg) scaleX(1.08); }
+    50%{ transform: translateY(0) rotate(0deg) scaleX(1.12); }
+    75%{ transform: translateY(-3px) rotate(6deg) scaleX(1.08); }
+    100%{ transform: translateY(0) rotate(0deg) scaleX(1); }
   }
   #heroSprite .cat-tail{
     transform-origin: 12px 9px;
     animation: tailWag 0.9s ease-in-out infinite;
   }
-  #heroSprite.running .cat-tail{ animation-duration: 0.35s; }
-  #heroSprite.idle .cat-tail{ animation: tailWag 1.8s ease-in-out infinite; }
+  #heroSprite.trot .cat-tail{ animation-duration: 0.55s; }
+  #heroSprite.running .cat-tail,
+  #heroSprite.dash .cat-tail,
+  #heroSprite.zoomies .cat-tail{ animation: tailWhip 0.25s ease-in-out infinite; }
+  #heroSprite.idle .cat-tail{ animation: tailCurl 2.6s ease-in-out infinite; }
   @keyframes tailWag{
     0%, 100%{ transform: rotate(0deg); }
     25%{ transform: rotate(-12deg); }
     75%{ transform: rotate(14deg); }
+  }
+  @keyframes tailWhip{
+    0%, 100%{ transform: rotate(-20deg) scaleX(1.1); }
+    50%{ transform: rotate(25deg) scaleX(1.15); }
+  }
+  @keyframes tailCurl{
+    0%, 100%{ transform: rotate(-8deg); }
+    50%{ transform: rotate(22deg); }
+  }
+  #heroSprite .cat-ears{
+    transform-origin: 50% 100%;
+    animation: earTwitch 5s steps(1) infinite;
+  }
+  @keyframes earTwitch{
+    0%, 92%, 100%{ transform: rotate(0deg); }
+    94%{ transform: rotate(-6deg); }
+    96%{ transform: rotate(4deg); }
   }
   #heroSprite .cat-eyes{
     animation: blinkEyes 4.5s steps(1) infinite;
     transform-origin: center;
   }
   #heroSprite.idle .cat-eyes{ animation-duration: 2.2s; }
+  #heroSprite.zoomies .cat-eyes,
+  #heroSprite.dash .cat-eyes{ animation: blinkEyes 1.2s steps(1) infinite; }
   @keyframes blinkEyes{
     0%, 94%, 100%{ transform: scaleY(1); }
     96%, 98%{ transform: scaleY(0.1); }
@@ -1400,7 +1456,7 @@
   </p>
 
   <div class="inventory">
-    <a class="inv-slot reveal" href="#" target="_blank" rel="noopener">
+    <a class="inv-slot reveal" href="https://www.linkedin.com/in/dinode/" target="_blank" rel="noopener">
       <div class="slot-head"><span>SLOT 01</span><span>★★★★★</span></div>
       <div class="icon">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1412,7 +1468,7 @@
       <div class="cta"><span>CONNECT</span><span class="arrow">▶</span></div>
     </a>
 
-    <a class="inv-slot reveal d1" href="#" target="_blank" rel="noopener">
+    <a class="inv-slot reveal d1" href="https://github.com/Dean988" target="_blank" rel="noopener">
       <div class="slot-head"><span>SLOT 02</span><span>★★★★★</span></div>
       <div class="icon">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -1424,7 +1480,7 @@
       <div class="cta"><span>REPOSITORY</span><span class="arrow">▶</span></div>
     </a>
 
-    <a class="inv-slot reveal d2" href="#">
+    <a class="inv-slot reveal d2" href="mailto:diemidiodino@gmail.com">
       <div class="slot-head"><span>SLOT 03</span><span>★★★★★</span></div>
       <div class="icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1474,9 +1530,15 @@
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
 
+  /* ========== Perf mode detection ========== */
+  const IS_MOBILE = window.matchMedia('(pointer: coarse), (max-width: 760px)').matches;
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LOW_PERF = IS_MOBILE || REDUCED || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+
   /* ========== Floating coins ========== */
   const coinsWrap = document.getElementById('coins');
-  for (let i = 0; i < 16; i++){
+  const COIN_COUNT = LOW_PERF ? 6 : 16;
+  for (let i = 0; i < COIN_COUNT; i++){
     const c = document.createElement('div');
     c.className = 'coin';
     c.style.left = Math.random() * 100 + '%';
@@ -1570,14 +1632,21 @@
   let pathInfo = buildPath();
   window.addEventListener('resize', () => { pathInfo = buildPath(); updatePath(); });
 
-  // cat animation state
+  // cat animation state machine
   let lastScrollY = window.scrollY;
   let lastScrollAt = performance.now();
   let idleTimer = null;
-  let lastJumpAt = 0;
+  let lastTrickAt = 0;      // last jump/backflip
+  let lastWalkSwitchAt = 0; // variety within walk cadence
+  let walkVariant = 'walk'; // 'walk' | 'trot' | 'stretch'
+  const ALL_MODES = ['idle','trot','running','jump','flip','dash','zoomies','stretch'];
   function setCatMode(mode){
-    heroSprite.classList.remove('idle','running','jump');
-    if (mode) heroSprite.classList.add(mode);
+    for (const m of ALL_MODES) heroSprite.classList.remove(m);
+    if (mode && mode !== 'walk') heroSprite.classList.add(mode);
+  }
+  function triggerTrick(cls, ms){
+    heroSprite.classList.add(cls);
+    setTimeout(() => heroSprite.classList.remove(cls), ms);
   }
 
   function updatePath(){
@@ -1606,24 +1675,45 @@
     lastScrollY = window.scrollY;
     lastScrollAt = now;
 
-    if (!heroSprite.classList.contains('jump')){
-      if (speed > 2.2){
-        setCatMode('running');
-        // random jump while running
-        if (now - lastJumpAt > 900 && Math.random() < 0.25){
-          lastJumpAt = now;
-          heroSprite.classList.add('jump');
-          setTimeout(() => heroSprite.classList.remove('jump'), 500);
+    const inTrick = heroSprite.classList.contains('jump') || heroSprite.classList.contains('flip');
+    if (!inTrick){
+      if (speed > 5){
+        setCatMode('zoomies');
+        if (now - lastTrickAt > 1400 && Math.random() < 0.35){
+          lastTrickAt = now;
+          triggerTrick('flip', 700);
         }
+      } else if (speed > 2.8){
+        setCatMode('dash');
+        if (now - lastTrickAt > 1100 && Math.random() < 0.25){
+          lastTrickAt = now;
+          triggerTrick('jump', 550);
+        }
+      } else if (speed > 1.4){
+        setCatMode('running');
+        if (now - lastTrickAt > 1600 && Math.random() < 0.18){
+          lastTrickAt = now;
+          triggerTrick('jump', 550);
+        }
+      } else if (speed > 0.35){
+        // cycle walking variants every ~2.2s for visual variety
+        if (now - lastWalkSwitchAt > 2200){
+          lastWalkSwitchAt = now;
+          const r = Math.random();
+          walkVariant = r < 0.45 ? 'walk' : (r < 0.8 ? 'trot' : 'stretch');
+        }
+        setCatMode(walkVariant === 'walk' ? 'walk' : walkVariant);
       } else {
-        setCatMode(null);
+        setCatMode('walk');
       }
     }
     // go idle if no scroll for a while
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
-      if (!heroSprite.classList.contains('jump')) setCatMode('idle');
-    }, 650);
+      if (!heroSprite.classList.contains('jump') && !heroSprite.classList.contains('flip')){
+        setCatMode('idle');
+      }
+    }, 700);
 
     // HUD progress
     const pct = Math.round(progress * 100);
@@ -1644,7 +1734,7 @@
   /* ========== DYNAMIC WORLD-MAP CANVAS (morphs by scroll) ========== */
   const canvas = document.getElementById('neuralCanvas');
   const ax = canvas.getContext('2d');
-  let AW, AH, DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  let AW, AH, DPR = LOW_PERF ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
   function aResize(){
     const rect = canvas.getBoundingClientRect();
     AW = rect.width; AH = rect.height;
@@ -1661,31 +1751,42 @@
   let parallax = 0; // camera pan for biomes
   const BIOMES = ['NEURAL GRID','ACADEMIC SKY','CODE DUNGEON','CRYSTAL SHOP','FINAL ZONE'];
 
-  function getBiomeWeights(){
-    // 5 zones: hero / academic / class / services / inventory
+  // cache zone positions so we don't trigger layout on every frame
+  let zoneCache = [];
+  function rebuildZoneCache(){
     const zones = document.querySelectorAll('[data-zone]');
+    zoneCache = Array.from(zones).map(z => {
+      const r = z.getBoundingClientRect();
+      const top = window.scrollY + r.top;
+      return { top, height: r.height, center: top + r.height/2 };
+    });
+  }
+  rebuildZoneCache();
+  window.addEventListener('resize', rebuildZoneCache);
+  window.addEventListener('load', rebuildZoneCache);
+  setTimeout(rebuildZoneCache, 1200);
+
+  function getBiomeWeights(){
     const weights = [0,0,0,0,0];
     const H = window.innerHeight;
     const centerY = scrollY + H/2;
-    zones.forEach((z, i) => {
-      const r = z.getBoundingClientRect();
-      const top = scrollY + r.top;
-      const bot = top + r.height;
-      // distance of zone center to viewport center, normalized
-      const zCenter = (top + bot)/2;
-      const d = Math.abs(zCenter - centerY);
-      const span = Math.max(r.height, H) * 0.85;
+    for (let i = 0; i < zoneCache.length; i++){
+      const z = zoneCache[i];
+      const d = Math.abs(z.center - centerY);
+      const span = Math.max(z.height, H) * 0.85;
       weights[i] = Math.max(0, 1 - d/span);
-    });
-    // normalize
-    let sum = weights.reduce((a,b)=>a+b, 0) || 1;
-    return weights.map(w => w/sum);
+    }
+    let sum = 0;
+    for (let i = 0; i < 5; i++) sum += weights[i];
+    if (!sum) sum = 1;
+    for (let i = 0; i < 5; i++) weights[i] /= sum;
+    return weights;
   }
 
   /* ---------- BIOME 0: NEURAL GRID ---------- */
   let columns = [];
   function buildNodes(){
-    const layers = AW < 700 ? [3, 5, 5, 3] : [4, 7, 7, 4];
+    const layers = LOW_PERF ? [3, 4, 4, 3] : (AW < 700 ? [3, 5, 5, 3] : [4, 7, 7, 4]);
     columns = [];
     const padX = AW * 0.08;
     const padY = AH * 0.15;
@@ -1726,7 +1827,9 @@
         }
       }
     }
-    if (frame % 8 === 0 && signals.length < 20) spawnSignal();
+    const signalCap = LOW_PERF ? 8 : 20;
+    const spawnEvery = LOW_PERF ? 14 : 8;
+    if (frame % spawnEvery === 0 && signals.length < signalCap) spawnSignal();
     for (let i = signals.length-1; i >= 0; i--){
       const s = signals[i];
       s.t += s.speed;
@@ -2022,11 +2125,20 @@
     if (biomeLabel.textContent !== BIOMES[maxI]) biomeLabel.textContent = BIOMES[maxI];
   }
 
-  function drawArena(){
-    if (document.hidden){ requestAnimationFrame(drawArena); return; }
+  // throttle to ~30fps on low-perf devices, 60fps on desktop
+  const TARGET_MS = LOW_PERF ? 33 : 16;
+  let lastFrameT = 0;
+  // skip canvas draw entirely when arena is outside viewport (rare, but cheap guard)
+  function arenaVisible(){ return true; }
+
+  function drawArena(ts){
+    requestAnimationFrame(drawArena);
+    if (document.hidden) return;
+    if (ts - lastFrameT < TARGET_MS) return;
+    lastFrameT = ts;
+
     frame++;
     scrollY = window.scrollY;
-    // smooth parallax pan
     parallax += (scrollY - parallax) * 0.06;
 
     ax.fillStyle = '#000';
@@ -2035,22 +2147,21 @@
     drawGrid();
 
     const w = getBiomeWeights();
-    updateBiomeLabel(w);
+    // update biome label only every few frames
+    if ((frame & 7) === 0) updateBiomeLabel(w);
     drawNeural(w[0]);
     drawAcademic(w[1]);
     drawDungeon(w[2]);
     drawShop(w[3]);
     drawFinal(w[4]);
 
-    drawDitherSweep();
+    if (!LOW_PERF) drawDitherSweep();
 
     // global scanline sweep
     ax.fillStyle = 'rgba(244,244,244,0.05)';
     ax.fillRect(0, (frame*3) % AH, AW, 2);
-
-    requestAnimationFrame(drawArena);
   }
-  drawArena();
+  requestAnimationFrame(drawArena);
 
 </script>
 
