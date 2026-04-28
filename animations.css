@@ -1,89 +1,98 @@
 /* ============================================================
    ANIMATIONS — Keyframes
+   Photosensitive-safe: no full-screen white flashes, no rapid
+   complementary-color cycling, reduced shake amplitude.
    ============================================================ */
 
+/* Mild horizontal slide for glitch bars (kept gentle) */
 @keyframes glitch-slide {
-  0% { transform: translateX(15%); }
-  25% { transform: translateX(-10%); }
-  50% { transform: translateX(20%); }
-  75% { transform: translateX(-5%); }
+  0%   { transform: translateX(8%); }
+  25%  { transform: translateX(-5%); }
+  50%  { transform: translateX(10%); }
+  75%  { transform: translateX(-3%); }
   100% { transform: translateX(0%); opacity: 0; }
 }
 
 @keyframes glitch-slide-r {
-  0% { transform: translateX(-25%); }
-  25% { transform: translateX(15%); }
-  50% { transform: translateX(-30%); }
-  75% { transform: translateX(10%); }
+  0%   { transform: translateX(-12%); }
+  25%  { transform: translateX(8%); }
+  50%  { transform: translateX(-15%); }
+  75%  { transform: translateX(5%); }
   100% { transform: translateX(0%); opacity: 0; }
 }
 
+/* Tinted dim overlay instead of pure white strobe.
+   Peak opacity capped at 0.35 to stay below seizure-trigger luminance jumps. */
 @keyframes flash-out {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
+  0%   { opacity: 0; }
+  20%  { opacity: 0.35; }
   100% { opacity: 0; }
 }
 
+/* Slower ring travel, lower opacity ramp */
 @keyframes warp-ring {
-  0% { transform: translateZ(-1000px) scale(0.1); opacity: 0; }
-  20% { opacity: 1; }
+  0%   { transform: translateZ(-1000px) scale(0.1); opacity: 0; }
+  25%  { opacity: 0.7; }
   100% { transform: translateZ(0) scale(1.2); opacity: 0; }
 }
 
+/* Reduced shake amplitude (was ±2px → now ±1px, slower cadence) */
 @keyframes warp-shake {
   0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-2px, 1px); }
-  50% { transform: translate(2px, -1px); }
-  75% { transform: translate(-1px, 2px); }
+  25% { transform: translate(-1px, 0.5px); }
+  50% { transform: translate(1px, -0.5px); }
+  75% { transform: translate(-0.5px, 1px); }
 }
 
 @keyframes float {
-  0% { transform: translate(0, 0); opacity: 0.4; }
-  50% { transform: translate(10px, -10px); opacity: 1; }
+  0%   { transform: translate(0, 0); opacity: 0.4; }
+  50%  { transform: translate(10px, -10px); opacity: 0.85; }
   100% { transform: translate(-5px, 5px); opacity: 0.4; }
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+  50%      { opacity: 1; transform: scale(1.08); }
 }
 
-.title-flash { animation: title-flash-anim 0.6s ease-out forwards; }
+/* Title transition: capped brightness + slower ramp.
+   Removed brightness(20) explosion + blur(20px) trigger. */
+.title-flash { animation: title-flash-anim 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 @keyframes title-flash-anim {
-  0% { filter: brightness(1); }
-  30% { filter: brightness(2) hue-rotate(45deg); }
-  60% { filter: brightness(3) blur(4px); }
-  100% { filter: brightness(20) blur(20px); opacity: 0; }
+  0%   { filter: brightness(1) blur(0); }
+  60%  { filter: brightness(1.25) blur(2px); }
+  100% { filter: brightness(1.5) blur(6px); opacity: 0; }
 }
 
+/* Slower CRT roll: less retinal ping */
 @keyframes crt-roll {
-  0% { transform: translateY(-100%); }
+  0%   { transform: translateY(-100%); }
   100% { transform: translateY(100vh); }
 }
 
 .crt-on #app-root::before {
   content: "";
   position: fixed; left: 0; right: 0; height: 4px;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  animation: crt-roll 6s linear infinite;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: crt-roll 8s linear infinite;
   pointer-events: none; z-index: 9997;
 }
 
 /* ============================================================
-   TELEPORT EFFECTS
+   TELEPORT EFFECTS — softened
    ============================================================ */
 
 @keyframes pixelate-anim {
   0%   { background-size: 8px 8px;   opacity: 0; }
-  20%  { opacity: 1; background-size: 24px 24px; }
-  60%  { background-size: 64px 64px; opacity: 1; }
+  20%  { opacity: 0.6; background-size: 24px 24px; }
+  60%  { background-size: 64px 64px; opacity: 0.6; }
   100% { background-size: 240px 240px; opacity: 0; }
 }
 
 @keyframes pipe-fade {
-  0% { background: transparent; }
-  20% { background: var(--bg-void); }
-  80% { background: var(--bg-void); }
+  0%   { background: transparent; }
+  20%  { background: var(--bg-void); }
+  80%  { background: var(--bg-void); }
   100% { background: transparent; }
 }
 @keyframes pipe-rise {
@@ -93,65 +102,112 @@
   100% { transform: translateX(-50%) translateY(-100%); }
 }
 @keyframes pipe-suck {
-  0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
-  40% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  0%   { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+  40%  { opacity: 1; transform: translateX(-50%) translateY(0); }
   100% { opacity: 0; transform: translateX(-50%) translateY(80px); }
 }
 
+/* CRT-off: softened — no #fff full-screen flash, fades to dim cyan */
 @keyframes crt-off-anim {
   0%   { background: transparent; transform: scaleY(1) scaleX(1); }
-  20%  { background: #fff; transform: scaleY(1) scaleX(1.05); }
-  40%  { background: #fff; transform: scaleY(0.02) scaleX(1); opacity: 1; }
-  60%  { background: #fff; transform: scaleY(0.005) scaleX(0.6); opacity: 1; }
-  85%  { background: #fff; transform: scaleY(0.005) scaleX(0); opacity: 0; }
+  20%  { background: rgba(180, 220, 255, 0.4); transform: scaleY(1) scaleX(1.02); }
+  40%  { background: rgba(180, 220, 255, 0.5); transform: scaleY(0.05) scaleX(1); opacity: 0.9; }
+  60%  { background: rgba(140, 180, 220, 0.35); transform: scaleY(0.01) scaleX(0.6); opacity: 0.6; }
+  85%  { background: rgba(140, 180, 220, 0.2); transform: scaleY(0.005) scaleX(0); opacity: 0; }
   100% { opacity: 0; }
 }
 
 @keyframes mode7-anim {
   0%   { transform: perspective(400px) rotateX(0deg) translateY(0); opacity: 0; }
-  20%  { opacity: 1; }
+  20%  { opacity: 0.7; }
   100% { transform: perspective(400px) rotateX(75deg) translateY(-30%) scale(2); opacity: 0; }
 }
 
+/* Glitch background: was rapid color-cycle (epilepsy risk).
+   Now: deep desaturated dim, single fade — no contrasting hue swap. */
 @keyframes glitch-bg {
-  0% { background: var(--bg-void); }
-  20% { background: var(--neon-magenta); }
-  40% { background: var(--neon-cyan); }
-  60% { background: var(--neon-yellow); }
-  80% { background: var(--bg-void); }
-  100% { background: transparent; opacity: 0; }
+  0%   { background: var(--bg-void); opacity: 0; }
+  20%  { background: var(--bg-deep); opacity: 0.85; }
+  100% { background: var(--bg-void); opacity: 0; }
 }
+
+/* Glitch bands: amplitude reduced to ~half */
 @keyframes glitch-band-0 {
-  0% { transform: translateX(0); }
-  30% { transform: translateX(-30%); }
-  60% { transform: translateX(40%); }
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(-15%); }
+  60%  { transform: translateX(20%); }
   100% { transform: translateX(0); opacity: 0; }
 }
 @keyframes glitch-band-1 {
-  0% { transform: translateX(0); }
-  30% { transform: translateX(35%); }
-  60% { transform: translateX(-25%); }
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(18%); }
+  60%  { transform: translateX(-12%); }
   100% { transform: translateX(0); opacity: 0; }
 }
 
+/* Final warp: capped peak opacity, no white center */
 @keyframes warp-final-bg {
-  0% { opacity: 0; transform: scale(0.5); }
-  30% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1.5); }
+  0%   { opacity: 0; transform: scale(0.6); }
+  30%  { opacity: 0.8; transform: scale(1); }
+  80%  { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(1.4); }
 }
 @keyframes warp-ring-final {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.85; }
   100% { transform: translate(-50%, -50%) scale(20); opacity: 0; }
 }
 @keyframes warp-streak {
   0%   { transform: translate(-50%, 0) rotate(var(--rot, 0)) scaleY(0); opacity: 0; }
-  30%  { opacity: 1; }
+  30%  { opacity: 0.7; }
   100% { transform: translate(-50%, 0) rotate(var(--rot, 0)) scaleY(3); opacity: 0; }
 }
 @keyframes warp-final-text {
-  0% { transform: scale(0.3); opacity: 0; }
-  20% { transform: scale(1); opacity: 1; }
-  60% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(3); opacity: 0; }
+  0%   { transform: scale(0.3); opacity: 0; }
+  20%  { transform: scale(1); opacity: 1; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* ============================================================
+   AMBIENT GAMING-OBJECT FLOAT
+   Active-Theory inspired: gentle parallax drift, no strobe.
+   ============================================================ */
+@keyframes drift-slow {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(12px, -18px, 0) rotate(8deg); }
+  100% { transform: translate3d(-8px, 6px, 0) rotate(-4deg); }
+}
+@keyframes drift-med {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(-16px, 14px, 0) rotate(-10deg); }
+  100% { transform: translate3d(10px, -8px, 0) rotate(6deg); }
+}
+@keyframes orbit {
+  0%   { transform: rotate(0deg) translateX(0) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(0) rotate(-360deg); }
+}
+
+/* ============================================================
+   PHOTOSENSITIVE-SAFE ESCAPE HATCH
+   Anyone with prefers-reduced-motion gets all teleport / strobe
+   visuals replaced by a calm fade.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .title-flash,
+  [class*="warp"],
+  [style*="glitch-bg"],
+  [style*="warp-final-bg"],
+  [style*="warp-ring-final"],
+  [style*="warp-streak"],
+  [style*="warp-shake"],
+  [style*="warp-final-text"],
+  [style*="flash-out"],
+  [style*="crt-off-anim"],
+  [style*="pixelate-anim"],
+  [style*="mode7-anim"],
+  [style*="glitch-slide"],
+  [style*="glitch-band"] {
+    animation: none !important;
+    opacity: 0 !important;
+  }
 }

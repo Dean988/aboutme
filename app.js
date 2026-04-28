@@ -1,4 +1,4 @@
-/* DINO Portfolio v3.0 — bundled at 2026-04-28T15:02:51.049Z
+/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:08:25.175Z
  * Source: src/app.src.jsx (do not edit app.js directly).
  */
 const IS_MOBILE = typeof window !== 'undefined' && (window.matchMedia('(max-width: 768px)').matches || /Mobi|Android/i.test(navigator.userAgent || ''));
@@ -6,8 +6,8 @@ const IS_LOW_END = typeof navigator !== 'undefined' && (navigator.deviceMemory &
 const PREFERS_REDUCED = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const PARTICLE_COUNT = PREFERS_REDUCED ? 0 : IS_MOBILE || IS_LOW_END ? 14 : 40;
 const WARP_RING_COUNT = IS_MOBILE || IS_LOW_END ? 5 : 8;
-const WARP_FINAL_RINGS = IS_MOBILE || IS_LOW_END ? 6 : 10;
-const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
+const WARP_FINAL_RINGS = IS_MOBILE || IS_LOW_END ? 4 : 7;
+const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
 (() => {
   const {
     useState,
@@ -639,7 +639,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
       right: 0,
       bottom: 0,
       left: 0,
-      background: '#fff',
+      background: 'rgba(45, 228, 240, 0.45)',
       animation: 'flash-out 0.8s ease-out',
       willChange: 'opacity'
     }
@@ -2128,9 +2128,9 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
     },
     warpText: {
       fontSize: 'clamp(40px, 10vw, 120px)',
-      textShadow: '0 0 20px var(--neon-magenta), 6px 0 0 var(--neon-cyan), -6px 0 0 var(--neon-yellow)',
+      textShadow: '0 0 20px var(--neon-magenta), 4px 0 0 var(--neon-cyan), -4px 0 0 var(--neon-yellow)',
       letterSpacing: '0.1em',
-      animation: 'warp-shake 0.2s steps(4) infinite',
+      animation: 'warp-shake 0.5s steps(4) infinite',
       willChange: 'transform'
     },
     warpSub: {
@@ -2469,7 +2469,6 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
         right: 0,
         bottom: 0,
         left: 0,
-        background: '#fff',
         animation: 'crt-off-anim 1.2s steps(8) forwards',
         willChange: 'transform, opacity'
       }
@@ -2524,18 +2523,18 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
         background: 'var(--bg-void)',
         animation: 'glitch-bg 1.2s steps(20) forwards'
       }
-    }), [0, 1, 2, 3, 4, 5].map(i => React.createElement("div", {
+    }), [0, 1, 2, 3].map(i => React.createElement("div", {
       key: i,
       style: {
         position: 'absolute',
         left: 0,
         right: 0,
-        top: `${i * 16 + 4}%`,
-        height: '14%',
+        top: `${i * 22 + 8}%`,
+        height: '12%',
         background: i % 3 === 0 ? 'var(--neon-magenta)' : i % 3 === 1 ? 'var(--neon-cyan)' : 'var(--neon-yellow)',
         mixBlendMode: 'screen',
-        animation: `glitch-band-${i % 2} ${0.5 + i * 0.1}s steps(8) forwards`,
-        opacity: 0.7,
+        animation: `glitch-band-${i % 2} ${0.6 + i * 0.1}s steps(8) forwards`,
+        opacity: 0.35,
         willChange: 'transform, opacity'
       }
     })), React.createElement(FxLabel, {
@@ -2554,7 +2553,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
         right: 0,
         bottom: 0,
         left: 0,
-        background: 'radial-gradient(circle at center, #fff 0%, var(--neon-magenta) 20%, var(--neon-cyan) 50%, var(--bg-void) 100%)',
+        background: 'radial-gradient(circle at center, rgba(237,60,198,0.55) 0%, rgba(237,60,198,0.4) 25%, rgba(45,228,240,0.3) 55%, var(--bg-void) 100%)',
         animation: 'warp-final-bg 1.8s ease-out forwards',
         willChange: 'transform, opacity'
       }
@@ -2615,8 +2614,8 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
       className: "pixel-text",
       style: {
         fontSize: 'clamp(36px, 8vw, 96px)',
-        color: '#fff',
-        textShadow: '0 0 20px var(--neon-magenta), 6px 0 0 var(--neon-cyan), -6px 0 0 var(--neon-yellow)',
+        color: 'var(--ink)',
+        textShadow: '0 0 20px var(--neon-magenta), 4px 0 0 var(--neon-cyan), -4px 0 0 var(--neon-yellow)',
         letterSpacing: '0.1em',
         animation: 'warp-final-text 1.8s ease-out forwards',
         willChange: 'transform, opacity'
@@ -2644,10 +2643,10 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
       className: "pixel-text",
       style: {
         fontSize: 'clamp(18px, 4vw, 42px)',
-        color: '#fff',
-        textShadow: `0 0 12px ${color}, 4px 0 0 var(--neon-magenta), -4px 0 0 var(--neon-cyan)`,
+        color: 'var(--ink)',
+        textShadow: `0 0 12px ${color}, 3px 0 0 var(--neon-magenta), -3px 0 0 var(--neon-cyan)`,
         letterSpacing: '0.15em',
-        animation: 'warp-shake 0.15s steps(4) infinite',
+        animation: 'warp-shake 0.4s steps(4) infinite',
         textAlign: 'center'
       }
     }, children), React.createElement("div", {
@@ -2660,6 +2659,330 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
   }
   window.TeleportAnchor = TeleportAnchor;
   window.TeleportOverlay = TeleportOverlay;
+})();
+(() => {
+  const ICONS = {
+    dpad: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("rect", {
+      x: "11",
+      y: "3",
+      width: "10",
+      height: "10",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "11",
+      y: "19",
+      width: "10",
+      height: "10",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "3",
+      y: "11",
+      width: "10",
+      height: "10",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "19",
+      y: "11",
+      width: "10",
+      height: "10",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "13",
+      y: "13",
+      width: "6",
+      height: "6",
+      fill: "rgba(0,0,0,0.4)"
+    })),
+    gem: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("polygon", {
+      points: "16,2 28,12 16,30 4,12",
+      fill: "currentColor",
+      stroke: "rgba(0,0,0,0.4)",
+      strokeWidth: "1"
+    }), React.createElement("polygon", {
+      points: "16,2 22,12 16,18 10,12",
+      fill: "rgba(255,255,255,0.18)"
+    })),
+    sword: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("rect", {
+      x: "14",
+      y: "3",
+      width: "4",
+      height: "20",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "10",
+      y: "22",
+      width: "12",
+      height: "3",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "14",
+      y: "25",
+      width: "4",
+      height: "6",
+      fill: "rgba(160,120,69,0.9)"
+    }), React.createElement("rect", {
+      x: "15",
+      y: "4",
+      width: "2",
+      height: "18",
+      fill: "rgba(255,255,255,0.3)"
+    })),
+    heart: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("rect", {
+      x: "6",
+      y: "8",
+      width: "6",
+      height: "6",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "20",
+      y: "8",
+      width: "6",
+      height: "6",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "6",
+      y: "14",
+      width: "20",
+      height: "6",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "10",
+      y: "20",
+      width: "12",
+      height: "4",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "14",
+      y: "24",
+      width: "4",
+      height: "3",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "9",
+      y: "9",
+      width: "2",
+      height: "2",
+      fill: "rgba(255,255,255,0.5)"
+    })),
+    coin: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("circle", {
+      cx: "16",
+      cy: "16",
+      r: "12",
+      fill: "currentColor"
+    }), React.createElement("circle", {
+      cx: "16",
+      cy: "16",
+      r: "8",
+      fill: "rgba(0,0,0,0.25)"
+    }), React.createElement("text", {
+      x: "16",
+      y: "21",
+      textAnchor: "middle",
+      fontFamily: "monospace",
+      fontWeight: "700",
+      fontSize: "12",
+      fill: "currentColor"
+    }, "$")),
+    controller: React.createElement("svg", {
+      viewBox: "0 0 48 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("rect", {
+      x: "2",
+      y: "6",
+      width: "44",
+      height: "22",
+      rx: "6",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "6",
+      y: "13",
+      width: "3",
+      height: "9",
+      fill: "rgba(0,0,0,0.5)"
+    }), React.createElement("rect", {
+      x: "3",
+      y: "16",
+      width: "9",
+      height: "3",
+      fill: "rgba(0,0,0,0.5)"
+    }), React.createElement("circle", {
+      cx: "34",
+      cy: "14",
+      r: "2",
+      fill: "rgba(0,0,0,0.5)"
+    }), React.createElement("circle", {
+      cx: "40",
+      cy: "20",
+      r: "2",
+      fill: "rgba(0,0,0,0.5)"
+    }), React.createElement("circle", {
+      cx: "40",
+      cy: "14",
+      r: "2",
+      fill: "rgba(0,0,0,0.5)"
+    }), React.createElement("circle", {
+      cx: "34",
+      cy: "20",
+      r: "2",
+      fill: "rgba(0,0,0,0.5)"
+    })),
+    floppy: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("rect", {
+      x: "3",
+      y: "3",
+      width: "26",
+      height: "26",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "7",
+      y: "3",
+      width: "14",
+      height: "9",
+      fill: "rgba(0,0,0,0.45)"
+    }), React.createElement("rect", {
+      x: "16",
+      y: "5",
+      width: "3",
+      height: "6",
+      fill: "currentColor"
+    }), React.createElement("rect", {
+      x: "9",
+      y: "18",
+      width: "14",
+      height: "9",
+      fill: "rgba(0,0,0,0.25)"
+    })),
+    star: React.createElement("svg", {
+      viewBox: "0 0 32 32",
+      width: "100%",
+      height: "100%",
+      "aria-hidden": "true"
+    }, React.createElement("polygon", {
+      points: "16,2 20,12 30,13 22,20 25,30 16,24 7,30 10,20 2,13 12,12",
+      fill: "currentColor"
+    }))
+  };
+  const OBJECTS = [{
+    type: 'dpad',
+    size: 78,
+    top: '6%',
+    left: '4%',
+    color: 'var(--neon-cyan)',
+    speed: 'slow'
+  }, {
+    type: 'gem',
+    size: 56,
+    top: '14%',
+    left: '88%',
+    color: 'var(--neon-magenta)',
+    speed: 'med'
+  }, {
+    type: 'sword',
+    size: 68,
+    top: '32%',
+    left: '2%',
+    color: 'var(--neon-yellow)',
+    speed: 'med'
+  }, {
+    type: 'heart',
+    size: 50,
+    top: '46%',
+    left: '92%',
+    color: 'var(--neon-pink)',
+    speed: 'fast'
+  }, {
+    type: 'coin',
+    size: 60,
+    top: '60%',
+    left: '6%',
+    color: 'var(--neon-yellow)',
+    speed: 'slow'
+  }, {
+    type: 'controller',
+    size: 96,
+    top: '70%',
+    left: '82%',
+    color: 'var(--neon-cyan)',
+    speed: 'med'
+  }, {
+    type: 'floppy',
+    size: 54,
+    top: '84%',
+    left: '10%',
+    color: 'var(--neon-green)',
+    speed: 'slow'
+  }, {
+    type: 'star',
+    size: 44,
+    top: '90%',
+    left: '70%',
+    color: 'var(--neon-magenta)',
+    speed: 'fast'
+  }, {
+    type: 'gem',
+    size: 38,
+    top: '24%',
+    left: '46%',
+    color: 'var(--neon-cyan)',
+    speed: 'fast'
+  }, {
+    type: 'star',
+    size: 34,
+    top: '54%',
+    left: '40%',
+    color: 'var(--neon-yellow)',
+    speed: 'med'
+  }];
+  function FloatingGameObjects() {
+    const list = IS_MOBILE || IS_LOW_END ? OBJECTS.filter((_, i) => i % 2 === 0) : OBJECTS;
+    return React.createElement("div", {
+      className: "ambient-layer",
+      "aria-hidden": "true"
+    }, list.map((o, i) => React.createElement("div", {
+      key: i,
+      className: `ambient-obj ${o.speed}`,
+      style: {
+        top: o.top,
+        left: o.left,
+        width: o.size,
+        height: o.size,
+        color: o.color,
+        animationDelay: `${i * 0.6 % 4}s`
+      }
+    }, ICONS[o.type])));
+  }
+  window.FloatingGameObjects = FloatingGameObjects;
 })();
 const {
   useState,
@@ -2704,7 +3027,10 @@ function AppInner({
   if (!booted) return React.createElement(window.BootScreen, {
     onComplete: () => setBooted(true)
   });
-  return React.createElement(React.Fragment, null, React.createElement(Hud, {
+  return React.createElement(React.Fragment, null, React.createElement(window.FloatingGameObjects, null), React.createElement("div", {
+    className: "grain",
+    "aria-hidden": "true"
+  }), React.createElement(Hud, {
     tweaks: tweaks,
     setTweaks: setTweaks,
     warped: warped
@@ -2866,7 +3192,7 @@ function ScrollWorld({
       right: 0,
       bottom: 0,
       left: 0,
-      background: '#fff',
+      background: 'rgba(45, 228, 240, 0.4)',
       zIndex: 5000,
       animation: 'flash-out 0.7s ease-out forwards',
       pointerEvents: 'none',

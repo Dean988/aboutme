@@ -20,8 +20,9 @@ const PREFERS_REDUCED = typeof window !== 'undefined' &&
 
 const PARTICLE_COUNT = PREFERS_REDUCED ? 0 : (IS_MOBILE || IS_LOW_END ? 14 : 40);
 const WARP_RING_COUNT = IS_MOBILE || IS_LOW_END ? 5 : 8;
-const WARP_FINAL_RINGS = IS_MOBILE || IS_LOW_END ? 6 : 10;
-const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 20 : 40;
+const WARP_FINAL_RINGS = IS_MOBILE || IS_LOW_END ? 4 : 7;
+/* Reduced from 20/40 → 12/22: less retinal noise during the warp transition */
+const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
 
 /* ============================================================
    AUDIO
@@ -436,7 +437,8 @@ const glitchStyles = {
   bar1: { position: 'absolute', top: '20%', left: 0, right: 0, height: '40px', background: 'var(--neon-magenta)', transform: 'translateX(15%)', animation: 'glitch-slide 0.8s steps(8)', mixBlendMode: 'screen', willChange: 'transform, opacity' },
   bar2: { position: 'absolute', top: '50%', left: 0, right: 0, height: '20px', background: 'var(--neon-cyan)', transform: 'translateX(-25%)', animation: 'glitch-slide-r 0.8s steps(8)', mixBlendMode: 'screen', willChange: 'transform, opacity' },
   bar3: { position: 'absolute', top: '75%', left: 0, right: 0, height: '60px', background: 'var(--neon-yellow)', transform: 'translateX(8%)', animation: 'glitch-slide 0.8s steps(8) 0.1s', mixBlendMode: 'screen', opacity: 0.6, willChange: 'transform, opacity' },
-  flash: { position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: '#fff', animation: 'flash-out 0.8s ease-out', willChange: 'opacity' },
+  /* Tinted dim overlay instead of pure-white strobe (epilepsy-safe). */
+  flash: { position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'rgba(45, 228, 240, 0.45)', animation: 'flash-out 0.8s ease-out', willChange: 'opacity' },
 };
 
 const titleStyles = {
@@ -976,7 +978,8 @@ const warpStyles = {
   tunnel: { position: 'relative', width: '100%', height: '100%', minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: '600px' },
   ring: { position: 'absolute', width: '120vw', height: '120vw', maxWidth: '900px', maxHeight: '900px', border: '3px solid var(--neon-cyan)', borderRadius: '50%', animation: 'warp-ring 2.5s linear infinite', boxShadow: '0 0 40px currentColor', willChange: 'transform, opacity' },
   center: { position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 16px' },
-  warpText: { fontSize: 'clamp(40px, 10vw, 120px)', textShadow: '0 0 20px var(--neon-magenta), 6px 0 0 var(--neon-cyan), -6px 0 0 var(--neon-yellow)', letterSpacing: '0.1em', animation: 'warp-shake 0.2s steps(4) infinite', willChange: 'transform' },
+  /* Slowed shake from 0.2s → 0.5s, amplitude reduced in keyframe */
+  warpText: { fontSize: 'clamp(40px, 10vw, 120px)', textShadow: '0 0 20px var(--neon-magenta), 4px 0 0 var(--neon-cyan), -4px 0 0 var(--neon-yellow)', letterSpacing: '0.1em', animation: 'warp-shake 0.5s steps(4) infinite', willChange: 'transform' },
   warpSub: { fontSize: '12px', color: 'var(--neon-cyan)', marginTop: '20px', textShadow: '0 0 8px var(--neon-cyan)' },
   glitchOverlay: { position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, pointerEvents: 'none', background: 'repeating-linear-gradient(0deg, rgba(255, 43, 214, 0.05) 0, rgba(255, 43, 214, 0.05) 2px, transparent 2px, transparent 8px)', transition: 'opacity 0.5s' },
 };
@@ -1120,7 +1123,8 @@ function WarpPipeFx({ color, label }) {
 
 function CrtOffFx({ color, label }) {
   return (<>
-    <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: '#fff', animation: 'crt-off-anim 1.2s steps(8) forwards', willChange: 'transform, opacity' }} />
+    {/* Background uses keyframe colors (tinted, not white) — avoids high-luminance strobe. */}
+    <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, animation: 'crt-off-anim 1.2s steps(8) forwards', willChange: 'transform, opacity' }} />
     <FxLabel color={color}>{label || 'SIGNAL...'}</FxLabel>
   </>);
 }
@@ -1142,13 +1146,14 @@ function Mode7Fx({ color, label }) {
 function GlitchFx({ color, label }) {
   return (<>
     <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)', animation: 'glitch-bg 1.2s steps(20) forwards' }} />
-    {[0, 1, 2, 3, 4, 5].map((i) => (
+    {/* Reduced from 6→4 bands at 0.35 opacity (was 0.7) — calmer transition */}
+    {[0, 1, 2, 3].map((i) => (
       <div key={i} style={{
-        position: 'absolute', left: 0, right: 0, top: `${i * 16 + 4}%`, height: '14%',
+        position: 'absolute', left: 0, right: 0, top: `${i * 22 + 8}%`, height: '12%',
         background: i % 3 === 0 ? 'var(--neon-magenta)' : i % 3 === 1 ? 'var(--neon-cyan)' : 'var(--neon-yellow)',
         mixBlendMode: 'screen',
-        animation: `glitch-band-${i % 2} ${0.5 + i * 0.1}s steps(8) forwards`,
-        opacity: 0.7, willChange: 'transform, opacity',
+        animation: `glitch-band-${i % 2} ${0.6 + i * 0.1}s steps(8) forwards`,
+        opacity: 0.35, willChange: 'transform, opacity',
       }} />
     ))}
     <FxLabel color={color}>{label || 'BUFFER OVERFLOW'}</FxLabel>
@@ -1157,9 +1162,10 @@ function GlitchFx({ color, label }) {
 
 function WarpFinalFx({ color, label }) {
   return (<>
+    {/* No #fff core — center starts at the tinted accent so total luminance stays well below the seizure threshold. */}
     <div style={{
       position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
-      background: 'radial-gradient(circle at center, #fff 0%, var(--neon-magenta) 20%, var(--neon-cyan) 50%, var(--bg-void) 100%)',
+      background: 'radial-gradient(circle at center, rgba(237,60,198,0.55) 0%, rgba(237,60,198,0.4) 25%, rgba(45,228,240,0.3) 55%, var(--bg-void) 100%)',
       animation: 'warp-final-bg 1.8s ease-out forwards', willChange: 'transform, opacity',
     }} />
     {Array.from({ length: WARP_FINAL_RINGS }).map((_, i) => (
@@ -1190,8 +1196,8 @@ function WarpFinalFx({ color, label }) {
     })}
     <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div className="pixel-text" style={{
-        fontSize: 'clamp(36px, 8vw, 96px)', color: '#fff',
-        textShadow: '0 0 20px var(--neon-magenta), 6px 0 0 var(--neon-cyan), -6px 0 0 var(--neon-yellow)',
+        fontSize: 'clamp(36px, 8vw, 96px)', color: 'var(--ink)',
+        textShadow: '0 0 20px var(--neon-magenta), 4px 0 0 var(--neon-cyan), -4px 0 0 var(--neon-yellow)',
         letterSpacing: '0.1em', animation: 'warp-final-text 1.8s ease-out forwards',
         willChange: 'transform, opacity',
       }}>WARP!</div>
@@ -1203,9 +1209,9 @@ function FxLabel({ color, children }) {
   return (
     <div style={{ position: 'absolute', left: 0, right: 0, top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', padding: '0 16px' }}>
       <div className="pixel-text" style={{
-        fontSize: 'clamp(18px, 4vw, 42px)', color: '#fff',
-        textShadow: `0 0 12px ${color}, 4px 0 0 var(--neon-magenta), -4px 0 0 var(--neon-cyan)`,
-        letterSpacing: '0.15em', animation: 'warp-shake 0.15s steps(4) infinite', textAlign: 'center',
+        fontSize: 'clamp(18px, 4vw, 42px)', color: 'var(--ink)',
+        textShadow: `0 0 12px ${color}, 3px 0 0 var(--neon-magenta), -3px 0 0 var(--neon-cyan)`,
+        letterSpacing: '0.15em', animation: 'warp-shake 0.4s steps(4) infinite', textAlign: 'center',
       }}>{children}</div>
       <div className="pixel-text blink" style={{ fontSize: '11px', color }}>▼ TELEPORTING ▼</div>
     </div>
@@ -1214,6 +1220,116 @@ function FxLabel({ color, children }) {
 
 window.TeleportAnchor = TeleportAnchor;
 window.TeleportOverlay = TeleportOverlay;
+})();
+
+/* ============================================================
+   AMBIENT GAMING OBJECTS — Active-Theory inspired depth layer.
+   Pure SVG, pointer-events: none, GPU transforms only.
+   Disabled on prefers-reduced-motion via .ambient-layer CSS.
+   ============================================================ */
+(() => {
+const ICONS = {
+  dpad: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <rect x="11" y="3"  width="10" height="10" fill="currentColor" />
+      <rect x="11" y="19" width="10" height="10" fill="currentColor" />
+      <rect x="3"  y="11" width="10" height="10" fill="currentColor" />
+      <rect x="19" y="11" width="10" height="10" fill="currentColor" />
+      <rect x="13" y="13" width="6" height="6" fill="rgba(0,0,0,0.4)" />
+    </svg>
+  ),
+  gem: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <polygon points="16,2 28,12 16,30 4,12" fill="currentColor" stroke="rgba(0,0,0,0.4)" strokeWidth="1" />
+      <polygon points="16,2 22,12 16,18 10,12" fill="rgba(255,255,255,0.18)" />
+    </svg>
+  ),
+  sword: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <rect x="14" y="3" width="4" height="20" fill="currentColor" />
+      <rect x="10" y="22" width="12" height="3" fill="currentColor" />
+      <rect x="14" y="25" width="4" height="6" fill="rgba(160,120,69,0.9)" />
+      <rect x="15" y="4" width="2" height="18" fill="rgba(255,255,255,0.3)" />
+    </svg>
+  ),
+  heart: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <rect x="6"  y="8"  width="6" height="6" fill="currentColor" />
+      <rect x="20" y="8"  width="6" height="6" fill="currentColor" />
+      <rect x="6"  y="14" width="20" height="6" fill="currentColor" />
+      <rect x="10" y="20" width="12" height="4" fill="currentColor" />
+      <rect x="14" y="24" width="4" height="3" fill="currentColor" />
+      <rect x="9"  y="9"  width="2" height="2" fill="rgba(255,255,255,0.5)" />
+    </svg>
+  ),
+  coin: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <circle cx="16" cy="16" r="12" fill="currentColor" />
+      <circle cx="16" cy="16" r="8" fill="rgba(0,0,0,0.25)" />
+      <text x="16" y="21" textAnchor="middle" fontFamily="monospace" fontWeight="700"
+            fontSize="12" fill="currentColor">$</text>
+    </svg>
+  ),
+  controller: (
+    <svg viewBox="0 0 48 32" width="100%" height="100%" aria-hidden="true">
+      <rect x="2" y="6" width="44" height="22" rx="6" fill="currentColor" />
+      <rect x="6" y="13" width="3" height="9" fill="rgba(0,0,0,0.5)" />
+      <rect x="3" y="16" width="9" height="3" fill="rgba(0,0,0,0.5)" />
+      <circle cx="34" cy="14" r="2" fill="rgba(0,0,0,0.5)" />
+      <circle cx="40" cy="20" r="2" fill="rgba(0,0,0,0.5)" />
+      <circle cx="40" cy="14" r="2" fill="rgba(0,0,0,0.5)" />
+      <circle cx="34" cy="20" r="2" fill="rgba(0,0,0,0.5)" />
+    </svg>
+  ),
+  floppy: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" fill="currentColor" />
+      <rect x="7" y="3" width="14" height="9" fill="rgba(0,0,0,0.45)" />
+      <rect x="16" y="5" width="3" height="6" fill="currentColor" />
+      <rect x="9" y="18" width="14" height="9" fill="rgba(0,0,0,0.25)" />
+    </svg>
+  ),
+  star: (
+    <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">
+      <polygon points="16,2 20,12 30,13 22,20 25,30 16,24 7,30 10,20 2,13 12,12"
+               fill="currentColor" />
+    </svg>
+  ),
+};
+
+/* Static layout — no per-object randomness on each render.
+   Positions chosen so objects spread across the viewport without clustering. */
+const OBJECTS = [
+  { type: 'dpad',       size: 78,  top: '6%',  left: '4%',  color: 'var(--neon-cyan)',    speed: 'slow' },
+  { type: 'gem',        size: 56,  top: '14%', left: '88%', color: 'var(--neon-magenta)', speed: 'med'  },
+  { type: 'sword',      size: 68,  top: '32%', left: '2%',  color: 'var(--neon-yellow)',  speed: 'med'  },
+  { type: 'heart',      size: 50,  top: '46%', left: '92%', color: 'var(--neon-pink)',    speed: 'fast' },
+  { type: 'coin',       size: 60,  top: '60%', left: '6%',  color: 'var(--neon-yellow)',  speed: 'slow' },
+  { type: 'controller', size: 96,  top: '70%', left: '82%', color: 'var(--neon-cyan)',    speed: 'med'  },
+  { type: 'floppy',     size: 54,  top: '84%', left: '10%', color: 'var(--neon-green)',   speed: 'slow' },
+  { type: 'star',       size: 44,  top: '90%', left: '70%', color: 'var(--neon-magenta)', speed: 'fast' },
+  { type: 'gem',        size: 38,  top: '24%', left: '46%', color: 'var(--neon-cyan)',    speed: 'fast' },
+  { type: 'star',       size: 34,  top: '54%', left: '40%', color: 'var(--neon-yellow)',  speed: 'med'  },
+];
+
+function FloatingGameObjects() {
+  /* On low-end / mobile, render half the objects */
+  const list = (IS_MOBILE || IS_LOW_END) ? OBJECTS.filter((_, i) => i % 2 === 0) : OBJECTS;
+  return (
+    <div className="ambient-layer" aria-hidden="true">
+      {list.map((o, i) => (
+        <div key={i} className={`ambient-obj ${o.speed}`} style={{
+          top: o.top, left: o.left, width: o.size, height: o.size, color: o.color,
+          animationDelay: `${(i * 0.6) % 4}s`,
+        }}>
+          {ICONS[o.type]}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+window.FloatingGameObjects = FloatingGameObjects;
 })();
 
 /* ============================================================
@@ -1250,6 +1366,8 @@ function AppInner({ booted, setBooted, warped, setWarped, tweaks, setTweaks }) {
   if (!booted) return <window.BootScreen onComplete={() => setBooted(true)} />;
 
   return (<>
+    <window.FloatingGameObjects />
+    <div className="grain" aria-hidden="true" />
     <Hud tweaks={tweaks} setTweaks={setTweaks} warped={warped} />
     <ScrollWorld onWarp={() => setWarped(true)} warped={warped} characterScale={tweaks.characterScale} />
   </>);
@@ -1337,9 +1455,11 @@ function ScrollWorld({ onWarp, warped, characterScale }) {
       <window.TeleportAnchor id="tp-5" kind="mode7" color="var(--neon-yellow)" label="FINAL ZONE" />
       <window.Marquee items={['FINAL ZONE', 'PICK UP ITEMS', 'GET IN TOUCH']} color="var(--neon-yellow)" dir={1} />
       <window.Inventory />
+      {/* Tinted, capped-opacity overlay — was full white at peak. */}
       {flashing && <div style={{
         position: 'fixed', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
-        background: '#fff', zIndex: 5000, animation: 'flash-out 0.7s ease-out forwards',
+        background: 'rgba(45, 228, 240, 0.4)', zIndex: 5000,
+        animation: 'flash-out 0.7s ease-out forwards',
         pointerEvents: 'none', willChange: 'opacity',
       }} />}
     </div>
