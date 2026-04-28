@@ -1,4 +1,4 @@
-/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:08:25.175Z
+/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:34:16.993Z
  * Source: src/app.src.jsx (do not edit app.js directly).
  */
 const IS_MOBILE = typeof window !== 'undefined' && (window.matchMedia('(max-width: 768px)').matches || /Mobi|Android/i.test(navigator.userAgent || ''));

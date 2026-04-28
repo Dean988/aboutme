@@ -280,14 +280,14 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 150;
   overflow: hidden;
-  contain: strict;
+  mix-blend-mode: screen;
 }
 .ambient-obj {
   position: absolute;
-  opacity: 0.18;
-  filter: drop-shadow(0 0 12px currentColor);
+  opacity: 0.55;
+  filter: drop-shadow(0 0 18px currentColor);
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
