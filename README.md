@@ -1,52 +1,34 @@
-# DeanPortfolio | Cyber-Renaissance Edition
+# DINO — Retro Portfolio v3.0
 
-Thinking Machines & Humanist Dreams.
-A portfolio that bridges the gap between Sociology and Data Science, presented in a high-performance "Cyber-Renaissance" interface.
+A retro-gaming portfolio for **Dino De Midio** — AI Engineer & Data Scientist.
 
-## 🚀 Live Demo
-[View Live Site](https://deanportfolio.vercel.app) *(Update link once deployed)*
+CRT scanlines + synthwave + pixel art. Boot screen → title screen → scrollable
+overworld with a pixel cat character → AI Dimension projects → contact slots.
 
-## ✨ Features
+## Stack
 
-### 🎨 Cyber-Renaissance Aesthetic
-- **Dual-Core Theme**: A fusion of classical Gold (`#FFD700`) and futuristic Blue (`#00F2FF`).
-- **Interactive UI**: Glassmorphism, scanlines, and CRT effects powered by Tailwind CSS.
-- **Framer Motion**: Smooth entry animations for a "cinematic" feel.
+Static site, no build step. React 18 (UMD) + Babel-Standalone served from CDN.
+Deployed on Vercel.
 
-### 🧠 Content Strategy
-- **Academic Foundation**: Prominently featuring Sociology (BA), Social Data Science (MSc), and AI specializations.
-- **Skill Tree**: A gamified visualization of technical competencies (Python, React, NLP, etc.).
-- **Philosophy Section**: Explaining the "Why" behind the code - integrating human nuance with machine precision.
+## Files
 
-## 🛠 Tech Stack
-- **Framework**: React 18 + Vite (TypeScript)
-- **Styling**: Tailwind CSS + Custom Config
-- **Animation**: Framer Motion
-- **Icons**: Lucide React
-- **Hosting**: Vercel Ready (SPA Routing configured)
+- `index.html` — entry point and bundled JSX
+- `styles.css` — base palette, CRT effect, mobile media queries
+- `animations.css` — keyframes for teleport effects
+- `vercel.json` — SPA rewrite + security headers
 
-## 📦 Installation
+## Local preview
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/Dean988/Portfolio.git
-    cd Portfolio
-    ```
+Any static server works. For example:
 
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
+```sh
+python -m http.server 8000
+```
 
-3.  **Run Development Server**
-    ```bash
-    npm run dev
-    ```
+Then open <http://localhost:8000>.
 
-4.  **Build for Production**
-    ```bash
-    npm run build
-    ```
+## Contact
 
-## 📄 License
-MIT © 2024 Dino Di Emidio
+- GitHub: <https://github.com/Dean988>
+- LinkedIn: <https://www.linkedin.com/in/dinode/>
+- Email: <diemidiodino@gmail.com>
