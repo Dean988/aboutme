@@ -1081,7 +1081,7 @@ function TeleportFx({ kind, color, label }) {
     'warp-final': <WarpFinalFx color={color} label={label} />,
   };
   return (
-    <div style={{ position: 'fixed', inset: 0, top: 0, right: 0, bottom: 0, left: 0, zIndex: 4000, pointerEvents: 'none', overflow: 'hidden' }}>
+    <div className="fx-overlay" style={{ position: 'fixed', inset: 0, top: 0, right: 0, bottom: 0, left: 0, zIndex: 10020, pointerEvents: 'none', overflow: 'hidden' }}>
       {variants[kind] || variants.pixelate}
     </div>
   );
@@ -1089,11 +1089,11 @@ function TeleportFx({ kind, color, label }) {
 
 function PixelateFx({ color, label }) {
   return (<>
-    <div style={{
+    <div className="fx-layer" style={{
       position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
-      background: `repeating-conic-gradient(${color} 0deg 90deg, transparent 90deg 180deg)`,
+      background: `radial-gradient(circle at center, rgba(5,3,15,0.08) 0%, rgba(5,3,15,0.32) 72%, rgba(5,3,15,0.46) 100%), repeating-conic-gradient(from 45deg, transparent 0deg 68deg, ${color} 68deg 90deg, transparent 90deg 180deg)`,
       backgroundSize: '24px 24px', animation: 'pixelate-anim 1.2s steps(12) forwards',
-      mixBlendMode: 'screen', willChange: 'background-size, opacity',
+      willChange: 'transform, background-size, opacity',
     }} />
     <FxLabel color={color}>{label || 'PIXELATING...'}</FxLabel>
   </>);
@@ -1101,7 +1101,7 @@ function PixelateFx({ color, label }) {
 
 function WarpPipeFx({ color, label }) {
   return (<>
-    <div style={{
+    <div className="fx-layer" style={{
       position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
       background: 'var(--bg-void)', animation: 'pipe-fade 1.2s ease-in-out forwards',
     }}>
@@ -1124,14 +1124,14 @@ function WarpPipeFx({ color, label }) {
 function CrtOffFx({ color, label }) {
   return (<>
     {/* Background uses keyframe colors (tinted, not white) — avoids high-luminance strobe. */}
-    <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, animation: 'crt-off-anim 1.2s steps(8) forwards', willChange: 'transform, opacity' }} />
+    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, animation: 'crt-off-anim 1.2s steps(8) forwards', willChange: 'transform, opacity' }} />
     <FxLabel color={color}>{label || 'SIGNAL...'}</FxLabel>
   </>);
 }
 
 function Mode7Fx({ color, label }) {
   return (<>
-    <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)' }}>
+    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)' }}>
       <div style={{
         position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
         background: `repeating-linear-gradient(90deg, transparent 0 60px, ${color} 60px 62px), repeating-linear-gradient(0deg, transparent 0 60px, ${color} 60px 62px)`,
@@ -1145,15 +1145,14 @@ function Mode7Fx({ color, label }) {
 
 function GlitchFx({ color, label }) {
   return (<>
-    <div style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)', animation: 'glitch-bg 1.2s steps(20) forwards' }} />
+    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)', animation: 'glitch-bg 1.2s steps(20) forwards' }} />
     {/* Reduced from 6→4 bands at 0.35 opacity (was 0.7) — calmer transition */}
     {[0, 1, 2, 3].map((i) => (
-      <div key={i} style={{
+      <div key={i} className="fx-layer" style={{
         position: 'absolute', left: 0, right: 0, top: `${i * 22 + 8}%`, height: '12%',
         background: i % 3 === 0 ? 'var(--neon-magenta)' : i % 3 === 1 ? 'var(--neon-cyan)' : 'var(--neon-yellow)',
-        mixBlendMode: 'screen',
         animation: `glitch-band-${i % 2} ${0.6 + i * 0.1}s steps(8) forwards`,
-        opacity: 0.35, willChange: 'transform, opacity',
+        opacity: 0.42, willChange: 'transform, opacity',
       }} />
     ))}
     <FxLabel color={color}>{label || 'BUFFER OVERFLOW'}</FxLabel>
@@ -1163,7 +1162,7 @@ function GlitchFx({ color, label }) {
 function WarpFinalFx({ color, label }) {
   return (<>
     {/* No #fff core — center starts at the tinted accent so total luminance stays well below the seizure threshold. */}
-    <div style={{
+    <div className="fx-layer" style={{
       position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
       background: 'radial-gradient(circle at center, rgba(237,60,198,0.55) 0%, rgba(237,60,198,0.4) 25%, rgba(45,228,240,0.3) 55%, var(--bg-void) 100%)',
       animation: 'warp-final-bg 1.8s ease-out forwards', willChange: 'transform, opacity',
@@ -1458,7 +1457,7 @@ function ScrollWorld({ onWarp, warped, characterScale }) {
       {/* Tinted, capped-opacity overlay — was full white at peak. */}
       {flashing && <div style={{
         position: 'fixed', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
-        background: 'rgba(45, 228, 240, 0.4)', zIndex: 5000,
+        background: 'rgba(45, 228, 240, 0.4)', zIndex: 10010,
         animation: 'flash-out 0.7s ease-out forwards',
         pointerEvents: 'none', willChange: 'opacity',
       }} />}

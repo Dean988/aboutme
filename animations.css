@@ -75,7 +75,7 @@
   position: fixed; left: 0; right: 0; height: 4px;
   background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08), transparent);
   animation: crt-roll 8s linear infinite;
-  pointer-events: none; z-index: 9997;
+  pointer-events: none; z-index: 8980;
 }
 
 /* ============================================================
@@ -83,10 +83,10 @@
    ============================================================ */
 
 @keyframes pixelate-anim {
-  0%   { background-size: 8px 8px;   opacity: 0; }
-  20%  { opacity: 0.6; background-size: 24px 24px; }
-  60%  { background-size: 64px 64px; opacity: 0.6; }
-  100% { background-size: 240px 240px; opacity: 0; }
+  0%   { background-size: 10px 10px; opacity: 0; transform: translateZ(0) scale(1); }
+  20%  { background-size: 22px 22px; opacity: 0.46; }
+  58%  { background-size: 58px 58px; opacity: 0.34; }
+  100% { background-size: 180px 180px; opacity: 0; transform: translateZ(0) scale(1.03); }
 }
 
 @keyframes pipe-fade {
@@ -127,7 +127,7 @@
    Now: deep desaturated dim, single fade — no contrasting hue swap. */
 @keyframes glitch-bg {
   0%   { background: var(--bg-void); opacity: 0; }
-  20%  { background: var(--bg-deep); opacity: 0.85; }
+  20%  { background: var(--bg-deep); opacity: 0.66; }
   100% { background: var(--bg-void); opacity: 0; }
 }
 

@@ -1,4 +1,4 @@
-/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:34:16.993Z
+/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:44:00.885Z
  * Source: src/app.src.jsx (do not edit app.js directly).
  */
 const IS_MOBILE = typeof window !== 'undefined' && (window.matchMedia('(max-width: 768px)').matches || /Mobi|Android/i.test(navigator.userAgent || ''));
@@ -2367,6 +2367,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
       })
     };
     return React.createElement("div", {
+      className: "fx-overlay",
       style: {
         position: 'fixed',
         inset: 0,
@@ -2374,7 +2375,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         right: 0,
         bottom: 0,
         left: 0,
-        zIndex: 4000,
+        zIndex: 10020,
         pointerEvents: 'none',
         overflow: 'hidden'
       }
@@ -2385,6 +2386,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
     label
   }) {
     return React.createElement(React.Fragment, null, React.createElement("div", {
+      className: "fx-layer",
       style: {
         position: 'absolute',
         inset: 0,
@@ -2392,11 +2394,10 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         right: 0,
         bottom: 0,
         left: 0,
-        background: `repeating-conic-gradient(${color} 0deg 90deg, transparent 90deg 180deg)`,
+        background: `radial-gradient(circle at center, rgba(5,3,15,0.08) 0%, rgba(5,3,15,0.32) 72%, rgba(5,3,15,0.46) 100%), repeating-conic-gradient(from 45deg, transparent 0deg 68deg, ${color} 68deg 90deg, transparent 90deg 180deg)`,
         backgroundSize: '24px 24px',
         animation: 'pixelate-anim 1.2s steps(12) forwards',
-        mixBlendMode: 'screen',
-        willChange: 'background-size, opacity'
+        willChange: 'transform, background-size, opacity'
       }
     }), React.createElement(FxLabel, {
       color: color
@@ -2407,6 +2408,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
     label
   }) {
     return React.createElement(React.Fragment, null, React.createElement("div", {
+      className: "fx-layer",
       style: {
         position: 'absolute',
         inset: 0,
@@ -2462,6 +2464,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
     label
   }) {
     return React.createElement(React.Fragment, null, React.createElement("div", {
+      className: "fx-layer",
       style: {
         position: 'absolute',
         inset: 0,
@@ -2481,6 +2484,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
     label
   }) {
     return React.createElement(React.Fragment, null, React.createElement("div", {
+      className: "fx-layer",
       style: {
         position: 'absolute',
         inset: 0,
@@ -2513,6 +2517,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
     label
   }) {
     return React.createElement(React.Fragment, null, React.createElement("div", {
+      className: "fx-layer",
       style: {
         position: 'absolute',
         inset: 0,
@@ -2525,6 +2530,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
       }
     }), [0, 1, 2, 3].map(i => React.createElement("div", {
       key: i,
+      className: "fx-layer",
       style: {
         position: 'absolute',
         left: 0,
@@ -2532,9 +2538,8 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         top: `${i * 22 + 8}%`,
         height: '12%',
         background: i % 3 === 0 ? 'var(--neon-magenta)' : i % 3 === 1 ? 'var(--neon-cyan)' : 'var(--neon-yellow)',
-        mixBlendMode: 'screen',
         animation: `glitch-band-${i % 2} ${0.6 + i * 0.1}s steps(8) forwards`,
-        opacity: 0.35,
+        opacity: 0.42,
         willChange: 'transform, opacity'
       }
     })), React.createElement(FxLabel, {
@@ -2546,6 +2551,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
     label
   }) {
     return React.createElement(React.Fragment, null, React.createElement("div", {
+      className: "fx-layer",
       style: {
         position: 'absolute',
         inset: 0,
@@ -3193,7 +3199,7 @@ function ScrollWorld({
       bottom: 0,
       left: 0,
       background: 'rgba(45, 228, 240, 0.4)',
-      zIndex: 5000,
+      zIndex: 10010,
       animation: 'flash-out 0.7s ease-out forwards',
       pointerEvents: 'none',
       willChange: 'opacity'

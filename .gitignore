@@ -4,5 +4,6 @@ dist/
 .env
 .env.local
 *.log
+.preview*.png
 .vscode/
 .idea/
