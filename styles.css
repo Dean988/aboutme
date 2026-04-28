@@ -46,12 +46,29 @@ html, body {
   overflow-x: hidden;
   -webkit-font-smoothing: none;
   font-smooth: never;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
   -webkit-tap-highlight-color: transparent;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  /* Promote whole document to its own compositor layer for smoother scroll */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Pixelated rendering only on actual pixel-art assets (not every image) */
+img[src^="data:image"],
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Skip layout/paint of long off-screen sections — huge mobile scroll win */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1200px;
+}
+.cv-auto-tall {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1600px;
 }
 
 body {
@@ -98,8 +115,9 @@ body {
   52% { opacity: 1; }
 }
 
+/* Throttled to 1.5s — same visual feel, way fewer repaints */
 .crt-on #app-root {
-  animation: flicker 0.15s infinite;
+  animation: flicker 1.5s steps(2) infinite;
 }
 
 /* ============================================================
@@ -279,12 +297,27 @@ body {
 }
 
 @media (max-width: 720px) {
-  /* HUD compact */
+  /* HUD compact — no backdrop blur on mobile (very expensive to composite) */
   .hud-center { display: none !important; }
-  .hud-root { padding: 8px 10px !important; }
+  .hud-root {
+    padding: 8px 10px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(5, 3, 15, 0.95) !important;
+  }
   .hud-btn { padding: 5px 7px !important; font-size: 8px !important; }
   .hud-title { font-size: 9px !important; }
   .hud-subtitle { font-size: 7px !important; }
+
+  /* Disable CRT scanline + flicker on mobile — major repaint cost */
+  .crt-on::before { display: none !important; }
+  .crt-on #app-root { animation: none !important; }
+  .crt-on #app-root::before { display: none !important; }
+
+  /* Lighter neon glow box-shadows (single-layer) on mobile */
+  .stage-card, .service-card, .project-card, .inv-slot, .class-card {
+    box-shadow: 0 0 0 2px var(--bg-void), 0 0 12px currentColor !important;
+  }
 
   /* Worlds padding */
   .world-section { padding: 56px 14px 40px !important; }
@@ -350,6 +383,11 @@ body {
   .service-card, .project-card, .inv-slot {
     padding: 14px !important;
   }
+}
+
+/* Coarse pointer (touch devices) — drop hover-only effects so paints don't queue */
+@media (hover: none) {
+  body { cursor: auto; }
 }
 
 /* iOS safe area */
