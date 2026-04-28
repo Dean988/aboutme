@@ -1,4 +1,4 @@
-/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:44:00.885Z
+/* DINO Portfolio v3.0 — bundled at 2026-04-28T19:56:20.676Z
  * Source: src/app.src.jsx (do not edit app.js directly).
  */
 const IS_MOBILE = typeof window !== 'undefined' && (window.matchMedia('(max-width: 768px)').matches || /Mobi|Android/i.test(navigator.userAgent || ''));
@@ -681,7 +681,8 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
       background: 'linear-gradient(180deg, #ffe066 0%, #ff5cad 55%, #c01a8a 100%)',
       boxShadow: '0 0 60px rgba(255, 92, 173, 0.5), 0 0 140px rgba(255, 224, 102, 0.25)',
       overflow: 'hidden',
-      opacity: 0.85
+      opacity: 0.85,
+      animation: 'title-sun-pulse 4s ease-in-out infinite'
     },
     sunInner: {
       position: 'absolute',
@@ -705,8 +706,10 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
       right: 0,
       height: '40%',
       background: `linear-gradient(180deg, transparent 0%, var(--bg-void) 100%), repeating-linear-gradient(90deg, transparent 0, transparent 60px, rgba(0, 240, 255, 0.55) 60px, rgba(0, 240, 255, 0.55) 62px), linear-gradient(180deg, transparent 0%, rgba(0, 240, 255, 0.35) 100%)`,
+      backgroundSize: 'auto, 120px 120px, auto',
       transform: 'perspective(400px) rotateX(60deg)',
-      transformOrigin: 'top'
+      transformOrigin: 'top',
+      animation: 'title-grid-pan 8s linear infinite'
     },
     mountains: {
       position: 'absolute',
@@ -771,7 +774,8 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
       cursor: 'pointer',
       letterSpacing: '0.2em',
       boxShadow: '6px 6px 0 #ff2bd6, 0 0 24px rgba(255, 230, 0, 0.45)',
-      textShadow: '0 0 6px rgba(255, 230, 0, 0.6)'
+      textShadow: '0 0 6px rgba(255, 230, 0, 0.6)',
+      animation: 'neon-breath 1.8s ease-in-out infinite'
     },
     scrollHint: {
       marginTop: '40px',
@@ -2326,7 +2330,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
           t: Date.now()
         });
         audio?.sfx('warp');
-        setTimeout(() => setState(null), kind === 'warp-final' ? 1800 : 1200);
+        setTimeout(() => setState(null), kind === 'warp-final' ? 2200 : 1600);
       };
       return () => {
         delete window.__triggerTeleport;
@@ -2394,9 +2398,9 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         right: 0,
         bottom: 0,
         left: 0,
-        background: `radial-gradient(circle at center, rgba(5,3,15,0.08) 0%, rgba(5,3,15,0.32) 72%, rgba(5,3,15,0.46) 100%), repeating-conic-gradient(from 45deg, transparent 0deg 68deg, ${color} 68deg 90deg, transparent 90deg 180deg)`,
+        background: `radial-gradient(circle at center, rgba(5,3,15,0.04) 0%, rgba(5,3,15,0.24) 72%, rgba(5,3,15,0.36) 100%), repeating-conic-gradient(from 45deg, transparent 0deg 62deg, ${color} 62deg 90deg, transparent 90deg 180deg)`,
         backgroundSize: '24px 24px',
-        animation: 'pixelate-anim 1.2s steps(12) forwards',
+        animation: 'pixelate-anim 1.6s steps(14) forwards',
         willChange: 'transform, background-size, opacity'
       }
     }), React.createElement(FxLabel, {
@@ -2417,7 +2421,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         bottom: 0,
         left: 0,
         background: 'var(--bg-void)',
-        animation: 'pipe-fade 1.2s ease-in-out forwards'
+        animation: 'pipe-fade 1.6s ease-in-out forwards'
       }
     }, React.createElement("div", {
       style: {
@@ -2429,7 +2433,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         height: '60vh',
         background: `linear-gradient(90deg, #1a5e2e 0 12%, #39ff90 12% 24%, #1a5e2e 24% 50%, #0d3a1c 50% 70%, #39ff90 70% 82%, #1a5e2e 82%)`,
         border: '6px solid #0a0820',
-        animation: 'pipe-rise 1.2s cubic-bezier(.5,1.5,.7,1) forwards',
+        animation: 'pipe-rise 1.6s cubic-bezier(.5,1.5,.7,1) forwards',
         boxShadow: '0 0 60px #39ff90',
         willChange: 'transform'
       }
@@ -2453,7 +2457,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         color: '#0a0820',
         fontFamily: 'var(--pixel)',
         fontSize: '14px',
-        animation: 'pipe-suck 1.2s ease-in forwards'
+        animation: 'pipe-suck 1.6s ease-in forwards'
       }
     }, "\u2193 \u2193 \u2193"))), React.createElement(FxLabel, {
       color: color
@@ -2472,7 +2476,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         right: 0,
         bottom: 0,
         left: 0,
-        animation: 'crt-off-anim 1.2s steps(8) forwards',
+        animation: 'crt-off-anim 1.6s steps(8) forwards',
         willChange: 'transform, opacity'
       }
     }), React.createElement(FxLabel, {
@@ -2504,7 +2508,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         left: 0,
         background: `repeating-linear-gradient(90deg, transparent 0 60px, ${color} 60px 62px), repeating-linear-gradient(0deg, transparent 0 60px, ${color} 60px 62px)`,
         transformOrigin: 'center bottom',
-        animation: 'mode7-anim 1.2s ease-in forwards',
+        animation: 'mode7-anim 1.6s ease-in forwards',
         boxShadow: `inset 0 0 200px ${color}`,
         willChange: 'transform, opacity'
       }
@@ -2526,7 +2530,7 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         bottom: 0,
         left: 0,
         background: 'var(--bg-void)',
-        animation: 'glitch-bg 1.2s steps(20) forwards'
+        animation: 'glitch-bg 1.6s steps(20) forwards'
       }
     }), [0, 1, 2, 3].map(i => React.createElement("div", {
       key: i,
@@ -2538,8 +2542,8 @@ const WARP_FINAL_STREAKS = IS_MOBILE || IS_LOW_END ? 12 : 22;
         top: `${i * 22 + 8}%`,
         height: '12%',
         background: i % 3 === 0 ? 'var(--neon-magenta)' : i % 3 === 1 ? 'var(--neon-cyan)' : 'var(--neon-yellow)',
-        animation: `glitch-band-${i % 2} ${0.6 + i * 0.1}s steps(8) forwards`,
-        opacity: 0.42,
+        animation: `glitch-band-${i % 2} ${0.85 + i * 0.12}s steps(8) forwards`,
+        opacity: 0.62,
         willChange: 'transform, opacity'
       }
     })), React.createElement(FxLabel, {

@@ -460,14 +460,16 @@ const titleStyles = {
     transform: 'translate(-50%, -50%)', borderRadius: '50%',
     background: 'linear-gradient(180deg, #ffe066 0%, #ff5cad 55%, #c01a8a 100%)',
     boxShadow: '0 0 60px rgba(255, 92, 173, 0.5), 0 0 140px rgba(255, 224, 102, 0.25)',
-    overflow: 'hidden', opacity: 0.85,
+    overflow: 'hidden', opacity: 0.85, animation: 'title-sun-pulse 4s ease-in-out infinite',
   },
   sunInner: { position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, borderRadius: '50%' },
   sunLine: { position: 'absolute', left: 0, right: 0, background: '#0a0820' },
   gridFloor: {
     position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%',
     background: `linear-gradient(180deg, transparent 0%, var(--bg-void) 100%), repeating-linear-gradient(90deg, transparent 0, transparent 60px, rgba(0, 240, 255, 0.55) 60px, rgba(0, 240, 255, 0.55) 62px), linear-gradient(180deg, transparent 0%, rgba(0, 240, 255, 0.35) 100%)`,
+    backgroundSize: 'auto, 120px 120px, auto',
     transform: 'perspective(400px) rotateX(60deg)', transformOrigin: 'top',
+    animation: 'title-grid-pan 8s linear infinite',
   },
   mountains: { position: 'absolute', bottom: '38%', left: 0, right: 0, height: '150px', width: '100%' },
   titleStack: {
@@ -504,6 +506,7 @@ const titleStyles = {
     border: '3px solid #ffe600', cursor: 'pointer', letterSpacing: '0.2em',
     boxShadow: '6px 6px 0 #ff2bd6, 0 0 24px rgba(255, 230, 0, 0.45)',
     textShadow: '0 0 6px rgba(255, 230, 0, 0.6)',
+    animation: 'neon-breath 1.8s ease-in-out infinite',
   },
   scrollHint: { marginTop: '40px', fontSize: '10px' },
 };
@@ -1063,7 +1066,7 @@ function TeleportOverlay() {
     window.__triggerTeleport = (kind, color, label) => {
       setState({ kind, color, label, t: Date.now() });
       audio?.sfx('warp');
-      setTimeout(() => setState(null), kind === 'warp-final' ? 1800 : 1200);
+      setTimeout(() => setState(null), kind === 'warp-final' ? 2200 : 1600);
     };
     return () => { delete window.__triggerTeleport; };
   }, [audio]);
@@ -1091,8 +1094,8 @@ function PixelateFx({ color, label }) {
   return (<>
     <div className="fx-layer" style={{
       position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
-      background: `radial-gradient(circle at center, rgba(5,3,15,0.08) 0%, rgba(5,3,15,0.32) 72%, rgba(5,3,15,0.46) 100%), repeating-conic-gradient(from 45deg, transparent 0deg 68deg, ${color} 68deg 90deg, transparent 90deg 180deg)`,
-      backgroundSize: '24px 24px', animation: 'pixelate-anim 1.2s steps(12) forwards',
+      background: `radial-gradient(circle at center, rgba(5,3,15,0.04) 0%, rgba(5,3,15,0.24) 72%, rgba(5,3,15,0.36) 100%), repeating-conic-gradient(from 45deg, transparent 0deg 62deg, ${color} 62deg 90deg, transparent 90deg 180deg)`,
+      backgroundSize: '24px 24px', animation: 'pixelate-anim 1.6s steps(14) forwards',
       willChange: 'transform, background-size, opacity',
     }} />
     <FxLabel color={color}>{label || 'PIXELATING...'}</FxLabel>
@@ -1103,18 +1106,18 @@ function WarpPipeFx({ color, label }) {
   return (<>
     <div className="fx-layer" style={{
       position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
-      background: 'var(--bg-void)', animation: 'pipe-fade 1.2s ease-in-out forwards',
+      background: 'var(--bg-void)', animation: 'pipe-fade 1.6s ease-in-out forwards',
     }}>
       <div style={{
         position: 'absolute', left: '50%', bottom: 0, transform: 'translateX(-50%)',
         width: 'min(320px, 70vw)', height: '60vh',
         background: `linear-gradient(90deg, #1a5e2e 0 12%, #39ff90 12% 24%, #1a5e2e 24% 50%, #0d3a1c 50% 70%, #39ff90 70% 82%, #1a5e2e 82%)`,
         border: '6px solid #0a0820',
-        animation: 'pipe-rise 1.2s cubic-bezier(.5,1.5,.7,1) forwards',
+        animation: 'pipe-rise 1.6s cubic-bezier(.5,1.5,.7,1) forwards',
         boxShadow: '0 0 60px #39ff90', willChange: 'transform',
       }}>
         <div style={{ position: 'absolute', top: '-30px', left: '-30px', right: '-30px', height: '60px', background: '#39ff90', border: '6px solid #0a0820', borderRadius: '6px 6px 0 0' }} />
-        <div style={{ position: 'absolute', top: '40px', left: '50%', transform: 'translateX(-50%)', color: '#0a0820', fontFamily: 'var(--pixel)', fontSize: '14px', animation: 'pipe-suck 1.2s ease-in forwards' }}>↓ ↓ ↓</div>
+        <div style={{ position: 'absolute', top: '40px', left: '50%', transform: 'translateX(-50%)', color: '#0a0820', fontFamily: 'var(--pixel)', fontSize: '14px', animation: 'pipe-suck 1.6s ease-in forwards' }}>↓ ↓ ↓</div>
       </div>
     </div>
     <FxLabel color={color}>{label || 'WARP PIPE ACTIVATED'}</FxLabel>
@@ -1124,7 +1127,7 @@ function WarpPipeFx({ color, label }) {
 function CrtOffFx({ color, label }) {
   return (<>
     {/* Background uses keyframe colors (tinted, not white) — avoids high-luminance strobe. */}
-    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, animation: 'crt-off-anim 1.2s steps(8) forwards', willChange: 'transform, opacity' }} />
+    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, animation: 'crt-off-anim 1.6s steps(8) forwards', willChange: 'transform, opacity' }} />
     <FxLabel color={color}>{label || 'SIGNAL...'}</FxLabel>
   </>);
 }
@@ -1135,7 +1138,7 @@ function Mode7Fx({ color, label }) {
       <div style={{
         position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0,
         background: `repeating-linear-gradient(90deg, transparent 0 60px, ${color} 60px 62px), repeating-linear-gradient(0deg, transparent 0 60px, ${color} 60px 62px)`,
-        transformOrigin: 'center bottom', animation: 'mode7-anim 1.2s ease-in forwards',
+        transformOrigin: 'center bottom', animation: 'mode7-anim 1.6s ease-in forwards',
         boxShadow: `inset 0 0 200px ${color}`, willChange: 'transform, opacity',
       }} />
     </div>
@@ -1145,14 +1148,14 @@ function Mode7Fx({ color, label }) {
 
 function GlitchFx({ color, label }) {
   return (<>
-    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)', animation: 'glitch-bg 1.2s steps(20) forwards' }} />
+    <div className="fx-layer" style={{ position: 'absolute', inset: 0, top: 0, right: 0, bottom: 0, left: 0, background: 'var(--bg-void)', animation: 'glitch-bg 1.6s steps(20) forwards' }} />
     {/* Reduced from 6→4 bands at 0.35 opacity (was 0.7) — calmer transition */}
     {[0, 1, 2, 3].map((i) => (
       <div key={i} className="fx-layer" style={{
         position: 'absolute', left: 0, right: 0, top: `${i * 22 + 8}%`, height: '12%',
         background: i % 3 === 0 ? 'var(--neon-magenta)' : i % 3 === 1 ? 'var(--neon-cyan)' : 'var(--neon-yellow)',
-        animation: `glitch-band-${i % 2} ${0.6 + i * 0.1}s steps(8) forwards`,
-        opacity: 0.42, willChange: 'transform, opacity',
+        animation: `glitch-band-${i % 2} ${0.85 + i * 0.12}s steps(8) forwards`,
+        opacity: 0.62, willChange: 'transform, opacity',
       }} />
     ))}
     <FxLabel color={color}>{label || 'BUFFER OVERFLOW'}</FxLabel>

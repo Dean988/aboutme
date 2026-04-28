@@ -282,18 +282,18 @@ body {
   pointer-events: none;
   z-index: 150;
   overflow: hidden;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
 }
 .ambient-obj {
   position: absolute;
-  opacity: 0.55;
-  filter: drop-shadow(0 0 18px currentColor);
+  opacity: 0.72;
+  filter: drop-shadow(0 0 22px currentColor);
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
-.ambient-obj.slow  { animation: drift-slow 18s ease-in-out infinite alternate; }
-.ambient-obj.med   { animation: drift-med 12s ease-in-out infinite alternate; }
-.ambient-obj.fast  { animation: drift-slow 8s ease-in-out infinite alternate; }
+.ambient-obj.slow  { animation: drift-slow 10s ease-in-out infinite alternate; }
+.ambient-obj.med   { animation: drift-med 8s ease-in-out infinite alternate; }
+.ambient-obj.fast  { animation: drift-slow 6s ease-in-out infinite alternate; }
 
 /* Subtle film-grain overlay (taste-skill recommended, fixed + non-scrolling) */
 .grain {
@@ -318,7 +318,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ambient-layer { display: none; }
+  .ambient-layer { opacity: 0.38; mix-blend-mode: normal; }
+  .ambient-obj {
+    opacity: 0.42;
+    animation-duration: 18s !important;
+  }
 }
 @media (max-width: 720px) {
   .ambient-obj { opacity: 0.1; }
@@ -464,12 +468,9 @@ body {
 
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-  .marquee-track { animation: none !important; }
+  .marquee-track { animation-duration: 80s !important; }
+  .title-start-btn { animation-duration: 3.2s !important; }
+  .crt-on #app-root { animation: none !important; }
 }
 
 /* Older browsers (no `inset`) */
